@@ -2,4 +2,24 @@
 
 #include "calculator/calculator.hpp"
 
-namespace calculator {}  // namespace calculator
+#include "token/token.hpp"
+
+namespace calculator {
+
+using token::Token;
+
+double expression() {
+    double left{term()};
+    Token token{get_token()};
+
+    switch (token.kind) {
+        case '+':
+            return left + term();
+        case '-':
+            return left - term();
+        default:
+            return left;
+    }
+}
+
+}  // namespace calculator
