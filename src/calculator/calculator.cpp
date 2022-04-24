@@ -6,6 +6,12 @@
 
 #include "token/token.hpp"
 
+namespace {
+void throw_exception(const std::string& error_msg, char token = ' ') {
+    throw std::runtime_error(error_msg + token);
+}
+}  // namespace
+
 namespace calculator {
 
 using token::Token;
