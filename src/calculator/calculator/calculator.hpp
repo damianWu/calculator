@@ -2,7 +2,13 @@
 #ifndef SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 #define SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 
+// #include <string>
+
 #include "token/token.hpp"
+
+// namespace {
+// void throw_exception(const std::string& error_msg, char token = ' ');
+// }  // namespace
 
 namespace calculator {
 
