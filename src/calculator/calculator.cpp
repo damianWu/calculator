@@ -49,9 +49,10 @@ double term() {
         Token token{get_token()};
 
         switch (token.kind) {
-            case '*':
+            case '*': {
                 left *= primary();
                 break;
+            }
             case '/': {
                 double prim{primary()};
                 if (prim == 0) {  // TODO(@damianWu) poor verification
