@@ -9,10 +9,18 @@ using uint32 = uint32_t;
 using uint64 = uint64_t;
 using int64 = int64_t;
 
+using calculator::expression;
 using token::Token;
 
 int main() {
     try {
+        while (std::cin) {
+            std::cout << expression() << '\n';
+        }
+
+        // added to don't close window immediately
+        char a{};
+        std::cin >> a;
     } catch (const std::exception &e) {
         std::cerr << "Exception catch in main function with message: "
                   << e.what() << '\n';
