@@ -2,6 +2,7 @@
 
 #include "calculator/calculator.hpp"
 
+#include <iostream>  // TODO(@damianWu) to delete?
 #include <stdexcept>
 
 #include "token/token.hpp"
@@ -36,10 +37,10 @@ double primary() {
         }
     }
     throw_exception(
-        "Function calculator::primary() throws"
+        "Function calculator::primary() throws "
         "unexpected token exception ",
         token.kind);
-    return 0.0;
+    return 0;
 }
 
 double term() {
