@@ -8,6 +8,28 @@ namespace calculator {
 
 using token::Token;
 
+double term() {
+    double left{primary()};
+
+    while (true) {
+        Token token{get_token()};
+
+        switch (token.kind) {
+            case '*':
+                left *= primary();
+                break;
+            case '/':
+                left /= primary();
+                break;
+            // case '%':
+            //     left = left % primary();
+            //     break;
+            default:
+                return left;
+        }
+    }
+}
+
 double expression() {
     double left{term()};
 

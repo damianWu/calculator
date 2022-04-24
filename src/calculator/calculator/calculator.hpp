@@ -10,6 +10,7 @@ using token::Token;
 
 double expression();
 double term();
+double primary();
 
 Token get_token();
 
