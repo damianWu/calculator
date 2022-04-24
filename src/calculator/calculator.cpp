@@ -10,15 +10,20 @@ using token::Token;
 
 double expression() {
     double left{term()};
-    Token token{get_token()};
 
-    switch (token.kind) {
-        case '+':
-            return left + term();
-        case '-':
-            return left - term();
-        default:
-            return left;
+    while (true) {
+        Token token{get_token()};
+
+        switch (token.kind) {
+            case '+':
+                left += term();
+                break;
+            case '-':
+                left -= term();
+                break;
+            default:
+                return left;
+        }
     }
 }
 
