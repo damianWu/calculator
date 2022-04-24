@@ -2,6 +2,17 @@
 #ifndef SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 #define SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 
-namespace calculator {}  // namespace calculator
+#include "token/token.hpp"
+
+namespace calculator {
+
+using token::Token;
+
+double expression();
+double term();
+
+Token get_token();
+
+}  // namespace calculator
 
 #endif  // SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
