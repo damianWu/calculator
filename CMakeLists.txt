@@ -6,7 +6,7 @@ project(calculator)
 # ----------------------
 # Debugging
 # ----------------------
-set(DEBUG_MODE TRUE)
+set(DEBUG_MODE FALSE)
 
 
 
