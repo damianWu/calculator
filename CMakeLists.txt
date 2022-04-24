@@ -87,6 +87,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 # ----------------------
 # add_subdirectory(tests)
 add_subdirectory(src/calculator)
+add_subdirectory(src/token)
 
 
 
@@ -100,4 +101,4 @@ add_executable(${PROJECT_NAME} src/main.cpp)
 # ----------------------
 # Link libraries target with executable target
 # ----------------------
-target_link_libraries(${PROJECT_NAME} calculator_lib)
+target_link_libraries(${PROJECT_NAME} token_lib calculator_lib)
