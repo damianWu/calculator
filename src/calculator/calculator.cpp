@@ -16,6 +16,32 @@ namespace calculator {
 
 using token::Token;
 
+double primary() {
+    Token token{get_token()};
+
+    switch (token.kind) {
+        case '8': {
+            return token.value;
+        }
+        case '(': {
+            double number{expression()};
+            Token closing_token{get_token()};
+            if (closing_token.kind == ')') {
+                return number;
+            }
+            throw_exception(
+                "Function calculator::primary() throws unexpected token "
+                "exception! Escpected ')', but was ",
+                closing_token.kind);
+        }
+    }
+    throw_exception(
+        "Function calculator::primary() throws"
+        "unexpected token exception ",
+        token.kind);
+    return 0.0;
+}
+
 double term() {
     double left{primary()};
 
