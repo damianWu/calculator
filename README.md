@@ -15,7 +15,7 @@ as a number or an operator. Assume that we despose Token type, we can express
 
 Token kind | '(' | '8' | '+' | '8' | ')' | '*' | '8' |
 ---        | --- | --- | --- | --- | --- | --- | --- |
-Value      |     | 1.5 |     |  4  |     |     | 11  |
+Value      |     | 2.5 |     |  19 |     |     | 11  |
 
 Token type '8' means floating-point-literal.
 ##### Grammar
