@@ -55,7 +55,7 @@ double term() {
             }
             case '/': {
                 double prim{primary()};
-                if (prim == 0) {  // TODO(@damianWu) poor verification
+                if (compare_double(prim, 0)) {
                     throw std::runtime_error(
                         "Function calculator::term() throws dividing by zero "
                         "exception!");
@@ -89,6 +89,11 @@ double expression() {
                 return left;
         }
     }
+}
+
+bool compare_double(const double a, const double b) {
+    double epsilon = std::numeric_limits<double>::epsilon();
+    return std::abs(a - b) < epsilon;
 }
 
 }  // namespace calculator

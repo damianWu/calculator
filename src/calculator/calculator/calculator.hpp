@@ -20,6 +20,8 @@ double primary();
 
 Token get_token();
 
+bool compare_double(const double a, const double b);
+
 }  // namespace calculator
 
 #endif  // SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
