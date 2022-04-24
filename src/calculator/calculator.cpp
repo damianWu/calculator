@@ -2,6 +2,8 @@
 
 #include "calculator/calculator.hpp"
 
+#include <stdexcept>
+
 #include "token/token.hpp"
 
 namespace calculator {
@@ -18,9 +20,16 @@ double term() {
             case '*':
                 left *= primary();
                 break;
-            case '/':
-                left /= primary();
+            case '/': {
+                double prim{primary()};
+                if (prim == 0) {  // TODO(@damianWu) poor verification
+                    throw std::runtime_error(
+                        "Function calculator::term() throws dividing by zero "
+                        "exception!");
+                }
+                left /= prim;
                 break;
+            }
             // case '%':
             //     left = left % primary();
             //     break;
