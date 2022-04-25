@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(calculator)
 
 
+
 # ----------------------
 # Debugging
 # ----------------------
@@ -49,6 +50,7 @@ else()
 endif()
 
 
+
 # ----------------------
 # Conan
 # ----------------------
@@ -62,10 +64,6 @@ conan_basic_setup()
 # ----------------------
 find_package(GTest REQUIRED)
  
-
-# target_include_directories(${project_name} PUBLIC ${FLTK_INCLUDE_DIR})
-# target_link_libraries(${project_name} ${FLTK_LIBRARIES})
-
 
 
 # Set output directory
@@ -94,6 +92,7 @@ add_subdirectory(src/token)
 # Create executable target
 # ----------------------
 add_executable(${PROJECT_NAME} src/main.cpp)
+
 
 
 # ----------------------
