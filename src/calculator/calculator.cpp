@@ -52,11 +52,12 @@ double primary() {
     return 0;
 }
 
+// Handle '*', '/' and '%' operators
 double term() {
     double left{primary()};
 
     while (true) {
-        Token token{get_token()};
+        Token token{ts.get()};
 
         switch (token.kind) {
             case '*': {
@@ -77,6 +78,7 @@ double term() {
             //     left = left % primary();
             //     break;
             default:
+                ts.put_back(token);
                 return left;
         }
     }
