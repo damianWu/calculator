@@ -31,11 +31,11 @@ int main() {
         while (std::cin) {
             Token t{ts.get()};
 
-            if (t.kind == 'k') {
+            if (t.kind == EXIT) {
                 break;
             }
 
-            if (t.kind == ';') {
+            if (t.kind == END_OF_EXPRESSION) {
                 std::cout << "= " << val << '\n';
             } else {
                 ts.put_back(t);
