@@ -7,10 +7,9 @@ namespace token {
 struct Token {
     char kind;
     double value{};
-    // make a Token from a char
-    explicit Token(char ch) : kind(ch) {}
-    // make a Token from a char and a double
-    Token(char ch, double val) : kind{ch}, value{val} {}
+
+    explicit Token(char ch);
+    Token(char ch, double val);
 };
 
 }  // namespace token
