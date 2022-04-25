@@ -84,11 +84,12 @@ double term() {
     }
 }
 
+// Handle '+' and '-' operators
 double expression() {
     double left{term()};
 
     while (true) {
-        Token token{get_token()};
+        Token token{ts.get()};  // // TODO(@damianWu) can token be inside while?
 
         switch (token.kind) {
             case '+':
@@ -98,6 +99,7 @@ double expression() {
                 left -= term();
                 break;
             default:
+                ts.put_back(token);
                 return left;
         }
     }
