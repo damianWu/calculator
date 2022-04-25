@@ -29,7 +29,7 @@ int main() {
             }
 
             if (t.kind == END_OF_EXPRESSION) {
-                std::cout << "= " << val << '\n';
+                std::cout << PROMPT << val << '\n';
             } else {
                 ts.put_back(t);
             }
