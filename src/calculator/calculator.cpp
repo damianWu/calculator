@@ -2,10 +2,15 @@
 
 #include "calculator/calculator.hpp"
 
-#include <iostream>  // TODO(@damianWu) to delete?
+#include <iostream>
 #include <stdexcept>
 
 #include "token/token.hpp"
+#include "token_stream/token_stream.hpp"
+
+using token_stream::TokenStream;
+
+TokenStream ts;  // TODO(@damianWu) Should TokenStream be here?
 
 namespace {
 void throw_exception(const std::string& error_msg, char token = ' ') {
