@@ -77,14 +77,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 # Tests
 # ----------------------
 # Must be defined in top-most CMakeLists.txt file.
-# enable_testing()
+enable_testing()
 
 
 
 # ----------------------
 # Subdirectories
 # ----------------------
-# add_subdirectory(tests)
+add_subdirectory(tests)
 add_subdirectory(src/calculator)
 add_subdirectory(src/token)
 
@@ -94,7 +94,6 @@ add_subdirectory(src/token)
 # Create executable target
 # ----------------------
 add_executable(${PROJECT_NAME} src/main.cpp)
-
 
 
 # ----------------------
