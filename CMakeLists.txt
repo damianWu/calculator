@@ -60,8 +60,8 @@ conan_basic_setup()
 # ----------------------
 # External Libraries
 # ----------------------
-# find_package(GTest REQUIRED)
-# find_package(Boost REQUIRED)
+find_package(GTest REQUIRED)
+ 
 
 # target_include_directories(${project_name} PUBLIC ${FLTK_INCLUDE_DIR})
 # target_link_libraries(${project_name} ${FLTK_LIBRARIES})
