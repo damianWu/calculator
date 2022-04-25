@@ -6,22 +6,18 @@
 #include <stdexcept>
 
 #include "token/token.hpp"
-#include "token_stream/token_stream.hpp"
-
-using token_stream::TokenStream;
-
-TokenStream ts;  // TODO(@damianWu) Should TokenStream be here?
 
 namespace {
-void throw_exception(const std::string& error_msg, char token = ' ') {
+inline void throw_exception(const std::string& error_msg, char token = ' ') {
     throw std::runtime_error(error_msg + token);
 }
-
 }  // namespace
 
 namespace calculator {
 
 using token::Token;
+
+token_stream::TokenStream ts;
 
 // Handle parenthesis and numbers
 double primary() {
