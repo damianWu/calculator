@@ -1,21 +1,20 @@
 // Copyright [2022] <@damianWu>
-#include <gtest/gtest.h>
-
 #include "calculator/calculator.hpp"
+
+#include <gtest/gtest.h>
 
 // class MaxConsecutiveOnesNaiveParameterizedTestFixture
 //     : public ::testing::TestWithParam<std::tuple<unsigned int>> {};
 
-TEST(TemperatureReadingTest, ShouldReturnCorrectStringMonth) {
-  // 0-201-78345-X 3 20.00
-  // Given
-  SalesData sd{};
+TEST(CorrectCalculationTest, ShouldReturnCorrectResult_1) {
+    // Given
+    double expected{4.0};
 
-  // When
-  read_sales_data(&sd);
+    // When
+    double given{calculator::expression()};  // read from file text1.txt
 
-  // Then
-  ASSERT_EQ("0-201-78345-X", sd.isbn_);
+    // Then
+    ASSERT_DOUBLE_EQ(given, expected);
 }
 
 // TEST(TemperatureReadingTest, ShouldReturnCorrectStringMonth) {

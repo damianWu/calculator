@@ -5,8 +5,12 @@
 namespace token {
 
 struct Token {
-    char kind{};
+    char kind;
     double value{};
+    // make a Token from a char
+    explicit Token(char ch) : kind(ch) {}
+    // make a Token from a char and a double
+    Token(char ch, double val) : kind{ch}, value{val} {}
 };
 
 }  // namespace token
