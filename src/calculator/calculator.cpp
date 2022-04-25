@@ -85,7 +85,8 @@ double expression() {
     double left{term()};
 
     while (true) {
-        Token token{ts.get()};  // // TODO(@damianWu) can token be inside while?
+        // TODO(@damianWu) can token be inside while?
+        Token token{ts.get()};
 
         switch (token.kind) {
             case '+':
