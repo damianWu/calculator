@@ -16,6 +16,14 @@ using token_stream::TokenStream;
 
 extern TokenStream ts;  // TODO(@damianWu) Should TokenStream be here?
 
+namespace {
+
+// Finish program
+constexpr char EXIT{'x'};
+constexpr char END_OF_EXPRESSION{';'};
+
+}  // namespace
+
 int main() {
     try {
         double val{};
