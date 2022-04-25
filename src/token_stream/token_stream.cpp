@@ -8,8 +8,6 @@
 #include "calculator/calculator.hpp"
 #include "token/token.hpp"
 
-// extern const char TOKEN_KIND_OF_FLOATING_POINT_NUMBER;
-
 namespace token_stream {
 
 using calculator::END_OF_EXPRESSION;
@@ -56,7 +54,7 @@ Token TokenStream::get() {
         case '7':
         case '8':
         case '9': {
-            // Put back number fragment to the input stream
+            // Put back number fragment to the input stream to read it as whole
             std::cin.putback(token_fragment);
             double value{};
             std::cin >> value;
