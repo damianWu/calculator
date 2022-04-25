@@ -49,12 +49,11 @@ else()
 endif()
 
 
-
 # ----------------------
 # Conan
 # ----------------------
-# include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-# conan_basic_setup()
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
 
 
 
