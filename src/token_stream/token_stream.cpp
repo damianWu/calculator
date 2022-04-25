@@ -38,8 +38,7 @@ Token TokenStream::get() {
         case '-':
         case '*':
         case '/':
-        case '%': {  // TODO(@damianWu) works properly for all with curly
-                     // TODO(@damianWu) braces? Or just for '%'?
+        case '%': {
             return Token{token_fragment};
         }
         // Token values:
