@@ -54,15 +54,15 @@ endif()
 # ----------------------
 # Conan
 # ----------------------
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
+# include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+# conan_basic_setup()
 
 
 
 # ----------------------
 # External Libraries
 # ----------------------
-find_package(GTest REQUIRED)
+# find_package(GTest REQUIRED)
  
 
 
@@ -75,16 +75,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 # Tests
 # ----------------------
 # Must be defined in top-most CMakeLists.txt file.
-enable_testing()
+# enable_testing()
 
 
 
 # ----------------------
 # Subdirectories
 # ----------------------
-add_subdirectory(tests)
+# add_subdirectory(tests)
 add_subdirectory(src/calculator)
 add_subdirectory(src/token)
+add_subdirectory(src/token_stream)
 
 
 
