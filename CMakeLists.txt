@@ -99,4 +99,4 @@ add_executable(${PROJECT_NAME} src/main.cpp)
 # ----------------------
 # Link libraries target with executable target
 # ----------------------
-target_link_libraries(${PROJECT_NAME} token_lib calculator_lib token_stream_lib)
+target_link_libraries(${PROJECT_NAME}   calculator_lib  token_stream_lib)
