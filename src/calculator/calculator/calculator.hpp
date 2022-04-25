@@ -6,9 +6,8 @@
 
 #include "token/token.hpp"
 
-// namespace {
-// void throw_exception(const std::string& error_msg, char token = ' ');
-// }  // namespace
+// Symbolizes floating-point (numeric) kind of token
+constexpr static char TOKEN_KIND_OF_FLOATING_POINT_NUMBER{'8'};
 
 namespace calculator {
 
