@@ -12,9 +12,7 @@ using token::Token;
 class TokenStream {
  public:
     Token get();
-    void putback(Token token);
-
- private:
+    void put_back(Token token);
 };
 
 }  // namespace token_stream
