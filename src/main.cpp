@@ -4,6 +4,7 @@
 
 #include "calculator/calculator.hpp"
 #include "token/token.hpp"
+#include "token_stream/token_stream.hpp"
 
 using uint32 = uint32_t;
 using uint64 = uint64_t;
@@ -11,16 +12,29 @@ using int64 = int64_t;
 
 using calculator::expression;
 using token::Token;
+using token_stream::TokenStream;
+
+extern TokenStream ts;  // TODO(@damianWu) Should TokenStream be here?
 
 int main() {
     try {
-        while (std::cin) {
-            std::cout << expression() << '\n';
-        }
+        double val{};
 
-        // added to don't close window immediately
-        // char a{};
-        // std::cin >> a;
+        while (std::cin) {
+            Token t{ts.get()};
+
+            if (t.kind == 'k') {
+                break;
+            }
+
+            if (t.kind == ';') {
+                std::cout << "= " << val << '\n';
+            } else {
+                ts.put_back(t);
+            }
+
+            val = expression();
+        }
     } catch (const std::exception &e) {
         std::cerr << "Exception catch in main function with message: "
                   << e.what() << '\n';

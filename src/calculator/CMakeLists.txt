@@ -4,4 +4,4 @@ target_include_directories(calculator_lib PUBLIC .)     # path to catalog that c
                                                         # .hpp file
                                                         # (not directly to .hpp file!)
 
-target_link_libraries(calculator_lib  token_lib)
+target_link_libraries(calculator_lib  token_lib token_stream_lib)

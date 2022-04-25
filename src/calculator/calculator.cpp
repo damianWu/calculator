@@ -2,31 +2,38 @@
 
 #include "calculator/calculator.hpp"
 
-#include <iostream>  // TODO(@damianWu) to delete?
+#include <iostream>
 #include <stdexcept>
 
 #include "token/token.hpp"
+#include "token_stream/token_stream.hpp"
+
+using token_stream::TokenStream;
+
+TokenStream ts;  // TODO(@damianWu) Should TokenStream be here?
 
 namespace {
 void throw_exception(const std::string& error_msg, char token = ' ') {
     throw std::runtime_error(error_msg + token);
 }
+
 }  // namespace
 
 namespace calculator {
 
 using token::Token;
 
+// Handle parenthesis and numbers
 double primary() {
-    Token token{get_token()};
+    Token token{ts.get()};
 
     switch (token.kind) {
-        case '8': {
+        case TOKEN_KIND_OF_FLOATING_POINT_NUMBER: {
             return token.value;
         }
         case '(': {
             double number{expression()};
-            Token closing_token{get_token()};
+            Token closing_token{ts.get()};
             if (closing_token.kind == ')') {
                 return number;
             }
@@ -34,20 +41,23 @@ double primary() {
                 "Function calculator::primary() throws unexpected token "
                 "exception! Escpected ')', but was ",
                 closing_token.kind);
+            break;
         }
+        default:
+            throw_exception(
+                "Function calculator::primary() throws "
+                "unexpected token exception: ",
+                token.kind);
     }
-    throw_exception(
-        "Function calculator::primary() throws "
-        "unexpected token exception ",
-        token.kind);
     return 0;
 }
 
+// Handle '*', '/' and '%' operators
 double term() {
     double left{primary()};
 
     while (true) {
-        Token token{get_token()};
+        Token token{ts.get()};
 
         switch (token.kind) {
             case '*': {
@@ -68,16 +78,18 @@ double term() {
             //     left = left % primary();
             //     break;
             default:
+                ts.put_back(token);
                 return left;
         }
     }
 }
 
+// Handle '+' and '-' operators
 double expression() {
     double left{term()};
 
     while (true) {
-        Token token{get_token()};
+        Token token{ts.get()};  // // TODO(@damianWu) can token be inside while?
 
         switch (token.kind) {
             case '+':
@@ -87,6 +99,7 @@ double expression() {
                 left -= term();
                 break;
             default:
+                ts.put_back(token);
                 return left;
         }
     }
@@ -95,45 +108,6 @@ double expression() {
 bool compare_double(const double a, const double b) {
     double epsilon = std::numeric_limits<double>::epsilon();
     return std::abs(a - b) < epsilon;
-}
-
-// read a token from cin
-Token get_token() {
-    char ch;
-    std::cin >>
-        ch;  // note that >> skips whitespace (space, newline, tab, etc.)
-
-    switch (ch) {
-            // not yet   case ';':    // for "print"
-            // not yet   case 'q':    // for "quit"
-        case '(':
-        case ')':
-        case '+':
-        case '-':
-        case '*':
-        case '/':
-            return Token(ch);  // let each character represent itself
-        case '.':
-        case '0':
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-        case '9': {
-            std::cin.putback(ch);  // put digit back into the input stream
-            double val;
-            std::cin >> val;         // read a floating-point number
-            return Token('8', val);  // let '8' represent "a number"
-        }
-        default:
-            throw std::runtime_error(
-                "calculator::get_token() throws exception: "
-                "Bad token");
-    }
 }
 
 }  // namespace calculator
