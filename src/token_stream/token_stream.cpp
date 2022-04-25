@@ -8,10 +8,13 @@
 #include "calculator/calculator.hpp"
 #include "token/token.hpp"
 
-extern const char TOKEN_KIND_OF_FLOATING_POINT_NUMBER;
+// extern const char TOKEN_KIND_OF_FLOATING_POINT_NUMBER;
 
 namespace token_stream {
 
+using calculator::END_OF_EXPRESSION;
+using calculator::EXIT;
+using calculator::TOKEN_KIND_OF_FLOATING_POINT_NUMBER;
 using token::Token;
 
 // TODO(@damianWu) Why this works when constructor is marked explicit?
@@ -30,8 +33,8 @@ Token TokenStream::get() {
 
     switch (token_fragment) {
         // Token kind:
-        case ';':
-        case 'k':
+        case END_OF_EXPRESSION:
+        case EXIT:
         case '(':
         case ')':
         case '+':
