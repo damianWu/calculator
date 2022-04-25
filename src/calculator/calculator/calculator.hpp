@@ -2,22 +2,30 @@
 #ifndef SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 #define SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 
-// #include <string>
+#include <array>
+#include <string>
 
 #include "token/token.hpp"
-
-// Symbolizes floating-point (numeric) kind of token
-constexpr static char TOKEN_KIND_OF_FLOATING_POINT_NUMBER{'8'};
+#include "token_stream/token_stream.hpp"
 
 namespace calculator {
 
-using token::Token;
+extern token_stream::TokenStream ts;
+
+// Symbolizes floating-point (numeric) kind of token
+constexpr static char TOKEN_KIND_OF_FLOATING_POINT_NUMBER{'8'};
+// Finish program symbol
+constexpr char EXIT{'x'};
+// End of input expression symbol
+constexpr char END_OF_EXPRESSION{';'};
+// Prompt symbols
+constexpr char PROMPT[]{"= "};
 
 double expression();
 double term();
 double primary();
 
-Token get_token();
+token::Token get_token();
 
 bool compare_double(const double a, const double b);
 
