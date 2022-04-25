@@ -63,9 +63,9 @@ double term() {
             case '/': {
                 double prim{primary()};
                 if (compare_double(prim, 0)) {
-                    throw std::runtime_error(
-                        "Function calculator::term() throws dividing by zero "
-                        "exception!");
+                    throw_exception(
+                        "Function calculator::term() "
+                        "throws dividing by zero exception!");
                 }
                 left /= prim;
                 break;
