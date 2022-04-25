@@ -14,7 +14,7 @@ namespace token_stream {
 
 using token::Token;
 
-// TODO(@damianWu) Why this works when constructior is marked explicit?
+// TODO(@damianWu) Why this works when constructor is marked explicit?
 TokenStream::TokenStream() : buffer_{0}, full_{false} {}
 
 // Give me token from std::cin or the buffer variable;
