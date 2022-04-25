@@ -41,12 +41,14 @@ double primary() {
                 "Function calculator::primary() throws unexpected token "
                 "exception! Escpected ')', but was ",
                 closing_token.kind);
+            break;
         }
+        default:
+            throw_exception(
+                "Function calculator::primary() throws "
+                "unexpected token exception: ",
+                token.kind);
     }
-    throw_exception(
-        "Function calculator::primary() throws "
-        "unexpected token exception ",
-        token.kind);
     return 0;
 }
 
