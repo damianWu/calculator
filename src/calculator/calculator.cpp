@@ -5,8 +5,6 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "token/token.hpp"
-
 namespace {
 inline void throw_exception(const std::string& error_msg, char token = ' ') {
     throw std::runtime_error(error_msg + token);

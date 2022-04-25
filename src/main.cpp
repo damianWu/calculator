@@ -4,7 +4,6 @@
 
 #include "calculator/calculator.hpp"
 #include "token/token.hpp"
-#include "token_stream/token_stream.hpp"
 
 using uint32 = uint32_t;
 using uint64 = uint64_t;
