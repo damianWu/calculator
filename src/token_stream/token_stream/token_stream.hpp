@@ -9,10 +9,17 @@ namespace token_stream {
 
 using token::Token;
 
+// Takes input and makes token from it
 class TokenStream {
  public:
+    TokenStream();
+
     Token get();
     void put_back(Token token);
+
+ private:
+    Token buffer_;
+    bool full_;
 };
 
 }  // namespace token_stream
