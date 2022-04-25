@@ -10,19 +10,12 @@ using uint32 = uint32_t;
 using uint64 = uint64_t;
 using int64 = int64_t;
 
+using calculator::END_OF_EXPRESSION;
+using calculator::EXIT;
 using calculator::expression;
+using calculator::PROMPT;
+using calculator::ts;
 using token::Token;
-using token_stream::TokenStream;
-
-extern TokenStream ts;  // TODO(@damianWu) Should TokenStream be here?
-
-namespace {
-
-// Finish program
-constexpr char EXIT{'x'};
-constexpr char END_OF_EXPRESSION{';'};
-
-}  // namespace
 
 int main() {
     try {
