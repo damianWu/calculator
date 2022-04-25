@@ -19,8 +19,8 @@ int main() {
         }
 
         // added to don't close window immediately
-        char a{};
-        std::cin >> a;
+        // char a{};
+        // std::cin >> a;
     } catch (const std::exception &e) {
         std::cerr << "Exception catch in main function with message: "
                   << e.what() << '\n';
