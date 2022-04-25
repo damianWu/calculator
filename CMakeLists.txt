@@ -49,20 +49,19 @@ else()
 endif()
 
 
-
 # ----------------------
 # Conan
 # ----------------------
-# include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-# conan_basic_setup()
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
 
 
 
 # ----------------------
 # External Libraries
 # ----------------------
-# find_package(GTest REQUIRED)
-# find_package(Boost REQUIRED)
+find_package(GTest REQUIRED)
+ 
 
 # target_include_directories(${project_name} PUBLIC ${FLTK_INCLUDE_DIR})
 # target_link_libraries(${project_name} ${FLTK_LIBRARIES})
@@ -78,14 +77,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 # Tests
 # ----------------------
 # Must be defined in top-most CMakeLists.txt file.
-# enable_testing()
+enable_testing()
 
 
 
 # ----------------------
 # Subdirectories
 # ----------------------
-# add_subdirectory(tests)
+add_subdirectory(tests)
 add_subdirectory(src/calculator)
 add_subdirectory(src/token)
 
@@ -95,7 +94,6 @@ add_subdirectory(src/token)
 # Create executable target
 # ----------------------
 add_executable(${PROJECT_NAME} src/main.cpp)
-
 
 
 # ----------------------
