@@ -16,22 +16,24 @@ namespace {
 void throw_exception(const std::string& error_msg, char token = ' ') {
     throw std::runtime_error(error_msg + token);
 }
+
 }  // namespace
 
 namespace calculator {
 
 using token::Token;
 
+// Handle parenthesis and numbers
 double primary() {
-    Token token{get_token()};
+    Token token{ts.get()};
 
     switch (token.kind) {
-        case '8': {
+        case TOKEN_KIND_OF_FLOATING_POINT_NUMBER: {
             return token.value;
         }
         case '(': {
             double number{expression()};
-            Token closing_token{get_token()};
+            Token closing_token{ts.get()};
             if (closing_token.kind == ')') {
                 return number;
             }
