@@ -3,6 +3,10 @@
 
 #include <gtest/gtest.h>
 
+/*
+ * Test depends on test file: calculator_test_1.txt
+ */
+
 // class MaxConsecutiveOnesNaiveParameterizedTestFixture
 //     : public ::testing::TestWithParam<std::tuple<unsigned int>> {};
 
