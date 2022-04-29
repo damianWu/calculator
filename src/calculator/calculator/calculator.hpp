@@ -21,6 +21,8 @@ constexpr char END_OF_EXPRESSION{';'};
 // Prompt symbols
 constexpr char PROMPT[]{"= "};
 
+double calculate();
+
 double expression();
 double term();
 double primary();

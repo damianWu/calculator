@@ -17,6 +17,27 @@ using token::Token;
 
 token_stream::TokenStream ts;
 
+double calculate() {
+    double val{};
+
+    while (std::cin) {
+        Token t{ts.get()};
+
+        if (t.kind == EXIT) {
+            break;
+        }
+
+        if (t.kind == END_OF_EXPRESSION) {
+            std::cout << PROMPT << val << '\n';
+        } else {
+            ts.put_back(t);
+        }
+
+        val = expression();
+    }
+    return val;
+}
+
 // Handle parenthesis and numbers
 double primary() {
     Token token{ts.get()};
