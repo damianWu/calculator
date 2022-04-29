@@ -10,7 +10,7 @@
 // class MaxConsecutiveOnesNaiveParameterizedTestFixture
 //     : public ::testing::TestWithParam<std::tuple<unsigned int>> {};
 
-TEST(CorrectCalculationTest, ShouldReturnCorrectResult_1) {
+TEST(CorrectCalculationTest, ShouldReturnExpectedResult_1) {
     // Given
     double expected{4.0};
 

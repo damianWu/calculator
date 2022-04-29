@@ -38,6 +38,7 @@ double primary() {
             break;
         }
         default:
+            // ts.put_back(token);
             throw_exception(
                 "Function calculator::primary() throws "
                 "unexpected token exception: ",
