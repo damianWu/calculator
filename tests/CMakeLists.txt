@@ -12,13 +12,13 @@ add_executable(
 
 # Link the executable to needed libraries.
 target_link_libraries(
-        ${PROJECT_NAME}_calculator_test
+        ${calculator_test}
         calculator_lib          # Library we are testing
         gtest_main              # GTest libraries
         gtest
         pthread
-        gmock_main
-        gmock
+        # gmock_main
+        # gmock
         # ${CONAN_LIBS}
 )
 
