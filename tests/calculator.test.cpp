@@ -3,6 +3,11 @@
 
 #include <gtest/gtest.h>
 
+#include <iostream>
+
+#include "gtest/internal/gtest-internal.h"
+
+namespace {
 /*
  * Test depends on test file: calculator_test_1.txt
  */
@@ -10,27 +15,43 @@
 // class MaxConsecutiveOnesNaiveParameterizedTestFixture
 //     : public ::testing::TestWithParam<std::tuple<unsigned int>> {};
 
-TEST(CorrectCalculationTest, ShouldReturnExpectedResult_1) {
-    // Given
-    double expected{4.0};
+// Derives a fixture FooTest from BaseTest.
+class FooTest : public ::testing::Test {
+ protected:
+    void SetUp() override { std::cout << "hello" << '\n'; }
 
-    // When
-    double given{calculator::expression()};  // read from file text1.txt
+    void TearDown() override { std::cout << "byhe" << '\n'; }
 
-    // Then
-    ASSERT_DOUBLE_EQ(given, expected);
-}
+    //   ... functions and variables for FooTest ...
+};
 
-TEST(CorrectCalculationTest, ShouldReturnExpectedResult_2) {
-    // Given
-    double expected{-4.0};
+// Tests that use the fixture FooTest.
+TEST_F(FooTest, Bar) { ASSERT_DOUBLE_EQ(1.0, 2.0); }
+TEST_F(FooTest, Baz) { SUCCEED(); }
 
-    // When
-    double given{calculator::expression()};  // read from file text1.txt
+// TEST(CorrectCalculationTest, ShouldReturnExpectedResult_1) {
+//     // Given
+//     double expected{4.0};
 
-    // Then
-    ASSERT_DOUBLE_EQ(given, expected);
-}
+//     // When
+//     double given{calculator::calculate()};  // read from file text1.txt
+//     // std::cout << "XXXXXXXXXXXXXXXXXXXXXXXXX " << given << '\n';
+//     double i = given;
+//     i += i;
+//     // Then
+//     ASSERT_DOUBLE_EQ(given, expected);
+// }
+
+// TEST(CorrectCalculationTest, ShouldReturnExpectedResult_2) {
+//     // Given
+//     double expected{-4.0};
+
+//     // When
+//     double given{calculator::calculate()};  // read from file text1.txt
+
+//     // Then
+//     ASSERT_DOUBLE_EQ(given, expected);
+// }
 
 // TEST(TemperatureReadingTest, ShouldReturnCorrectStringMonth) {
 //     // Month range [0-11]
@@ -109,3 +130,5 @@ TEST(CorrectCalculationTest, ShouldReturnExpectedResult_2) {
 //     // Then
 //     ASSERT_EQ(actual, result);
 // }
+
+}  // namespace
