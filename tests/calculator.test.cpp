@@ -21,6 +21,17 @@ TEST(CorrectCalculationTest, ShouldReturnExpectedResult_1) {
     ASSERT_DOUBLE_EQ(given, expected);
 }
 
+TEST(CorrectCalculationTest, ShouldReturnExpectedResult_2) {
+    // Given
+    double expected{-4.0};
+
+    // When
+    double given{calculator::expression()};  // read from file text1.txt
+
+    // Then
+    ASSERT_DOUBLE_EQ(given, expected);
+}
+
 // TEST(TemperatureReadingTest, ShouldReturnCorrectStringMonth) {
 //     // Month range [0-11]
 //     // Given
