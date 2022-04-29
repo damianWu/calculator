@@ -61,9 +61,11 @@ Token TokenStream::get() {
             return Token{TOKEN_KIND_OF_FLOATING_POINT_NUMBER, value};
         }
         default: {
-            throw std::runtime_error(
+            std::string error_msg{
                 "token_stream::TokenStream::get() "
-                "throws unknown token exception!");
+                "throws unknown token exception: "};
+            error_msg += token_fragment;
+            throw std::runtime_error(error_msg);
         }
     }
 }
