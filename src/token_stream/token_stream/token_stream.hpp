@@ -15,7 +15,7 @@ class TokenStream {
     TokenStream();
 
     Token get();
-    void put_back(Token token);
+    void put_back(const Token);
 
  private:
     Token buffer_;

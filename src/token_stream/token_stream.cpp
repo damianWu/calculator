@@ -15,7 +15,6 @@ using calculator::EXIT;
 using calculator::TOKEN_KIND_OF_FLOATING_POINT_NUMBER;
 using token::Token;
 
-// TODO(@damianWu) Why this works when constructor is marked explicit?
 TokenStream::TokenStream() : buffer_{Token{0}}, full_{false} {}
 
 // Give me token from std::cin or the buffer variable;
@@ -71,7 +70,7 @@ Token TokenStream::get() {
 }
 
 // Put token to the buffer if empty
-void TokenStream::put_back(Token token) {
+void TokenStream::put_back(const Token token) {
     if (full_) {
         throw std::runtime_error(
             "token_stream::TokenStream::put_back() "
