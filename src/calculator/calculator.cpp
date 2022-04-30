@@ -5,6 +5,8 @@
 #include <iostream>
 #include <stdexcept>
 
+#include "token_stream/token_stream.hpp"
+
 namespace {
 inline void throw_exception(const std::string& error_msg, char token = ' ') {
     throw std::runtime_error(error_msg + token);
@@ -14,8 +16,30 @@ inline void throw_exception(const std::string& error_msg, char token = ' ') {
 namespace calculator {
 
 using token::Token;
+using token_stream::TokenStream;
 
-token_stream::TokenStream ts;
+TokenStream ts{};
+
+double calculate() {
+    double val{};
+
+    while (std::cin) {
+        Token t{ts.get()};
+
+        if (t.kind == EXIT) {
+            break;
+        }
+
+        if (t.kind == END_OF_EXPRESSION) {
+            std::cout << PROMPT << val << '\n';
+        } else {
+            ts.put_back(t);
+        }
+
+        val = expression();
+    }
+    return val;
+}
 
 // Handle parenthesis and numbers
 double primary() {
@@ -38,6 +62,7 @@ double primary() {
             break;
         }
         default:
+            // ts.put_back(token);
             throw_exception(
                 "Function calculator::primary() throws "
                 "unexpected token exception: ",

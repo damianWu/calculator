@@ -3,19 +3,41 @@
 
 #include <gtest/gtest.h>
 
-// class MaxConsecutiveOnesNaiveParameterizedTestFixture
-//     : public ::testing::TestWithParam<std::tuple<unsigned int>> {};
+#include <iostream>
 
-TEST(CorrectCalculationTest, ShouldReturnCorrectResult_1) {
+namespace {
+/*
+ * Test depends on test file: calculator_test_1.txt
+ */
+
+TEST(CorrectCalculationTest, ShouldReturnExpectedResult_1) {
+    std::streambuf* orig = std::cin.rdbuf();
+    std::istringstream input("2*2; 3*3;");
+    std::cin.rdbuf(input.rdbuf());
+
     // Given
     double expected{4.0};
 
     // When
-    double given{calculator::expression()};  // read from file text1.txt
+    double given{calculator::calculate()};  // read from file text1.txt
+    // std::cout << "XXXXXXXXXXXXXXXXXXXXXXXXX " << given << '\n';
 
     // Then
     ASSERT_DOUBLE_EQ(given, expected);
+
+    std::cin.rdbuf(orig);
 }
+
+// TEST(CorrectCalculationTest, ShouldReturnExpectedResult_2) {
+//     // Given
+//     double expected{-4.0};
+
+//     // When
+//     double given{calculator::calculate()};  // read from file text1.txt
+
+//     // Then
+//     ASSERT_DOUBLE_EQ(given, expected);
+// }
 
 // TEST(TemperatureReadingTest, ShouldReturnCorrectStringMonth) {
 //     // Month range [0-11]
@@ -94,3 +116,5 @@ TEST(CorrectCalculationTest, ShouldReturnCorrectResult_1) {
 //     // Then
 //     ASSERT_EQ(actual, result);
 // }
+
+}  // namespace
