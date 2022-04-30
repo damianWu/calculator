@@ -9,7 +9,6 @@
 #include "token_stream/token_stream.hpp"
 
 namespace calculator {
-
 extern token_stream::TokenStream ts;
 
 // Symbolizes floating-point (numeric) kind of token
