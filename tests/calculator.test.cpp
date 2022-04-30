@@ -5,42 +5,28 @@
 
 #include <iostream>
 
-#include "gtest/internal/gtest-internal.h"
-
 namespace {
 /*
  * Test depends on test file: calculator_test_1.txt
  */
 
-// class MaxConsecutiveOnesNaiveParameterizedTestFixture
-//     : public ::testing::TestWithParam<std::tuple<unsigned int>> {};
+TEST(CorrectCalculationTest, ShouldReturnExpectedResult_1) {
+    std::streambuf* orig = std::cin.rdbuf();
+    std::istringstream input("2*2; 3*3;");
+    std::cin.rdbuf(input.rdbuf());
 
-// Derives a fixture FooTest from BaseTest.
-class FooTest : public ::testing::Test {
- protected:
-    void SetUp() override { std::cout << "hello" << '\n'; }
+    // Given
+    double expected{4.0};
 
-    void TearDown() override { std::cout << "byhe" << '\n'; }
+    // When
+    double given{calculator::calculate()};  // read from file text1.txt
+    // std::cout << "XXXXXXXXXXXXXXXXXXXXXXXXX " << given << '\n';
 
-    //   ... functions and variables for FooTest ...
-};
+    // Then
+    ASSERT_DOUBLE_EQ(given, expected);
 
-// Tests that use the fixture FooTest.
-TEST_F(FooTest, Bar) { ASSERT_DOUBLE_EQ(1.0, 2.0); }
-TEST_F(FooTest, Baz) { SUCCEED(); }
-
-// TEST(CorrectCalculationTest, ShouldReturnExpectedResult_1) {
-//     // Given
-//     double expected{4.0};
-
-//     // When
-//     double given{calculator::calculate()};  // read from file text1.txt
-//     // std::cout << "XXXXXXXXXXXXXXXXXXXXXXXXX " << given << '\n';
-//     double i = given;
-//     i += i;
-//     // Then
-//     ASSERT_DOUBLE_EQ(given, expected);
-// }
+    std::cin.rdbuf(orig);
+}
 
 // TEST(CorrectCalculationTest, ShouldReturnExpectedResult_2) {
 //     // Given
