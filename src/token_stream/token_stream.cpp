@@ -16,7 +16,7 @@ using calculator::TOKEN_KIND_OF_FLOATING_POINT_NUMBER;
 using token::Token;
 
 // TODO(@damianWu) Why this works when constructor is marked explicit?
-TokenStream::TokenStream() : buffer_{0}, full_{false} {}
+TokenStream::TokenStream() : buffer_{Token{0}}, full_{false} {}
 
 // Give me token from std::cin or the buffer variable;
 Token TokenStream::get() {
