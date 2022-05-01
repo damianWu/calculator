@@ -9,7 +9,7 @@
 #include "token_stream/token_stream.hpp"
 
 namespace calculator {
-extern token_stream::TokenStream ts;
+// extern token_stream::TokenStream ts;
 
 // Symbolizes floating-point (numeric) kind of token
 constexpr static char TOKEN_KIND_OF_FLOATING_POINT_NUMBER{'8'};

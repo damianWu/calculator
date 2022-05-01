@@ -7,18 +7,22 @@
 
 #include "token_stream/token_stream.hpp"
 
+using token_stream::TokenStream;
+
 namespace {
+
 inline void throw_exception(const std::string& error_msg, char token = ' ') {
     throw std::runtime_error(error_msg + token);
 }
+
+// Receives, holds (only one) and give out token
+TokenStream ts{};
+
 }  // namespace
 
 namespace calculator {
 
 using token::Token;
-using token_stream::TokenStream;
-
-TokenStream ts{};
 
 double calculate() {
     double val{};
