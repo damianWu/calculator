@@ -91,23 +91,6 @@ double primary() {
     return 0;
 }
 
-double verify_factorial(const double number) {
-    if (is_factorial()) {
-        return static_cast<double>(factorial(static_cast<uint64>(number)));
-    }
-    return number;
-}
-
-bool is_factorial() {
-    Token token{ts.get()};
-    if (token.kind == '!') {
-        return true;
-    }
-
-    ts.put_back(token);
-    return false;
-}
-
 // Handle '*', '/' and '%' operators
 double term() {
     double left{primary()};
@@ -172,6 +155,24 @@ void verify_closing_bracket(const char closing_bracket) {
 
         throw_exception(error_msg, closing_token.kind);
     }
+}
+
+double verify_factorial(const double number) {
+    if (is_factorial()) {
+        return static_cast<double>(factorial(static_cast<uint64>(number)));
+    }
+    return number;
+}
+
+// TODO(@damianWu) To improve?
+bool is_factorial() {
+    Token token{ts.get()};
+    if (token.kind == '!') {
+        return true;
+    }
+
+    ts.put_back(token);
+    return false;
 }
 
 uint64 factorial(const uint64 number) {
