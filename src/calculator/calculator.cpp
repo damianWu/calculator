@@ -57,16 +57,22 @@ double primary() {
 
     switch (token.kind) {
         case TOKEN_KIND_OF_FLOATING_POINT_NUMBER: {
-            return token.value;
+            return verify_factorial(token.value);
         }
         case open_parenthesis: {
             double number{expression()};
+
             verify_closing_bracket(close_parenthesis);
+            number = verify_factorial(number);
+
             return number;
         }
         case open_brace: {
             double number{expression()};
+
             verify_closing_bracket(close_brace);
+            number = verify_factorial(number);
+
             return number;
         }
         default:
@@ -77,6 +83,23 @@ double primary() {
                 token.kind);
     }
     return 0;
+}
+
+double verify_factorial(const double number) {
+    if (is_factorial()) {
+        return static_cast<double>(factorial(static_cast<uint64>(number)));
+    }
+    return number;
+}
+
+bool is_factorial() {
+    Token token{ts.get()};
+    if (token.kind == '!') {
+        return true;
+    }
+
+    ts.put_back(token);
+    return false;
 }
 
 // Handle '*', '/' and '%' operators
@@ -137,12 +160,19 @@ void verify_closing_bracket(const char closing_bracket) {
     Token closing_token{ts.get()};
     if (closing_token.kind != closing_bracket) {
         std::string error_msg{
-            "Function calculator::primary() throws unexpected token "
-            "exception! Escpected "};
+            "Function calculator::verify_closing_bracket() throws unexpected "
+            "token exception! Expected "};
         (error_msg += closing_bracket) += (" but was: ");
 
         throw_exception(error_msg, closing_token.kind);
     }
+}
+
+uint64 factorial(const uint64 number) {
+    if (number == 0) {
+        return 1;
+    }
+    return number * factorial(number - 1);
 }
 
 bool compare_double(const double a, const double b) {
