@@ -198,13 +198,13 @@ uint64 factorial(const uint64 number) {
 }
 
 double calculate_logical_not() {
-    double number{expression()};
-    bool logical_number_value{!static_cast<bool>(number)};
-    return static_cast<double>(logical_number_value);
+    double number{primary()};
+    bool logical_number_value{static_cast<bool>(number)};
+    return static_cast<double>(!logical_number_value);
 }
 
 double calculate_bitwise_not() {
-    double number{expression()};
+    double number{primary()};
     uint64 number_integer{static_cast<uint64>(number)};
     return static_cast<double>(~number_integer);
 }
