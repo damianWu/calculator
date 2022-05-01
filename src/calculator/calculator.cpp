@@ -5,19 +5,20 @@
 #include <iostream>
 #include <stdexcept>
 
+#include "token/token.hpp"
 #include "token_stream/token_stream.hpp"
 
 using token_stream::TokenStream;
 
 namespace {
 
+constexpr char OPEN_PARENTHESIS{'('};
+constexpr char CLOSE_PARENTHESIS{')'};
+constexpr char CLOSE_BRACE{'}'};
+constexpr char OPEN_BRACE{'{'};
+
 // Receives, holds (only one) and give out token
 TokenStream ts{};
-
-constexpr char open_parenthesis{'('};
-constexpr char close_parenthesis{')'};
-constexpr char open_brace{'{'};
-constexpr char close_brace{'}'};
 
 inline void throw_exception(const std::string& error_msg,
                             const char token = ' ') {
@@ -30,28 +31,7 @@ namespace calculator {
 
 using token::Token;
 
-double calculate() {
-    double val{};
-
-    while (std::cin) {
-        Token t{ts.get()};
-
-        if (t.kind == EXIT) {
-            break;
-        }
-
-        if (t.kind == END_OF_EXPRESSION) {
-            std::cout << PROMPT << val << '\n';
-        } else {
-            ts.put_back(t);
-        }
-
-        val = expression();
-    }
-    return val;
-}
-
-// Handle parenthesis and numbers
+// Handle parenthesis, braces, factorial, logical not, bitwise not and numbers
 double primary() {
     Token token{ts.get()};
 
@@ -59,47 +39,35 @@ double primary() {
         case TOKEN_KIND_OF_FLOATING_POINT_NUMBER: {
             return verify_factorial(token.value);
         }
-        case open_parenthesis: {
+        case OPEN_PARENTHESIS: {
             double number{expression()};
 
-            verify_closing_bracket(close_parenthesis);
+            verify_closing_bracket(CLOSE_PARENTHESIS);
             number = verify_factorial(number);
 
             return number;
         }
-        case open_brace: {
+        case OPEN_BRACE: {
             double number{expression()};
 
-            verify_closing_bracket(close_brace);
+            verify_closing_bracket(CLOSE_BRACE);
             number = verify_factorial(number);
 
             return number;
+        }
+        case LOGICAL_NOT: {
+            return calculate_logical_not();
+        }
+        case BITWISE_NOT: {
+            return calculate_bitwise_not();
         }
         default:
-            // ts.put_back(token);
             throw_exception(
                 "Function calculator::primary() throws "
                 "unexpected token exception: ",
                 token.kind);
     }
     return 0;
-}
-
-double verify_factorial(const double number) {
-    if (is_factorial()) {
-        return static_cast<double>(factorial(static_cast<uint64>(number)));
-    }
-    return number;
-}
-
-bool is_factorial() {
-    Token token{ts.get()};
-    if (token.kind == '!') {
-        return true;
-    }
-
-    ts.put_back(token);
-    return false;
 }
 
 // Handle '*', '/' and '%' operators
@@ -156,6 +124,42 @@ double expression() {
     }
 }
 
+double calculate() {
+    double val{};
+
+    while (std::cin) {
+        Token token{ts.get()};
+
+        if (token.kind == EXIT) {
+            break;
+        }
+
+        if (token.kind == END_OF_EXPRESSION) {
+            std::cout << PROMPT << val << '\n';
+        } else {
+            ts.put_back(token);
+        }
+
+        val = expression();
+
+        if (is_floating_point_number_token(&token)) {
+            throw_exception(
+                "Function calculator::calculate() "
+                "throws unexpected token exception. Syntax error.");
+        }
+    }
+    return val;
+}
+
+bool is_floating_point_number_token(Token* token) {
+    *token = ts.get();
+    if (token->kind == TOKEN_KIND_OF_FLOATING_POINT_NUMBER) {
+        return true;
+    }
+    ts.put_back(*token);
+    return false;
+}
+
 void verify_closing_bracket(const char closing_bracket) {
     Token closing_token{ts.get()};
     if (closing_token.kind != closing_bracket) {
@@ -168,11 +172,41 @@ void verify_closing_bracket(const char closing_bracket) {
     }
 }
 
+double verify_factorial(const double number) {
+    if (is_factorial()) {
+        return static_cast<double>(factorial(static_cast<uint64>(number)));
+    }
+    return number;
+}
+
+// TODO(@damianWu) To improve?
+bool is_factorial() {
+    Token token{ts.get()};
+    if (token.kind == '!') {
+        return true;
+    }
+
+    ts.put_back(token);
+    return false;
+}
+
 uint64 factorial(const uint64 number) {
     if (number == 0) {
         return 1;
     }
     return number * factorial(number - 1);
+}
+
+double calculate_logical_not() {
+    double number{primary()};
+    bool logical_number_value{static_cast<bool>(number)};
+    return static_cast<double>(!logical_number_value);
+}
+
+double calculate_bitwise_not() {
+    double number{primary()};
+    uint64 number_integer{static_cast<uint64>(number)};
+    return static_cast<double>(~number_integer);
 }
 
 bool compare_double(const double a, const double b) {
