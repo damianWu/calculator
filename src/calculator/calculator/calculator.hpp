@@ -10,6 +10,8 @@
 
 namespace calculator {
 
+using uint64 = std::uint64_t;
+
 // Symbolizes floating-point (numeric) kind of token
 constexpr char TOKEN_KIND_OF_FLOATING_POINT_NUMBER{'8'};
 // Finish program symbol
@@ -25,7 +27,10 @@ double expression();
 double term();
 double primary();
 
+bool is_factorial();
+double verify_factorial(const double number);
 void verify_closing_bracket(const char closing_bracket);
+uint64 factorial(const uint64 number);
 bool compare_double(const double a, const double b);
 
 }  // namespace calculator
