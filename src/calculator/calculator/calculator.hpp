@@ -39,6 +39,7 @@ void verify_closing_bracket(const char closing_bracket);
 double calculate_bitwise_not();
 double calculate_logical_not();
 
+bool is_floating_point_number_token(token::Token* token);
 bool compare_double(const double a, const double b);
 
 }  // namespace calculator
