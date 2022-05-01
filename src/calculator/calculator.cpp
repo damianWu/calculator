@@ -5,19 +5,20 @@
 #include <iostream>
 #include <stdexcept>
 
+#include "token/token.hpp"
 #include "token_stream/token_stream.hpp"
 
 using token_stream::TokenStream;
 
 namespace {
 
+constexpr char OPEN_PARENTHESIS{'('};
+constexpr char CLOSE_PARENTHESIS{')'};
+constexpr char CLOSE_BRACE{'}'};
+constexpr char OPEN_BRACE{'{'};
+
 // Receives, holds (only one) and give out token
 TokenStream ts{};
-
-constexpr char open_parenthesis{'('};
-constexpr char close_parenthesis{')'};
-constexpr char open_brace{'{'};
-constexpr char close_brace{'}'};
 
 inline void throw_exception(const std::string& error_msg,
                             const char token = ' ') {
