@@ -21,7 +21,7 @@ TokenStream ts{};
 constexpr char open_parenthesis{'('};
 constexpr char close_parenthesis{')'};
 constexpr char open_brace{'{'};
-constexpr char clos_brace{'}'};
+constexpr char close_brace{'}'};
 
 }  // namespace
 
@@ -58,16 +58,12 @@ double primary() {
         case TOKEN_KIND_OF_FLOATING_POINT_NUMBER: {
             return token.value;
         }
-        case '(': {
-            double number{expression()};
-            Token closing_token{ts.get()};
-            if (closing_token.kind == ')') {
-                return number;
-            }
-            throw_exception(
-                "Function calculator::primary() throws unexpected token "
-                "exception! Escpected ')', but was ",
-                closing_token.kind);
+        case open_parenthesis: {
+            return execute_expr_verify_closing_bracket(close_parenthesis);
+            break;
+        }
+        case open_brace: {
+            return execute_expr_verify_closing_bracket(close_brace);
             break;
         }
         default:
@@ -132,6 +128,22 @@ double expression() {
                 return left;
         }
     }
+}
+
+double execute_expr_verify_closing_bracket(const char closing_bracket) {
+    double number{expression()};
+    Token closing_token{ts.get()};
+    if (closing_token.kind == closing_bracket) {
+        return number;
+    }
+
+    std::string error_msg{
+        "Function calculator::primary() throws unexpected token "
+        "exception! Escpected "};
+    (error_msg += closing_bracket) += (" but was: ");
+
+    throw_exception(error_msg, closing_token.kind);
+    return 0;
 }
 
 bool compare_double(const double a, const double b) {
