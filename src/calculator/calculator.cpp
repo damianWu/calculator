@@ -31,28 +31,7 @@ namespace calculator {
 
 using token::Token;
 
-double calculate() {
-    double val{};
-
-    while (std::cin) {
-        Token t{ts.get()};
-
-        if (t.kind == EXIT) {
-            break;
-        }
-
-        if (t.kind == END_OF_EXPRESSION) {
-            std::cout << PROMPT << val << '\n';
-        } else {
-            ts.put_back(t);
-        }
-
-        val = expression();
-    }
-    return val;
-}
-
-// Handle parenthesis and numbers
+// Handle parenthesis, braces, factorial, logical not, bitwise not and numbers
 double primary() {
     Token token{ts.get()};
 
@@ -143,6 +122,42 @@ double expression() {
                 return left;
         }
     }
+}
+
+double calculate() {
+    double val{};
+
+    while (std::cin) {
+        Token token{ts.get()};
+
+        if (token.kind == EXIT) {
+            break;
+        }
+
+        if (token.kind == END_OF_EXPRESSION) {
+            std::cout << PROMPT << val << '\n';
+        } else {
+            ts.put_back(token);
+        }
+
+        val = expression();
+
+        if (is_floating_point_number_token(&token)) {
+            throw_exception(
+                "Function calculator::calculate() "
+                "throws unexpected token exception. Syntax error.");
+        }
+    }
+    return val;
+}
+
+bool is_floating_point_number_token(Token* token) {
+    *token = ts.get();
+    if (token->kind == TOKEN_KIND_OF_FLOATING_POINT_NUMBER) {
+        return true;
+    }
+    ts.put_back(*token);
+    return false;
 }
 
 void verify_closing_bracket(const char closing_bracket) {
