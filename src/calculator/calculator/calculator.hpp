@@ -26,6 +26,8 @@ double expression();
 double term();
 double primary();
 
+double execute_expr_verify_closing_bracket(const char closing_bracket);
+
 token::Token get_token();
 
 bool compare_double(const double a, const double b);
