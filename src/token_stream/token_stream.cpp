@@ -13,6 +13,7 @@ namespace token_stream {
 using calculator::END_OF_EXPRESSION;
 using calculator::EXIT;
 using calculator::TOKEN_KIND_OF_FLOATING_POINT_NUMBER;
+
 using token::Token;
 
 TokenStream::TokenStream() : buffer_{Token{0}}, full_{false} {}
@@ -34,6 +35,8 @@ Token TokenStream::get() {
         case EXIT:
         case '(':
         case ')':
+        case '}':
+        case '{':
         case '+':
         case '-':
         case '*':

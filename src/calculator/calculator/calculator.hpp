@@ -9,10 +9,9 @@
 #include "token_stream/token_stream.hpp"
 
 namespace calculator {
-// extern token_stream::TokenStream ts;
 
 // Symbolizes floating-point (numeric) kind of token
-constexpr static char TOKEN_KIND_OF_FLOATING_POINT_NUMBER{'8'};
+constexpr char TOKEN_KIND_OF_FLOATING_POINT_NUMBER{'8'};
 // Finish program symbol
 constexpr char EXIT{'x'};
 // End of input expression symbol
@@ -26,8 +25,7 @@ double expression();
 double term();
 double primary();
 
-token::Token get_token();
-
+void verify_closing_bracket(const char closing_bracket);
 bool compare_double(const double a, const double b);
 
 }  // namespace calculator

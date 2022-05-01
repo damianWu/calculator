@@ -11,12 +11,18 @@ using token_stream::TokenStream;
 
 namespace {
 
-inline void throw_exception(const std::string& error_msg, char token = ' ') {
-    throw std::runtime_error(error_msg + token);
-}
-
 // Receives, holds (only one) and give out token
 TokenStream ts{};
+
+constexpr char open_parenthesis{'('};
+constexpr char close_parenthesis{')'};
+constexpr char open_brace{'{'};
+constexpr char close_brace{'}'};
+
+inline void throw_exception(const std::string& error_msg,
+                            const char token = ' ') {
+    throw std::runtime_error(error_msg + token);
+}
 
 }  // namespace
 
@@ -53,17 +59,15 @@ double primary() {
         case TOKEN_KIND_OF_FLOATING_POINT_NUMBER: {
             return token.value;
         }
-        case '(': {
+        case open_parenthesis: {
             double number{expression()};
-            Token closing_token{ts.get()};
-            if (closing_token.kind == ')') {
-                return number;
-            }
-            throw_exception(
-                "Function calculator::primary() throws unexpected token "
-                "exception! Escpected ')', but was ",
-                closing_token.kind);
-            break;
+            verify_closing_bracket(close_parenthesis);
+            return number;
+        }
+        case open_brace: {
+            double number{expression()};
+            verify_closing_bracket(close_brace);
+            return number;
         }
         default:
             // ts.put_back(token);
@@ -126,6 +130,18 @@ double expression() {
                 ts.put_back(token);
                 return left;
         }
+    }
+}
+
+void verify_closing_bracket(const char closing_bracket) {
+    Token closing_token{ts.get()};
+    if (closing_token.kind != closing_bracket) {
+        std::string error_msg{
+            "Function calculator::primary() throws unexpected token "
+            "exception! Escpected "};
+        (error_msg += closing_bracket) += (" but was: ");
+
+        throw_exception(error_msg, closing_token.kind);
     }
 }
 
