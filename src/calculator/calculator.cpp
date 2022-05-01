@@ -60,24 +60,29 @@ double primary() {
         case TOKEN_KIND_OF_FLOATING_POINT_NUMBER: {
             return verify_factorial(token.value);
         }
-        case open_parenthesis: {
+        case OPEN_PARENTHESIS: {
             double number{expression()};
 
-            verify_closing_bracket(close_parenthesis);
+            verify_closing_bracket(CLOSE_PARENTHESIS);
             number = verify_factorial(number);
 
             return number;
         }
-        case open_brace: {
+        case OPEN_BRACE: {
             double number{expression()};
 
-            verify_closing_bracket(close_brace);
+            verify_closing_bracket(CLOSE_BRACE);
             number = verify_factorial(number);
 
             return number;
+        }
+        case LOGICAL_NOT: {
+            return calculate_logical_not();
+        }
+        case BITWISE_NOT: {
+            return calculate_bitwise_not();
         }
         default:
-            // ts.put_back(token);
             throw_exception(
                 "Function calculator::primary() throws "
                 "unexpected token exception: ",
