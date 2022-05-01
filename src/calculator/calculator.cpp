@@ -60,12 +60,14 @@ double primary() {
             return token.value;
         }
         case open_parenthesis: {
-            return execute_expr_verify_closing_bracket(close_parenthesis);
-            break;
+            double number{expression()};
+            verify_closing_bracket(close_parenthesis);
+            return number;
         }
         case open_brace: {
-            return execute_expr_verify_closing_bracket(close_brace);
-            break;
+            double number{expression()};
+            verify_closing_bracket(close_brace);
+            return number;
         }
         default:
             // ts.put_back(token);
@@ -131,20 +133,16 @@ double expression() {
     }
 }
 
-double execute_expr_verify_closing_bracket(const char closing_bracket) {
-    double number{expression()};
+void verify_closing_bracket(const char closing_bracket) {
     Token closing_token{ts.get()};
-    if (closing_token.kind == closing_bracket) {
-        return number;
+    if (closing_token.kind != closing_bracket) {
+        std::string error_msg{
+            "Function calculator::primary() throws unexpected token "
+            "exception! Escpected "};
+        (error_msg += closing_bracket) += (" but was: ");
+
+        throw_exception(error_msg, closing_token.kind);
     }
-
-    std::string error_msg{
-        "Function calculator::primary() throws unexpected token "
-        "exception! Escpected "};
-    (error_msg += closing_bracket) += (" but was: ");
-
-    throw_exception(error_msg, closing_token.kind);
-    return 0;
 }
 
 bool compare_double(const double a, const double b) {
