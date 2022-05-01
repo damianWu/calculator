@@ -18,6 +18,11 @@ inline void throw_exception(const std::string& error_msg, char token = ' ') {
 // Receives, holds (only one) and give out token
 TokenStream ts{};
 
+constexpr char open_parenthesis{'('};
+constexpr char close_parenthesis{')'};
+constexpr char open_brace{'{'};
+constexpr char clos_brace{'}'};
+
 }  // namespace
 
 namespace calculator {
