@@ -182,6 +182,18 @@ uint64 factorial(const uint64 number) {
     return number * factorial(number - 1);
 }
 
+double calculate_logical_not() {
+    double number{expression()};
+    bool logical_number_value{!static_cast<bool>(number)};
+    return static_cast<double>(logical_number_value);
+}
+
+double calculate_bitwise_not() {
+    double number{expression()};
+    uint64 number_integer{static_cast<uint64>(number)};
+    return static_cast<double>(~number_integer);
+}
+
 bool compare_double(const double a, const double b) {
     double epsilon = std::numeric_limits<double>::epsilon();
     return std::abs(a - b) < epsilon;
