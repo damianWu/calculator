@@ -11,10 +11,6 @@ using token_stream::TokenStream;
 
 namespace {
 
-inline void throw_exception(const std::string& error_msg, char token = ' ') {
-    throw std::runtime_error(error_msg + token);
-}
-
 // Receives, holds (only one) and give out token
 TokenStream ts{};
 
@@ -22,6 +18,11 @@ constexpr char open_parenthesis{'('};
 constexpr char close_parenthesis{')'};
 constexpr char open_brace{'{'};
 constexpr char close_brace{'}'};
+
+inline void throw_exception(const std::string& error_msg,
+                            const char token = ' ') {
+    throw std::runtime_error(error_msg + token);
+}
 
 }  // namespace
 
