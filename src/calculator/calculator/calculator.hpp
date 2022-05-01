@@ -33,8 +33,12 @@ double primary();
 
 bool is_factorial();
 double verify_factorial(const double number);
-void verify_closing_bracket(const char closing_bracket);
 uint64 factorial(const uint64 number);
+void verify_closing_bracket(const char closing_bracket);
+
+double calculate_bitwise_not();
+double calculate_logical_not();
+
 bool compare_double(const double a, const double b);
 
 }  // namespace calculator
