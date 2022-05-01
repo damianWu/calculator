@@ -18,6 +18,10 @@ constexpr char TOKEN_KIND_OF_FLOATING_POINT_NUMBER{'8'};
 constexpr char EXIT{'x'};
 // End of input expression symbol
 constexpr char END_OF_EXPRESSION{';'};
+
+constexpr char LOGICAL_NOT{'!'};
+constexpr char BITWISE_NOT{'~'};
+
 // Prompt symbols
 constexpr char PROMPT[]{"= "};
 
