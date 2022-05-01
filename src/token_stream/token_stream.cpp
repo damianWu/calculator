@@ -34,6 +34,8 @@ Token TokenStream::get() {
         case EXIT:
         case '(':
         case ')':
+        case '}':
+        case '{':
         case '+':
         case '-':
         case '*':
