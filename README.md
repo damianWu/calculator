@@ -1,8 +1,8 @@
-# (Exression) Calculator
+# (Expression) Calculator
 
 [//]: # (_The Last Markdown Editor, Ever_)
 
-(Exression) Calculator compute seemingly simple expressions like: 8+20.5*2.
+(Expression) Calculator compute seemingly simple expressions like: 8+20.5*2.
 Expected value is 49. For humans is obvious, but think how we can program this idea
 to be ''understandable'' by computers. Contrary to appearances it is not a trivial task.
 To handle this problem we use idea of **tokens** and **grammars**.
