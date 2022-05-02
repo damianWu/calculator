@@ -3,6 +3,7 @@
 #include "calculator/calculator.hpp"
 
 #include <iostream>
+#include <limits>
 #include <stdexcept>
 
 #include "token/token.hpp"
@@ -183,22 +184,22 @@ double bitwise_or() {
 
 double calculate() {
     double val{};
-
     while (std::cin) {
         // std::cout << PROMPT;
         Token token{ts.get()};
 
-        if (token.kind == EXIT) {
-            break;
+        while (token.kind == END_OF_EXPRESSION) {
+            token = ts.get();
         }
 
-        if (token.kind == END_OF_EXPRESSION) {
-            std::cout << RESULT << val << '\n';
-        } else {
-            ts.put_back(token);
+        if (token.kind == EXIT) {
+            return val;
         }
+
+        ts.put_back(token);
 
         val = bitwise_or();
+        std::cout << RESULT << val << '\n';
 
         if (is_floating_point_number_token(&token)) {
             throw_exception(
@@ -207,7 +208,11 @@ double calculate() {
                 "No floating point literal expected.");
         }
     }
-    return val;
+    throw_exception(
+        "Function calculate::calculate() throws exception: "
+        "reached unexpected program fragment. Expected retrun value by while "
+        "loop.");
+    return std::numeric_limits<double>::max();
 }
 
 bool is_floating_point_number_token(Token* token) {
