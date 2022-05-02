@@ -27,6 +27,9 @@ constexpr char PROMPT[]{"= "};
 
 double calculate();
 
+double bitwise_xor();
+double bitwise_or();
+double bitwise_and();
 double expression();
 double term();
 double primary();
