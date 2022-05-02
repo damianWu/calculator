@@ -43,7 +43,10 @@ Token TokenStream::get() {
         case '/':
         case '%':
         case '~':
-        case '!': {
+        case '!':
+        case '&':
+        case '|':
+        case '^': {
             return Token{token_fragment};
         }
         // Token values:
