@@ -185,6 +185,7 @@ double calculate() {
     double val{};
 
     while (std::cin) {
+        std::cout << PROMPT;
         Token token{ts.get()};
 
         if (token.kind == EXIT) {
@@ -192,7 +193,7 @@ double calculate() {
         }
 
         if (token.kind == END_OF_EXPRESSION) {
-            std::cout << PROMPT << val << '\n';
+            std::cout << RESULT << val << '\n';
         } else {
             ts.put_back(token);
         }

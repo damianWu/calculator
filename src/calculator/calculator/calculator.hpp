@@ -22,8 +22,8 @@ constexpr char END_OF_EXPRESSION{';'};
 constexpr char LOGICAL_NOT{'!'};
 constexpr char BITWISE_NOT{'~'};
 
-// Prompt symbols
-constexpr char PROMPT[]{"= "};
+constexpr char RESULT[]{"= "};
+constexpr char PROMPT[]{"> "};
 
 double calculate();
 
