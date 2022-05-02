@@ -124,6 +124,63 @@ double expression() {
     }
 }
 
+double bitwise_and() {
+    double left{expression()};
+
+    while (true) {
+        // TODO(@damianWu) can token be inside while?
+        Token token{ts.get()};
+
+        switch (token.kind) {
+            case '&':
+                left = static_cast<double>(static_cast<uint64>(left) &
+                                           static_cast<uint64>(expression()));
+                break;
+            default:
+                ts.put_back(token);
+                return left;
+        }
+    }
+}
+
+double bitwise_xor() {
+    double left{bitwise_and()};
+
+    while (true) {
+        // TODO(@damianWu) can token be inside while?
+        Token token{ts.get()};
+
+        switch (token.kind) {
+            case '^':
+                left = static_cast<double>(static_cast<uint64>(left) ^
+                                           static_cast<uint64>(bitwise_and()));
+                break;
+            default:
+                ts.put_back(token);
+                return left;
+        }
+    }
+}
+
+double bitwise_or() {
+    double left{bitwise_xor()};
+
+    while (true) {
+        // TODO(@damianWu) can token be inside while?
+        Token token{ts.get()};
+
+        switch (token.kind) {
+            case '|':
+                left = static_cast<double>(static_cast<uint64>(left) |
+                                           static_cast<uint64>(bitwise_xor()));
+                break;
+            default:
+                ts.put_back(token);
+                return left;
+        }
+    }
+}
+
 double calculate() {
     double val{};
 
