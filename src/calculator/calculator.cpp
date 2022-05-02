@@ -202,7 +202,8 @@ double calculate() {
         if (is_floating_point_number_token(&token)) {
             throw_exception(
                 "Function calculator::calculate() "
-                "throws unexpected token exception. Syntax error.");
+                "throws unexpected token exception. Syntax error. "
+                "No floating point literal expected.");
         }
     }
     return val;
