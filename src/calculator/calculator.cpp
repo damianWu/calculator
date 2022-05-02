@@ -40,7 +40,7 @@ double primary() {
             return verify_factorial(token.value);
         }
         case OPEN_PARENTHESIS: {
-            double number{expression()};
+            double number{bitwise_or()};
 
             verify_closing_bracket(CLOSE_PARENTHESIS);
             number = verify_factorial(number);
@@ -48,7 +48,7 @@ double primary() {
             return number;
         }
         case OPEN_BRACE: {
-            double number{expression()};
+            double number{bitwise_or()};
 
             verify_closing_bracket(CLOSE_BRACE);
             number = verify_factorial(number);
