@@ -23,7 +23,7 @@ constexpr char LOGICAL_NOT{'!'};
 constexpr char BITWISE_NOT{'~'};
 
 constexpr char RESULT[]{"= "};
-constexpr char PROMPT[]{"> "};
+// constexpr char PROMPT[]{"> "};
 
 double calculate();
 

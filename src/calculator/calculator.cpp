@@ -185,7 +185,7 @@ double calculate() {
     double val{};
 
     while (std::cin) {
-        std::cout << PROMPT;
+        // std::cout << PROMPT;
         Token token{ts.get()};
 
         if (token.kind == EXIT) {
