@@ -197,7 +197,7 @@ double calculate() {
             ts.put_back(token);
         }
 
-        val = expression();
+        val = bitwise_or();
 
         if (is_floating_point_number_token(&token)) {
             throw_exception(
