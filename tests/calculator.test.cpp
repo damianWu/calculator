@@ -6,115 +6,422 @@
 #include <iostream>
 
 namespace {
-/*
- * Test depends on test file: calculator_test_1.txt
- */
 
-TEST(CorrectCalculationTest, ShouldReturnExpectedResult_1) {
-    std::streambuf* orig = std::cin.rdbuf();
-    std::istringstream input("2*2; 3*3;");
-    std::cin.rdbuf(input.rdbuf());
+class CalculatorFixture1 : public ::testing::TestWithParam<std::string> {};
 
+TEST_P(CalculatorFixture1, ShouldReturnExpectedResult_1) {
     // Given
+    std::istringstream input(GetParam());
+    std::cin.rdbuf(input.rdbuf());
     double expected{4.0};
 
     // When
-    double given{calculator::calculate()};  // read from file text1.txt
-    // std::cout << "XXXXXXXXXXXXXXXXXXXXXXXXX " << given << '\n';
+    double given{calculator::calculate()};
 
     // Then
-    ASSERT_DOUBLE_EQ(given, expected);
-
-    std::cin.rdbuf(orig);
+    ASSERT_NEAR(given, expected, 0.0001);
 }
 
-// TEST(CorrectCalculationTest, ShouldReturnExpectedResult_2) {
-//     // Given
-//     double expected{-4.0};
+INSTANTIATE_TEST_SUITE_P(ExpectedResultTwoTest, CalculatorFixture1,
+                         ::testing::Values("2+2; x", "2*2; x", "4; x",
+                                           "20/5; x"));
+////////////////////////////////////////////////////////////////////////////////
+class CalculatorFixture2 : public ::testing::TestWithParam<std::string> {};
 
-//     // When
-//     double given{calculator::calculate()};  // read from file text1.txt
+TEST_P(CalculatorFixture2, ShouldReturnExpectedResult_2) {
+    // Given
+    std::istringstream input(GetParam());
+    std::cin.rdbuf(input.rdbuf());
+    double expected{7.71429};
 
-//     // Then
-//     ASSERT_DOUBLE_EQ(given, expected);
-// }
+    // When
+    double given{calculator::calculate()};
 
-// TEST(TemperatureReadingTest, ShouldReturnCorrectStringMonth) {
-//     // Month range [0-11]
-//     // Given
-//     int month{11};
-//     std::string expected{"dec"};
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
 
-//     // When
-//     std::string result{(month)};
+INSTANTIATE_TEST_SUITE_P(ExpectedResultEqualTo7dot71429Test, CalculatorFixture2,
+                         ::testing::Values("{(4+5)*6}/(3+4); x",
+                                           "({4+5}*6)/(3+4); x",
+                                           "({4+5}*6)/{3+4}; x"));
+////////////////////////////////////////////////////////////////////////////////
+TEST(CorrectCalculationTest, ShouldReturnExpectedResult_1) {
+    // Given
+    std::istringstream input("1-2-3; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{-4.0};
 
-//     // Then
-//     ASSERT_EQ(expected, result);
-// }
+    // When
+    double given{calculator::calculate()};
 
-// TEST(TemperatureReadingHomeworkTestEx2, ShouldReturnCorrectMeanValue) {
-//     // Given
-//     std::vector<Reading> r{Reading{0, 0, 10}, Reading{0, 0, 20},
-//                            Reading{0, 0, 30}, Reading{0, 0, 40}};
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
 
-//     std::vector<Reading> r2{Reading{0, 0, 10}, Reading{0, 0, 10},
-//                             Reading{0, 0, 10}, Reading{0, 0, 10}};
+TEST(CorrectCalculationTest, ShouldReturnExpectedResult_2) {
+    // Given
+    std::istringstream input("280; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{280.0};
 
-//     double expected{25.0};
-//     double expected2{10.0};
+    // When
+    double given{calculator::calculate()};
 
-//     // When
-//     double actual = mean(r);
-//     double actual2 = mean(r2);
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
 
-//     // Then
-//     ASSERT_EQ(expected, actual);
-//     ASSERT_EQ(expected2, actual2);
-// }
+TEST(CorrectCalculationTest, ShouldReturnExpectedResult_3) {
+    // Given
+    std::istringstream input("3!*2*2; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{24.0};
 
-// TEST(TemperatureReadingHomeworkTestEx2,
-// ShouldReturnCorrectMedianValueOrdered) {
-//     // Given
-//     std::vector<Reading> r{Reading{0, 0, 10}, Reading{0, 0, 20},
-//                            Reading{0, 0, 30}};
+    // When
+    double given{calculator::calculate()};
 
-//     double expected{20.0};
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+////////////////////////////////////////////////////////////////////////////////
+TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_1) {
+    // Given
+    std::istringstream input("0!; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{1.0};
 
-//     // When
-//     double actual = median(r);
+    // When
+    double given{calculator::calculate()};
 
-//     // Then
-//     ASSERT_EQ(expected, actual);
-// }
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
 
-// TEST(TemperatureReadingHomeworkTestEx2,
-//      ShouldReturnCorrectMedianValueUnordered) {
-//     // Given
-//     std::vector<Reading> r{Reading{0, 0, 10}, Reading{0, 0, 120},
-//                            Reading{0, 0, 20}, Reading{0, 0, 420},
-//                            Reading{0, 0, 60}, Reading{0, 0, 50},
-//                            Reading{0, 0, 30}};
+TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_2) {
+    // Given
+    std::istringstream input("4!; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{24.0};
 
-//     double expected{50.0};
+    // When
+    double given{calculator::calculate()};
 
-//     // When
-//     double actual = median(r);
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
 
-//     // Then
-//     ASSERT_EQ(expected, actual);
-// }
+TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_3) {
+    // Given
+    std::istringstream input("8!; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{40320.0};
 
-// TEST(TemperatureReadingHomeworkTestEx3,
-//      ShouldReturnCorrectTemperatureConvertedValueCtoF) {
-//     // Given
-//     double input_c_temperature{25.0};
-//     double actual{77.0};
+    // When
+    double given{calculator::calculate()};
 
-//     // When
-//     double result = convert_celsius_to_fahrenheit(given);
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
 
-//     // Then
-//     ASSERT_EQ(actual, result);
-// }
+TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_4) {
+    // Given
+    std::istringstream input("2*3!; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{12.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_5) {
+    // Given
+    std::istringstream input("2*(3!); x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{12.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_6) {
+    // Given
+    std::istringstream input("(2*3)!; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{720.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+////////////////////////////////////////////////////////////////////////////////
+TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_1) {
+    // Given
+    std::istringstream input("!(324); x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{0.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_2) {
+    // Given
+    std::istringstream input("2*!(34); x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{0.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_3) {
+    // Given
+    std::istringstream input("!(0); x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{1.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_4) {
+    // Given
+    std::istringstream input("!(0)+1; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{2.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_5) {
+    // Given
+    std::istringstream input("!2+3; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{3.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_6) {
+    // Given
+    std::istringstream input("(!3)!; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{1.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+////////////////////////////////////////////////////////////////////////////////
+TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_1) {
+    // Given
+    std::istringstream input("(23^4)^54; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{37.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_2) {
+    // Given
+    std::istringstream input("23|43^54&32; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{31.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_3) {
+    // Given
+    std::istringstream input("43^54&32; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{11.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_4) {
+    // Given
+    std::istringstream input("231.5|43^54&32; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{239.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_5) {
+    // Given
+    std::istringstream input("(231|43)^54&32; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{207.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_6) {
+    // Given
+    std::istringstream input("((231|43)^54)&32; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{0.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_7) {
+    // Given
+    std::istringstream input("2*3|2^34; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{38.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_8) {
+    // Given
+    std::istringstream input("3|32^3&731|13; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{47.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+////////////////////////////////////////////////////////////////////////////////
+TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_1) {
+    // Given
+    std::istringstream input("23|43; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{63.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_2) {
+    // Given
+    std::istringstream input("23|43|54; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{63.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_3) {
+    // Given
+    std::istringstream input("(23|43)|54; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{63.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_4) {
+    // Given
+    std::istringstream input("2|5!; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{122.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_5) {
+    // Given
+    std::istringstream input("(2|5)!; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{5040.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_6) {
+    // Given
+    std::istringstream input("(!2|5)!; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{120.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+////////////////////////////////////////////////////////////////////////////////
 
 }  // namespace
