@@ -21,6 +21,8 @@ constexpr char END_OF_EXPRESSION{';'};
 
 constexpr char LOGICAL_NOT{'!'};
 constexpr char BITWISE_NOT{'~'};
+constexpr char NEGATIVE_SIGN{'-'};
+constexpr char POSITIVE_SIGN{'+'};
 
 constexpr char RESULT[]{"= "};
 // constexpr char PROMPT[]{"> "};
