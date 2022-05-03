@@ -56,6 +56,12 @@ double primary() {
 
             return number;
         }
+        case NEGATIVE_SIGN: {
+            return -primary();
+        }
+        case POSITIVE_SIGN: {
+            return primary();
+        }
         case LOGICAL_NOT: {
             return calculate_logical_not();
         }
