@@ -25,7 +25,6 @@ constexpr char NEGATIVE_SIGN{'-'};
 constexpr char POSITIVE_SIGN{'+'};
 
 constexpr char RESULT[]{"= "};
-constexpr char PROMPT[]{"> "};
 
 double calculate();
 

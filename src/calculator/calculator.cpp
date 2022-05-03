@@ -201,7 +201,6 @@ double calculate() {
     double result{};
     while (std::cin) {
         try {
-            // std::cout << PROMPT;
             Token token{ts.get()};
 
             skip_print_symbol(&token);
