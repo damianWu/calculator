@@ -10,9 +10,9 @@
 
 namespace token_stream {
 
-using calculator::END_OF_EXPRESSION;
 using calculator::EXIT;
-using calculator::TOKEN_KIND_OF_FLOATING_POINT_NUMBER;
+using calculator::FLOATING_POINT_NUMBER;
+using calculator::PRINT;
 
 using token::Token;
 
@@ -31,7 +31,7 @@ Token TokenStream::get() {
 
     switch (token_fragment) {
         // Token kind:
-        case END_OF_EXPRESSION:
+        case PRINT:
         case EXIT:
         case '(':
         case ')':
@@ -61,11 +61,12 @@ Token TokenStream::get() {
         case '7':
         case '8':
         case '9': {
-            // Put back number fragment to the input stream to read it as whole
+            // Put back number fragment to the input stream to read number as
+            // whole
             std::cin.putback(token_fragment);
             double value{};
             std::cin >> value;
-            return Token{TOKEN_KIND_OF_FLOATING_POINT_NUMBER, value};
+            return Token{FLOATING_POINT_NUMBER, value};
         }
         default: {
             std::string error_msg{

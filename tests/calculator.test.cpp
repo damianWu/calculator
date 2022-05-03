@@ -436,5 +436,83 @@ TEST(CorrectCalculationNegativeNumbers, ShouldReturnExpectedNegativeResult_1) {
     ASSERT_NEAR(given, expected, 0.00001);
 }
 ////////////////////////////////////////////////////////////////////////////////
+TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_1) {
+    // Given
+    std::istringstream input("4%2; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{0.0};
 
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_2) {
+    // Given
+    std::istringstream input("2%2; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{0.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_3) {
+    // Given
+    std::istringstream input("2%3; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{2.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_4) {
+    // Given
+    std::istringstream input("5%3; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{2.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_5) {
+    // Given
+    std::istringstream input("3%2; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{1.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_6) {
+    // Given
+    std::istringstream input("6.7%3.3; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{0.1};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 }  // namespace

@@ -2,6 +2,7 @@
 
 #include "calculator/calculator.hpp"
 
+#include <cmath>
 #include <iostream>
 #include <limits>
 #include <stdexcept>
@@ -21,8 +22,8 @@ constexpr char OPEN_BRACE{'{'};
 // Receives, holds (only one) and give out token
 TokenStream ts{};
 
-inline void throw_exception(const std::string& error_msg,
-                            const char token = '\0') {
+inline void throw_runtime_exception(const std::string& error_msg,
+                                    const char token = '\0') {
     throw std::runtime_error(error_msg + token);
 }
 
@@ -32,12 +33,13 @@ namespace calculator {
 
 using token::Token;
 
-// Handle parenthesis, braces, factorial, logical not, bitwise not and numbers
+// Handle parenthesis, braces, factorial, logical not, bitwise not, negatie
+// sign, positive sign and numbers
 double primary() {
     Token token{ts.get()};
 
     switch (token.kind) {
-        case TOKEN_KIND_OF_FLOATING_POINT_NUMBER: {
+        case FLOATING_POINT_NUMBER: {
             return verify_factorial(token.value);
         }
         case OPEN_PARENTHESIS: {
@@ -63,13 +65,13 @@ double primary() {
             return primary();
         }
         case LOGICAL_NOT: {
-            return calculate_logical_not();
+            return logical_not();
         }
         case BITWISE_NOT: {
-            return calculate_bitwise_not();
+            return bitwise_not();
         }
         default:
-            throw_exception(
+            throw_runtime_exception(
                 "Function calculator::primary() throws "
                 "unexpected token exception: ",
                 token.kind);
@@ -92,16 +94,23 @@ double term() {
             case '/': {
                 double prim{primary()};
                 if (compare_double(prim, 0)) {
-                    throw_exception(
+                    throw_runtime_exception(
                         "Function calculator::term() "
-                        "throws dividing by zero exception!");
+                        "throws division by zero exception!");
                 }
                 left /= prim;
                 break;
             }
-            // case '%':
-            //     left = left % primary();
-            //     break;
+            case '%': {
+                double right{primary()};
+                if (compare_double(right, 0.0)) {
+                    throw_runtime_exception(
+                        "Function calculator::term throws "
+                        "modulo operator (%) division by zero exception.");
+                }
+                left = std::fmod(left, right);
+                break;
+            }
             default:
                 ts.put_back(token);
                 return left;
@@ -189,41 +198,40 @@ double bitwise_or() {
 }
 
 double calculate() {
-    double val{};
     while (std::cin) {
+        double result{};
         // std::cout << PROMPT;
         Token token{ts.get()};
-
-        while (token.kind == END_OF_EXPRESSION) {
-            token = ts.get();
-        }
-
+        skip_print_symbol(&token);
         if (token.kind == EXIT) {
-            return val;
+            return result;
         }
-
         ts.put_back(token);
-
-        val = bitwise_or();
-        std::cout << RESULT << val << '\n';
-
+        result = bitwise_or();
+        std::cout << RESULT << result << '\n';
         if (is_floating_point_number_token(&token)) {
-            throw_exception(
+            throw_runtime_exception(
                 "Function calculator::calculate() "
                 "throws unexpected token exception. Syntax error. "
                 "No floating point literal expected.");
         }
     }
-    throw_exception(
+    throw_runtime_exception(
         "Function calculate::calculate() throws exception: "
         "reached unexpected program fragment. Expected retrun value by while "
         "loop.");
     return std::numeric_limits<double>::max();
 }
 
+void skip_print_symbol(Token* token) {
+    while (token->kind == PRINT) {
+        *token = ts.get();
+    }
+}
+
 bool is_floating_point_number_token(Token* token) {
     *token = ts.get();
-    if (token->kind == TOKEN_KIND_OF_FLOATING_POINT_NUMBER) {
+    if (token->kind == FLOATING_POINT_NUMBER) {
         return true;
     }
     ts.put_back(*token);
@@ -238,7 +246,7 @@ void verify_closing_bracket(const char closing_bracket) {
             "token exception! Expected "};
         (error_msg += closing_bracket) += (" but was: ");
 
-        throw_exception(error_msg, closing_token.kind);
+        throw_runtime_exception(error_msg, closing_token.kind);
     }
 }
 
@@ -267,13 +275,13 @@ uint64 factorial(const uint64 number) {
     return number * factorial(number - 1);
 }
 
-double calculate_logical_not() {
+double logical_not() {
     double number{primary()};
     bool logical_number_value{static_cast<bool>(number)};
     return static_cast<double>(!logical_number_value);
 }
 
-double calculate_bitwise_not() {
+double bitwise_not() {
     double number{primary()};
     uint64 number_integer{static_cast<uint64>(number)};
     return static_cast<double>(~number_integer);

@@ -13,11 +13,11 @@ namespace calculator {
 using uint64 = std::uint64_t;
 
 // Symbolizes floating-point (numeric) kind of token
-constexpr char TOKEN_KIND_OF_FLOATING_POINT_NUMBER{'8'};
+constexpr char FLOATING_POINT_NUMBER{'8'};
 // Finish program symbol
 constexpr char EXIT{'x'};
 // End of input expression symbol
-constexpr char END_OF_EXPRESSION{';'};
+constexpr char PRINT{';'};
 
 constexpr char LOGICAL_NOT{'!'};
 constexpr char BITWISE_NOT{'~'};
@@ -25,7 +25,7 @@ constexpr char NEGATIVE_SIGN{'-'};
 constexpr char POSITIVE_SIGN{'+'};
 
 constexpr char RESULT[]{"= "};
-// constexpr char PROMPT[]{"> "};
+constexpr char PROMPT[]{"> "};
 
 double calculate();
 
@@ -41,9 +41,10 @@ double verify_factorial(const double number);
 uint64 factorial(const uint64 number);
 void verify_closing_bracket(const char closing_bracket);
 
-double calculate_bitwise_not();
-double calculate_logical_not();
+double bitwise_not();
+double logical_not();
 
+void skip_print_symbol(token::Token* token);
 bool is_floating_point_number_token(token::Token* token);
 bool compare_double(const double a, const double b);
 

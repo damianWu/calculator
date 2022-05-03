@@ -74,5 +74,26 @@ TEST(ExceptionToken_streamTokenStreamGet, ShouldThrowRuntimeException_1) {
         std::runtime_error);
 }
 ////////////////////////////////////////////////////////////////////////////////
+TEST(CorrectCalculationModuloOperator,
+     ShouldThrowRuntimeModuloDivisionByZeroException_1) {
+    EXPECT_THROW(
+        {
+            // Given
+            std::istringstream input("6%0; x");
+            std::cin.rdbuf(input.rdbuf());
+            try {
+                // When
+                calculator::calculate();
+            } catch (const std::runtime_error& e) {
+                EXPECT_STREQ(
+                    "Function calculator::term throws "
+                    "modulo operator (%) division by zero exception.",
+                    e.what());
+                throw;
+            }
+        },
+        std::runtime_error);
+}
+////////////////////////////////////////////////////////////////////////////////
 
 }  // namespace
