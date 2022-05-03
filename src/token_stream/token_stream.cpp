@@ -31,7 +31,7 @@ Token TokenStream::get() {
 
     switch (token_fragment) {
         // Token kind:
-        case END_OF_EXPRESSION:
+        case PRINT:
         case EXIT:
         case '(':
         case ')':
