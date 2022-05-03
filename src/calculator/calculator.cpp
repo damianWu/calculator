@@ -220,6 +220,8 @@ double calculate() {
                     "throws unexpected token exception. Syntax error. "
                     "No floating point literal expected.");
             }
+
+            std::cout << RESULT << result << '\n';
         } catch (const std::exception& e) {
             std::cerr << "Exception catch in calculator::calculate() function "
                          "with message: "
