@@ -65,10 +65,10 @@ double primary() {
             return primary();
         }
         case LOGICAL_NOT: {
-            return calculate_logical_not();
+            return logical_not();
         }
         case BITWISE_NOT: {
-            return calculate_bitwise_not();
+            return bitwise_not();
         }
         default:
             throw_runtime_exception(
@@ -275,13 +275,13 @@ uint64 factorial(const uint64 number) {
     return number * factorial(number - 1);
 }
 
-double calculate_logical_not() {
+double logical_not() {
     double number{primary()};
     bool logical_number_value{static_cast<bool>(number)};
     return static_cast<double>(!logical_number_value);
 }
 
-double calculate_bitwise_not() {
+double bitwise_not() {
     double number{primary()};
     uint64 number_integer{static_cast<uint64>(number)};
     return static_cast<double>(~number_integer);
