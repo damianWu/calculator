@@ -202,11 +202,7 @@ double calculate() {
     while (std::cin) {
         // std::cout << PROMPT;
         Token token{ts.get()};
-
-        while (token.kind == END_OF_EXPRESSION) {
-            token = ts.get();
-        }
-
+        skip_print_symbol(&token);
         if (token.kind == EXIT) {
             return val;
         }
@@ -227,6 +223,12 @@ double calculate() {
         "reached unexpected program fragment. Expected retrun value by while "
         "loop.");
     return std::numeric_limits<double>::max();
+}
+
+void skip_print_symbol(Token* token) {
+    while (token->kind == PRINT) {
+        *token = ts.get();
+    }
 }
 
 bool is_floating_point_number_token(Token* token) {
