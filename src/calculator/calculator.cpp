@@ -22,8 +22,8 @@ constexpr char OPEN_BRACE{'{'};
 // Receives, holds (only one) and give out token
 TokenStream ts{};
 
-inline void throw_exception(const std::string& error_msg,
-                            const char token = '\0') {
+inline void throw_runtime_exception(const std::string& error_msg,
+                                    const char token = '\0') {
     throw std::runtime_error(error_msg + token);
 }
 
@@ -70,7 +70,7 @@ double primary() {
             return calculate_bitwise_not();
         }
         default:
-            throw_exception(
+            throw_runtime_exception(
                 "Function calculator::primary() throws "
                 "unexpected token exception: ",
                 token.kind);
@@ -93,9 +93,9 @@ double term() {
             case '/': {
                 double prim{primary()};
                 if (compare_double(prim, 0)) {
-                    throw_exception(
+                    throw_runtime_exception(
                         "Function calculator::term() "
-                        "throws dividing by zero exception!");
+                        "throws division by zero exception!");
                 }
                 left /= prim;
                 break;
@@ -209,20 +209,19 @@ double calculate() {
         if (token.kind == EXIT) {
             return val;
         }
-
         ts.put_back(token);
 
         val = bitwise_or();
         std::cout << RESULT << val << '\n';
 
         if (is_floating_point_number_token(&token)) {
-            throw_exception(
+            throw_runtime_exception(
                 "Function calculator::calculate() "
                 "throws unexpected token exception. Syntax error. "
                 "No floating point literal expected.");
         }
     }
-    throw_exception(
+    throw_runtime_exception(
         "Function calculate::calculate() throws exception: "
         "reached unexpected program fragment. Expected retrun value by while "
         "loop.");
@@ -246,7 +245,7 @@ void verify_closing_bracket(const char closing_bracket) {
             "token exception! Expected "};
         (error_msg += closing_bracket) += (" but was: ");
 
-        throw_exception(error_msg, closing_token.kind);
+        throw_runtime_exception(error_msg, closing_token.kind);
     }
 }
 
