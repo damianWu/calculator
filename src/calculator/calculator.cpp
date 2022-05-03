@@ -213,18 +213,18 @@ double calculate() {
             ts.put_back(token);
             result = bitwise_or();
 
-            std::cout << RESULT << result << '\n';
-            if (is_floating_point_number_token(&token)) {
+            if (is_token_floating_point_number(&token)) {
                 throw_runtime_exception(
                     "Function calculator::calculate() "
                     "throws unexpected token exception. Syntax error. "
                     "No floating point literal expected.");
             }
+
+            std::cout << RESULT << result << '\n';
         } catch (const std::exception& e) {
             std::cerr << "Exception catch in calculator::calculate() function "
                          "with message: "
                       << e.what() << '\n';
-
             clean_up_mess();
         } catch (...) {
             std::cerr << "Unknown type of exception catch in "
@@ -239,13 +239,7 @@ double calculate() {
     return std::numeric_limits<double>::max();
 }
 
-void clean_up_mess() {
-    Token token{ts.get()};
-    while (token.kind != PRINT) {
-        token = ts.get();
-    }
-    ts.put_back(token);
-}
+void clean_up_mess() { ts.ignore(PRINT); }
 
 void skip_print_symbol(Token* token) {
     while (token->kind == PRINT) {
@@ -253,7 +247,7 @@ void skip_print_symbol(Token* token) {
     }
 }
 
-bool is_floating_point_number_token(Token* token) {
+bool is_token_floating_point_number(Token* token) {
     *token = ts.get();
     if (token->kind == FLOATING_POINT_NUMBER) {
         return true;

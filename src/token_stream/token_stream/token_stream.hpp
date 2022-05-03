@@ -16,6 +16,7 @@ class TokenStream {
 
     Token get();
     void put_back(const Token);
+    void ignore(const char up_to);
 
  private:
     Token buffer_;
