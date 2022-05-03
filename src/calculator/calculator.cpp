@@ -198,16 +198,20 @@ double bitwise_or() {
 }
 
 double calculate() {
+    double result{};
     while (std::cin) {
-        double result{};
         // std::cout << PROMPT;
         Token token{ts.get()};
+
         skip_print_symbol(&token);
+
         if (token.kind == EXIT) {
             return result;
         }
+
         ts.put_back(token);
         result = bitwise_or();
+
         std::cout << RESULT << result << '\n';
         if (is_floating_point_number_token(&token)) {
             throw_runtime_exception(
