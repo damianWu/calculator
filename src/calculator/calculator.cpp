@@ -239,13 +239,7 @@ double calculate() {
     return std::numeric_limits<double>::max();
 }
 
-void clean_up_mess() {
-    Token token{ts.get()};
-    while (token.kind != PRINT) {
-        token = ts.get();
-    }
-    ts.put_back(token);
-}
+void clean_up_mess() { ts.ignore(PRINT); }
 
 void skip_print_symbol(Token* token) {
     while (token->kind == PRINT) {

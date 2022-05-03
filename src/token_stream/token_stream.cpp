@@ -18,6 +18,20 @@ using token::Token;
 
 TokenStream::TokenStream() : buffer_{Token{0}}, full_{false} {}
 
+void TokenStream::ignore(const char border_char) {
+    // Firstly, search in buffer
+    if (full_ && buffer_.kind == border_char) {
+        full_ = false;
+        return;
+    }
+
+    // Secondly, search in input stream
+    full_ = false;
+    char ch{};
+    while (std::cin >> ch && ch != border_char) {
+    }
+}
+
 // Give me token from std::cin or the buffer variable;
 Token TokenStream::get() {
     if (full_) {
