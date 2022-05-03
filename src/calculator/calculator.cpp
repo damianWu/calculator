@@ -33,12 +33,13 @@ namespace calculator {
 
 using token::Token;
 
-// Handle parenthesis, braces, factorial, logical not, bitwise not and numbers
+// Handle parenthesis, braces, factorial, logical not, bitwise not, negatie
+// sign, positive sign and numbers
 double primary() {
     Token token{ts.get()};
 
     switch (token.kind) {
-        case TOKEN_KIND_OF_FLOATING_POINT_NUMBER: {
+        case FLOATING_POINT_NUMBER: {
             return verify_factorial(token.value);
         }
         case OPEN_PARENTHESIS: {
@@ -230,7 +231,7 @@ double calculate() {
 
 bool is_floating_point_number_token(Token* token) {
     *token = ts.get();
-    if (token->kind == TOKEN_KIND_OF_FLOATING_POINT_NUMBER) {
+    if (token->kind == FLOATING_POINT_NUMBER) {
         return true;
     }
     ts.put_back(*token);

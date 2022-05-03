@@ -13,7 +13,7 @@ namespace calculator {
 using uint64 = std::uint64_t;
 
 // Symbolizes floating-point (numeric) kind of token
-constexpr char TOKEN_KIND_OF_FLOATING_POINT_NUMBER{'8'};
+constexpr char FLOATING_POINT_NUMBER{'8'};
 // Finish program symbol
 constexpr char EXIT{'x'};
 // End of input expression symbol
