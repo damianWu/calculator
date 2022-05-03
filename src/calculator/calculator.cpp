@@ -2,6 +2,7 @@
 
 #include "calculator/calculator.hpp"
 
+#include <cmath>
 #include <iostream>
 #include <limits>
 #include <stdexcept>
@@ -99,9 +100,16 @@ double term() {
                 left /= prim;
                 break;
             }
-            // case '%':
-            //     left = left % primary();
-            //     break;
+            case '%': {
+                double right{primary()};
+                if (compare_double(right, 0.0)) {
+                    throw_runtime_exception(
+                        "Function calculator::term throws "
+                        "modulo operator (%) division by zero exception.");
+                }
+                left = std::fmod(left, right);
+                break;
+            }
             default:
                 ts.put_back(token);
                 return left;
