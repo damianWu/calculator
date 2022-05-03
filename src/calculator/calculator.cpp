@@ -22,7 +22,7 @@ constexpr char OPEN_BRACE{'{'};
 TokenStream ts{};
 
 inline void throw_exception(const std::string& error_msg,
-                            const char token = ' ') {
+                            const char token = '\0') {
     throw std::runtime_error(error_msg + token);
 }
 
