@@ -200,24 +200,36 @@ double bitwise_or() {
 double calculate() {
     double result{};
     while (std::cin) {
-        // std::cout << PROMPT;
-        Token token{ts.get()};
+        try {
+            // std::cout << PROMPT;
+            Token token{ts.get()};
 
-        skip_print_symbol(&token);
+            skip_print_symbol(&token);
 
-        if (token.kind == EXIT) {
-            return result;
-        }
+            if (token.kind == EXIT) {
+                return result;
+            }
 
-        ts.put_back(token);
-        result = bitwise_or();
+            ts.put_back(token);
+            result = bitwise_or();
 
-        std::cout << RESULT << result << '\n';
-        if (is_floating_point_number_token(&token)) {
-            throw_runtime_exception(
-                "Function calculator::calculate() "
-                "throws unexpected token exception. Syntax error. "
-                "No floating point literal expected.");
+            std::cout << RESULT << result << '\n';
+            if (is_floating_point_number_token(&token)) {
+                throw_runtime_exception(
+                    "Function calculator::calculate() "
+                    "throws unexpected token exception. Syntax error. "
+                    "No floating point literal expected.");
+            }
+        } catch (const std::exception& e) {
+            std::cerr << "Exception catch in calculator::calculate() function "
+                         "with message: "
+                      << e.what() << '\n';
+
+            clean_up_mess();
+        } catch (...) {
+            std::cerr << "Unknown type of exception catch in "
+                         "calculator::calculate() function"
+                      << '\n';
         }
     }
     throw_runtime_exception(
@@ -225,6 +237,14 @@ double calculate() {
         "reached unexpected program fragment. Expected retrun value by while "
         "loop.");
     return std::numeric_limits<double>::max();
+}
+
+void clean_up_mess() {
+    Token token{ts.get()};
+    while (token.kind != PRINT) {
+        token = ts.get();
+    }
+    ts.put_back(token);
 }
 
 void skip_print_symbol(Token* token) {
