@@ -8,8 +8,8 @@ struct Token {
     char kind;
     double value{};
 
-    explicit Token(char ch);
-    Token(char ch, double val);
+    explicit Token(char k);
+    Token(char k, double v);
 };
 
 }  // namespace token

@@ -4,7 +4,7 @@
 
 namespace token {
 
-Token::Token(char ch) : kind(ch) {}
-Token::Token(char ch, double val) : kind{ch}, value{val} {}
+Token::Token(char k) : kind(k) {}
+Token::Token(char k, double v) : kind{k}, value{v} {}
 
 }  // namespace token
