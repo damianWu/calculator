@@ -34,6 +34,7 @@ double bitwise_and();
 double expression();
 double term();
 double primary();
+double statement();
 
 bool is_factorial();
 double verify_factorial(const double number);
@@ -45,6 +46,7 @@ double logical_not();
 
 void clean_up_mess();
 void skip_print_symbol(token::Token* token);
+void throw_if_floating_point_token(token::Token* token);
 bool is_token_floating_point_number(token::Token* token);
 bool compare_double(const double a, const double b);
 

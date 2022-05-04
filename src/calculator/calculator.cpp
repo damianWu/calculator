@@ -210,14 +210,9 @@ double calculate() {
             }
 
             ts.put_back(token);
-            result = bitwise_or();
+            result = statement();
 
-            if (is_token_floating_point_number(&token)) {
-                throw_runtime_exception(
-                    "Function calculator::calculate() "
-                    "throws unexpected token exception. Syntax error. "
-                    "No floating point literal expected.");
-            }
+            throw_if_floating_point_token(&token);
 
             std::cout << RESULT << result << '\n';
         } catch (const std::exception& e) {
@@ -237,6 +232,17 @@ double calculate() {
         "loop.");
     return std::numeric_limits<double>::max();
 }
+
+void throw_if_floating_point_token(Token* token) {
+    if (is_token_floating_point_number(token)) {
+        throw_runtime_exception(
+            "Function calculator::calculate() "
+            "throws unexpected token exception. Syntax error. "
+            "No floating point literal expected.");
+    }
+}
+
+double statement() { return bitwise_or(); }
 
 void clean_up_mess() { ts.ignore(PRINT); }
 
