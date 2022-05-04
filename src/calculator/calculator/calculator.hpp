@@ -46,8 +46,8 @@ double logical_not();
 
 void clean_up_mess();
 void skip_print_symbol(token::Token* token);
-void throw_if_floating_point_token(token::Token* token);
 bool is_token_floating_point_number(token::Token* token);
+void throw_if_get_floating_point_token();
 bool compare_double(const double a, const double b);
 
 }  // namespace calculator

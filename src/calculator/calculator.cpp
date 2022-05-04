@@ -212,8 +212,7 @@ double calculate() {
             ts.put_back(token);
             result = statement();
 
-            throw_if_floating_point_token(&token);
-
+            throw_if_get_floating_point_token();
             std::cout << RESULT << result << '\n';
         } catch (const std::exception& e) {
             std::cerr << "Exception catch in calculator::calculate() function "
@@ -233,13 +232,15 @@ double calculate() {
     return std::numeric_limits<double>::max();
 }
 
-void throw_if_floating_point_token(Token* token) {
-    if (is_token_floating_point_number(token)) {
+void throw_if_get_floating_point_token() {
+    Token token = ts.get();
+    if (is_token_floating_point_number(&token)) {
         throw_runtime_exception(
-            "Function calculator::calculate() "
-            "throws unexpected token exception. Syntax error. "
-            "No floating point literal expected.");
+            "Function calculator::throw_if_floating_point_token() "
+            "throws syntax error exception. No floating point literal "
+            "expected.");
     }
+    ts.put_back(token);
 }
 
 double statement() { return bitwise_or(); }
@@ -253,12 +254,7 @@ void skip_print_symbol(Token* token) {
 }
 
 bool is_token_floating_point_number(Token* token) {
-    *token = ts.get();
-    if (token->kind == FLOATING_POINT_NUMBER) {
-        return true;
-    }
-    ts.put_back(*token);
-    return false;
+    return token->kind == FLOATING_POINT_NUMBER;
 }
 
 void verify_closing_bracket(const char closing_bracket) {
