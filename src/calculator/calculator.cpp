@@ -33,7 +33,7 @@ namespace calculator {
 
 using token::Token;
 
-// Handle parenthesis, braces, factorial, logical not, bitwise not, negatie
+// Handle parenthesis, braces, factorial, logical not, bitwise not, negative
 // sign, positive sign and numbers
 double primary() {
     Token token{ts.get()};
