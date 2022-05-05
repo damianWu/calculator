@@ -225,11 +225,10 @@ double calculate() {
                       << '\n';
         }
     }
-    throw_runtime_exception(
+    throw std::runtime_error(
         "Function calculate::calculate() throws exception: "
         "reached unexpected program fragment. Expected retrun value by while "
-        "loop.");
-    return std::numeric_limits<double>::max();
+        "loop. Program forced to exit (probably).");
 }
 
 void throw_if_get_floating_point_token() {
