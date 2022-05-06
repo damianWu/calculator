@@ -84,8 +84,9 @@ double logical_not() {
 
 double bitwise_not() {
     double number{primary()};
-    uint64 number_integer{static_cast<uint64>(number)};
-    return static_cast<double>(~number_integer);
+    int64 number_integer{~static_cast<int64>(number)};
+    std::cout << "number_integer: " << number_integer << '\n';
+    return static_cast<double>(number_integer);
 }
 
 // Handle '*', '/' and '%' operators

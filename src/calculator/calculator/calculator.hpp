@@ -11,6 +11,7 @@
 namespace calculator {
 
 using uint64 = std::uint64_t;
+using int64 = std::int64_t;
 
 constexpr char OPEN_PARENTHESIS{'('};
 constexpr char CLOSE_PARENTHESIS{')'};
