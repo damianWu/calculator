@@ -513,6 +513,19 @@ TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_6) {
     // Then
     ASSERT_NEAR(given, expected, 0.00001);
 }
+////////////////////////////////////////////////////////////////////////////////
+TEST(CorrectCalculationBitwiseNotOperator,
+     ShouldReturnExpectedBitwiseNotResult_1) {
+    // Given
+    std::istringstream input("~2; x");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{-3.0};
 
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
 ////////////////////////////////////////////////////////////////////////////////
 }  // namespace
