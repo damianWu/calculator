@@ -132,7 +132,6 @@ double expression() {
     double left{term()};
 
     while (true) {
-        // TODO(@damianWu) can token be inside while?
         Token token{ts.get()};
 
         switch (token.kind) {
@@ -153,7 +152,6 @@ double bitwise_and() {
     double left{expression()};
 
     while (true) {
-        // TODO(@damianWu) can token be inside while?
         Token token{ts.get()};
 
         switch (token.kind) {
@@ -172,7 +170,6 @@ double bitwise_xor() {
     double left{bitwise_and()};
 
     while (true) {
-        // TODO(@damianWu) can token be inside while?
         Token token{ts.get()};
 
         switch (token.kind) {
@@ -191,7 +188,6 @@ double bitwise_or() {
     double left{bitwise_xor()};
 
     while (true) {
-        // TODO(@damianWu) can token be inside while?
         Token token{ts.get()};
 
         switch (token.kind) {
