@@ -224,7 +224,10 @@ double calculate() {
             ts.put_back(token);
             result = statement();
 
-            throw_if_get_floating_point_token();
+            token = ts.get();
+            throw_if_unexpected_token(token);
+            ts.put_back(token);
+
             std::cout << RESULT << result << '\n';
         } catch (const std::exception& e) {
             std::cerr << "Exception catch in calculator::calculate() function "
@@ -245,19 +248,21 @@ double calculate() {
 
 void clean_up_mess() { ts.ignore(PRINT); }
 
-void throw_if_get_floating_point_token() {
-    Token token = ts.get();
-    if (is_token_floating_point_number(&token)) {
+void throw_if_unexpected_token(const Token& token) {
+    // Two token are unexpected at this stage: fp-number and bitwise not.
+    // Reason #1: !3!2 = !(3!)2 = !62 ? What is two? 62? There is no operator
+    //            between !6 and 2. Error!
+    // Reason #2: ~3~2 = -4~2 -> -4 -3? Two numbers, no operator between them.
+    if (is_token_floating_point_number(token) || token.kind == BITWISE_NOT) {
         throw_runtime_exception(
-            "Function calculator::throw_if_floating_point_token() "
+            "Function calculator::throw_if_unexpected_token() "
             "throws syntax error exception. No floating point literal "
-            "expected.");
+            "or bitwise not expected.");
     }
-    ts.put_back(token);
 }
 
-bool is_token_floating_point_number(Token* token) {
-    return token->kind == FLOATING_POINT_NUMBER;
+bool is_token_floating_point_number(const Token& token) {
+    return token.kind == FLOATING_POINT_NUMBER;
 }
 
 void skip_print_symbol(Token* token) {
