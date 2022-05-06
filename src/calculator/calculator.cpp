@@ -14,12 +14,7 @@ using token_stream::TokenStream;
 
 namespace {
 
-constexpr char OPEN_PARENTHESIS{'('};
-constexpr char CLOSE_PARENTHESIS{')'};
-constexpr char CLOSE_BRACE{'}'};
-constexpr char OPEN_BRACE{'{'};
-
-// Receives, holds (only one) and give out token
+// Receive, hold (only one) and give out token
 TokenStream ts{};
 
 inline void throw_runtime_exception(const std::string& error_msg,
@@ -32,6 +27,8 @@ inline void throw_runtime_exception(const std::string& error_msg,
 namespace calculator {
 
 using token::Token;
+
+namespace grammar {
 
 // Handle parenthesis, braces, factorial, logical not, bitwise not, negative
 // sign, positive sign and numbers
@@ -77,6 +74,18 @@ double primary() {
                 token.kind);
     }
     return 0;
+}
+
+double logical_not() {
+    double number{primary()};
+    bool logical_number_value{static_cast<bool>(number)};
+    return static_cast<double>(!logical_number_value);
+}
+
+double bitwise_not() {
+    double number{primary()};
+    uint64 number_integer{static_cast<uint64>(number)};
+    return static_cast<double>(~number_integer);
 }
 
 // Handle '*', '/' and '%' operators
@@ -197,6 +206,13 @@ double bitwise_or() {
     }
 }
 
+double statement() { return bitwise_or(); }
+
+}  // namespace grammar
+
+using grammar::statement;
+
+// calculator starting point
 double calculate() {
     double result{};
     while (std::cin) {
@@ -242,8 +258,6 @@ void throw_if_get_floating_point_token() {
     ts.put_back(token);
 }
 
-double statement() { return bitwise_or(); }
-
 void clean_up_mess() { ts.ignore(PRINT); }
 
 void skip_print_symbol(Token* token) {
@@ -269,40 +283,22 @@ void verify_closing_bracket(const char closing_bracket) {
 }
 
 double verify_factorial(const double number) {
-    if (is_factorial()) {
+    Token token{ts.get()};
+    if (is_factorial(token)) {
         return static_cast<double>(factorial(static_cast<uint64>(number)));
     }
+    ts.put_back(token);
     return number;
 }
 
 // TODO(@damianWu) To improve?
-bool is_factorial() {
-    Token token{ts.get()};
-    if (token.kind == '!') {
-        return true;
-    }
-
-    ts.put_back(token);
-    return false;
-}
+bool is_factorial(const Token& token) { return token.kind == '!'; }
 
 uint64 factorial(const uint64 number) {
     if (number == 0) {
         return 1;
     }
     return number * factorial(number - 1);
-}
-
-double logical_not() {
-    double number{primary()};
-    bool logical_number_value{static_cast<bool>(number)};
-    return static_cast<double>(!logical_number_value);
-}
-
-double bitwise_not() {
-    double number{primary()};
-    uint64 number_integer{static_cast<uint64>(number)};
-    return static_cast<double>(~number_integer);
 }
 
 bool compare_double(const double a, const double b) {

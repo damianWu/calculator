@@ -18,14 +18,15 @@ using token::Token;
 
 TokenStream::TokenStream() : buffer_{Token{0}}, full_{false} {}
 
+// Ignore invalid expression up to
 void TokenStream::ignore(const char border_char) {
-    // Firstly, search in buffer
+    // Search in buffer
     if (full_ && buffer_.kind == border_char) {
         full_ = false;
         return;
     }
 
-    // Secondly, search in input stream
+    // Search in input stream
     full_ = false;
     char ch{};
     while (std::cin >> ch && ch != border_char) {

@@ -56,7 +56,7 @@ TEST(CorrectCalculationModuloOperator,
             std::cin.rdbuf(input.rdbuf());
             try {
                 // When
-                calculator::statement();
+                calculator::grammar::statement();
             } catch (const std::runtime_error& e) {
                 EXPECT_STREQ(
                     "Function calculator::term throws "
