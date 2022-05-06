@@ -2,8 +2,7 @@
 #ifndef SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 #define SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 
-#include <array>
-#include <string>
+#include <cstdint>
 
 #include "token/token.hpp"
 #include "token_stream/token_stream.hpp"
@@ -54,8 +53,8 @@ void verify_closing_bracket(char closing_bracket);
 
 void clean_up_mess();
 void skip_print_symbol(token::Token* token);
-bool is_token_floating_point_number(token::Token* token);
-void throw_if_get_floating_point_token();
+bool is_token_floating_point_number(const token::Token& token);
+void throw_if_unexpected_token(const token::Token& token);
 
 uint64 factorial(uint64 number);
 bool compare_double(double a, double b);
