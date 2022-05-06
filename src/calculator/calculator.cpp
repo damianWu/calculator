@@ -292,7 +292,6 @@ double verify_factorial(const double number) {
     return number;
 }
 
-// TODO(@damianWu) To improve?
 bool is_factorial(const Token& token) { return token.kind == '!'; }
 
 uint64 factorial(const uint64 number) {
