@@ -247,6 +247,8 @@ double calculate() {
         "loop. Program forced to exit (probably).");
 }
 
+void clean_up_mess() { ts.ignore(PRINT); }
+
 void throw_if_get_floating_point_token() {
     Token token = ts.get();
     if (is_token_floating_point_number(&token)) {
@@ -258,16 +260,14 @@ void throw_if_get_floating_point_token() {
     ts.put_back(token);
 }
 
-void clean_up_mess() { ts.ignore(PRINT); }
+bool is_token_floating_point_number(Token* token) {
+    return token->kind == FLOATING_POINT_NUMBER;
+}
 
 void skip_print_symbol(Token* token) {
     while (token->kind == PRINT) {
         *token = ts.get();
     }
-}
-
-bool is_token_floating_point_number(Token* token) {
-    return token->kind == FLOATING_POINT_NUMBER;
 }
 
 void verify_closing_bracket(const char closing_bracket) {
