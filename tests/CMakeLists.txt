@@ -7,7 +7,7 @@ add_executable(
         ${calculator_test}             # Executable tests file name
         main.test.cpp
         calculator.test.cpp
-        # calculator.exception.test.cpp
+        calculator.exception.test.cpp
         statement.exception.test.cpp
 )
 
