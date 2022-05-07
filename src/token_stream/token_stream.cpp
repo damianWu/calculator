@@ -74,27 +74,24 @@ Token TokenStream::get() {
         case '8':
         case '9': {
             // Put back number fragment to the input stream to read number as
-            // whole
+            // a whole
             std::cin.putback(token_fragment);
             double value{};
             std::cin >> value;
-            return Token{FLOATING_POINT_NUMBER, value};
+            return Token{calculator::FLOATING_POINT_NUMBER, value};
         }
-        case LET: {
-            char e{};
-            char t{};
-            std::cin >> e >> t;
-            if (verify_let(e, t)) {
-                return Token{LET};
-            }
-            throw std::runtime_error(
-                "token_stream::TokenStream::get() "
-                "throws unknown token exception: ");
-        }
-        case NAME: {
-        }
-
         default: {
+            // Read 'let' keyword or variable name
+            if (std::isalpha(token_fragment)) {
+                std::string word{token_fragment};
+                read_word(&word);
+
+                if (word == calculator::DECL_KEY) {
+                    return Token{calculator::LET};
+                }
+                return Token{calculator::VAR_NAME, word};
+            }
+
             std::string error_msg{
                 "token_stream::TokenStream::get() "
                 "throws unknown token exception: "};
