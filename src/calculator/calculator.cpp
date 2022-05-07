@@ -46,15 +46,24 @@ double get_value(const std::string& name) {
 
 // Set value of (existing) variable
 void set_value(const std::string& name, const double value) {
-    auto var{std::find_if(std::begin(vars), std::end(vars),
-                          [&name](const auto& n) { return name == n; })};
-    if (var == std::end(vars)) {
+    auto var_iterator{
+        std::find_if(std::begin(vars), std::end(vars),
+                     [&name](const auto& n) { return name == n; })};
+    if (var_iterator == std::end(vars)) {
         throw std::runtime_error(
             "double variables::set_value() throws exception. "
             "Unknow variable: " +
             name);
     }
-    var->value = value;
+    var_iterator->value = value;
+}
+
+bool is_declared(const std::string& variable_name) {
+    auto var_iterator{std::find_if(std::begin(vars), std::end(vars),
+                                   [&variable_name](const std::string& name) {
+                                       return variable_name == name;
+                                   })};
+    return var_iterator != std::end(vars);
 }
 
 }  // namespace variables
