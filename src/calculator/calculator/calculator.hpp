@@ -29,18 +29,21 @@ namespace calculator {
 using uint64 = std::uint64_t;
 using int64 = std::int64_t;
 
+// Symbolizes floating-point (numeric) kind of token
+constexpr char FLOATING_POINT_NUMBER{'8'};
+// Finish program symbol/token kind
+constexpr char EXIT{'x'};
+// End of input expression symbol/token kind
+constexpr char PRINT{';'};
+// let keyword token kind
+constexpr char LET{'L'};
+// variable name token kind
+constexpr char NAME{'a'};
+
 constexpr char OPEN_PARENTHESIS{'('};
 constexpr char CLOSE_PARENTHESIS{')'};
 constexpr char CLOSE_BRACE{'}'};
 constexpr char OPEN_BRACE{'{'};
-
-// Symbolizes floating-point (numeric) kind of token
-constexpr char FLOATING_POINT_NUMBER{'8'};
-// Finish program symbol
-constexpr char EXIT{'x'};
-// End of input expression symbol
-constexpr char PRINT{';'};
-constexpr char LET{'L'};
 
 constexpr char LOGICAL_NOT{'!'};
 constexpr char BITWISE_NOT{'~'};

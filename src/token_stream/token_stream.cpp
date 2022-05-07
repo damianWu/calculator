@@ -95,6 +95,9 @@ Token TokenStream::get() {
                 "token_stream::TokenStream::get() "
                 "throws unknown token exception: ");
         }
+        case NAME: {
+        }
+
         default: {
             std::string error_msg{
                 "token_stream::TokenStream::get() "
