@@ -236,7 +236,19 @@ double bitwise_or() {
     }
 }
 
-double statement() { return bitwise_or(); }
+double declaration() {}
+
+double statement() {
+    Token token{ts.get()};
+    switch (token.kind) {
+        case LET:
+            return declaration();
+        default: {
+            ts.put_back(token);
+            return bitwise_or();
+        }
+    }
+}
 
 }  // namespace grammar
 
