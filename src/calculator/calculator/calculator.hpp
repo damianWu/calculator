@@ -14,6 +14,7 @@ namespace variables {
 struct Variable {
     std::string name{};
     double value{};
+    bool is_const{};
 };
 
 double get_value(const std::string& name);
