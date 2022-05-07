@@ -89,6 +89,11 @@ Token TokenStream::get() {
                 if (word == calculator::DECL_KEY) {
                     return Token{calculator::LET};
                 }
+
+                if (word == calculator::CONST_KEY) {
+                    return Token{calculator::CONST};
+                }
+
                 return Token{calculator::VAR_NAME, word};
             }
 
