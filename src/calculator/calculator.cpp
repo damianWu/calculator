@@ -55,6 +55,13 @@ void set_value(const std::string& name, const double value) {
             "Unknow variable: " +
             name);
     }
+
+    if (var_iterator->is_const) {
+        throw std::runtime_error(
+            "double variables::set_value() throws exception. "
+            "Attempt to change constant variable.");
+    }
+
     var_iterator->value = value;
 }
 
