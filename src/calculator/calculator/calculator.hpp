@@ -14,13 +14,15 @@ namespace variables {
 struct Variable {
     std::string name{};
     double value{};
+    bool is_const{};
 };
 
 double get_value(const std::string& name);
 void set_value(const std::string& name, double value);
 
 bool is_declared(const std::string& variable_name);
-double define_name(const std::string& variable_name, double value);
+double define_name(const std::string& variable_name, double value,
+                   bool is_const = false);
 
 }  // namespace variables
 
@@ -39,6 +41,8 @@ constexpr char PRINT{';'};
 constexpr char VAR_NAME{'a'};
 // let keyword token kind
 constexpr char LET{'L'};
+// const keyword token kind
+constexpr char CONST{'C'};
 
 constexpr char OPEN_PARENTHESIS{'('};
 constexpr char CLOSE_PARENTHESIS{')'};
@@ -53,6 +57,7 @@ constexpr char POSITIVE_SIGN{'+'};
 
 // Variable definition keyword
 constexpr char DECL_KEY[]{"let"};
+constexpr char CONST_KEY[]{"const"};
 constexpr char RESULT[]{"= "};
 
 namespace grammar {
@@ -63,10 +68,10 @@ double logical_not();
 double term();
 double expression();
 double bitwise_and();
-double bitwise_xor();
 double bitwise_or();
+double bitwise_xor();
 double statement();
-double declaration();
+double declaration(const token::Token& var_type);
 
 }  // namespace grammar
 

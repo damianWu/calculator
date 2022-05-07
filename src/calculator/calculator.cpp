@@ -55,6 +55,13 @@ void set_value(const std::string& name, const double value) {
             "Unknow variable: " +
             name);
     }
+
+    if (var_iterator->is_const) {
+        throw std::runtime_error(
+            "double variables::set_value() throws exception. "
+            "Attempt to change constant variable.");
+    }
+
     var_iterator->value = value;
 }
 
@@ -66,13 +73,15 @@ bool is_declared(const std::string& variable_name) {
     return var_iterator != std::end(vars);
 }
 
-double define_name(const std::string& variable_name, const double value) {
+double define_name(const std::string& variable_name, const double value,
+                   const bool is_const) {
     if (is_declared(variable_name)) {
         throw_runtime_exception(
             "variables::define_name() "
             " throws redefined variable exception.");
     }
-    variables::vars.push_back(variables::Variable{variable_name, value});
+    variables::vars.push_back(
+        variables::Variable{variable_name, value, is_const});
     return value;
 }
 
@@ -271,7 +280,7 @@ double bitwise_or() {
     }
 }
 
-double declaration() {
+double declaration(const Token& var_type) {
     Token name_tkn{ts.get()};
     if (name_tkn.kind != VAR_NAME) {
         throw_runtime_exception(
@@ -289,7 +298,7 @@ double declaration() {
     }
 
     double value{calculator::grammar::bitwise_or()};
-    variables::define_name(name_tkn.name, value);
+    variables::define_name(name_tkn.name, value, var_type.kind == CONST);
     return value;
 }
 
@@ -297,7 +306,9 @@ double statement() {
     Token token{ts.get()};
     switch (token.kind) {
         case LET:
-            return declaration();
+        case CONST: {
+            return declaration(token);
+        }
         default: {
             ts.put_back(token);
             return bitwise_or();
