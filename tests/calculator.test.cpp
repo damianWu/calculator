@@ -3,8 +3,6 @@
 
 #include <gtest/gtest.h>
 
-#include <iostream>
-
 namespace {
 
 class CalculatorFixture1 : public ::testing::TestWithParam<std::string> {};
@@ -23,9 +21,9 @@ TEST_P(CalculatorFixture1, ShouldReturnExpectedResult_1) {
 }
 
 INSTANTIATE_TEST_SUITE_P(ExpectedResultTwoTest, CalculatorFixture1,
-                         ::testing::Values("2+2; x", "2*2; x", "4; x",
-                                           "20/5; x"));
-////////////////////////////////////////////////////////////////////////////////
+                         ::testing::Values("2+2; @", "2*2; @", "4; @",
+                                           "20/5; @"));
+// ////////////////////////////////////////////////////////////////////////////////
 class CalculatorFixture2 : public ::testing::TestWithParam<std::string> {};
 
 TEST_P(CalculatorFixture2, ShouldReturnExpectedResult_2) {
@@ -42,13 +40,13 @@ TEST_P(CalculatorFixture2, ShouldReturnExpectedResult_2) {
 }
 
 INSTANTIATE_TEST_SUITE_P(ExpectedResultEqualTo7dot71429Test, CalculatorFixture2,
-                         ::testing::Values("{(4+5)*6}/(3+4); x",
-                                           "({4+5}*6)/(3+4); x",
-                                           "({4+5}*6)/{3+4}; x"));
+                         ::testing::Values("{(4+5)*6}/(3+4); @",
+                                           "({4+5}*6)/(3+4); @",
+                                           "({4+5}*6)/{3+4}; @"));
 ////////////////////////////////////////////////////////////////////////////////
 TEST(CorrectCalculationTest, ShouldReturnExpectedResult_1) {
     // Given
-    std::istringstream input("1-2-3; x");
+    std::istringstream input("1-2-3; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{-4.0};
 
@@ -61,7 +59,7 @@ TEST(CorrectCalculationTest, ShouldReturnExpectedResult_1) {
 
 TEST(CorrectCalculationTest, ShouldReturnExpectedResult_2) {
     // Given
-    std::istringstream input("280; x");
+    std::istringstream input("280; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{280.0};
 
@@ -74,7 +72,7 @@ TEST(CorrectCalculationTest, ShouldReturnExpectedResult_2) {
 
 TEST(CorrectCalculationTest, ShouldReturnExpectedResult_3) {
     // Given
-    std::istringstream input("3!*2*2; x");
+    std::istringstream input("3!*2*2; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{24.0};
 
@@ -87,7 +85,7 @@ TEST(CorrectCalculationTest, ShouldReturnExpectedResult_3) {
 ////////////////////////////////////////////////////////////////////////////////
 TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_1) {
     // Given
-    std::istringstream input("0!; x");
+    std::istringstream input("0!; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{1.0};
 
@@ -100,7 +98,7 @@ TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_1) {
 
 TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_2) {
     // Given
-    std::istringstream input("4!; x");
+    std::istringstream input("4!; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{24.0};
 
@@ -113,7 +111,7 @@ TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_2) {
 
 TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_3) {
     // Given
-    std::istringstream input("8!; x");
+    std::istringstream input("8!; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{40320.0};
 
@@ -126,7 +124,7 @@ TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_3) {
 
 TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_4) {
     // Given
-    std::istringstream input("2*3!; x");
+    std::istringstream input("2*3!; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{12.0};
 
@@ -139,7 +137,7 @@ TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_4) {
 
 TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_5) {
     // Given
-    std::istringstream input("2*(3!); x");
+    std::istringstream input("2*(3!); @");
     std::cin.rdbuf(input.rdbuf());
     double expected{12.0};
 
@@ -152,7 +150,7 @@ TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_5) {
 
 TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_6) {
     // Given
-    std::istringstream input("(2*3)!; x");
+    std::istringstream input("(2*3)!; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{720.0};
 
@@ -165,7 +163,7 @@ TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_6) {
 ////////////////////////////////////////////////////////////////////////////////
 TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_1) {
     // Given
-    std::istringstream input("!(324); x");
+    std::istringstream input("!(324); @");
     std::cin.rdbuf(input.rdbuf());
     double expected{0.0};
 
@@ -178,7 +176,7 @@ TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_1) {
 
 TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_2) {
     // Given
-    std::istringstream input("2*!(34); x");
+    std::istringstream input("2*!(34); @");
     std::cin.rdbuf(input.rdbuf());
     double expected{0.0};
 
@@ -191,7 +189,7 @@ TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_2) {
 
 TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_3) {
     // Given
-    std::istringstream input("!(0); x");
+    std::istringstream input("!(0); @");
     std::cin.rdbuf(input.rdbuf());
     double expected{1.0};
 
@@ -204,7 +202,7 @@ TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_3) {
 
 TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_4) {
     // Given
-    std::istringstream input("!(0)+1; x");
+    std::istringstream input("!(0)+1; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{2.0};
 
@@ -217,7 +215,7 @@ TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_4) {
 
 TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_5) {
     // Given
-    std::istringstream input("!2+3; x");
+    std::istringstream input("!2+3; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{3.0};
 
@@ -230,7 +228,7 @@ TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_5) {
 
 TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_6) {
     // Given
-    std::istringstream input("(!3)!; x");
+    std::istringstream input("(!3)!; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{1.0};
 
@@ -243,7 +241,7 @@ TEST(CorrectCalculationBinaryNotTest, ShouldReturnExpectedBinaryNotResult_6) {
 ////////////////////////////////////////////////////////////////////////////////
 TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_1) {
     // Given
-    std::istringstream input("(23^4)^54; x");
+    std::istringstream input("(23^4)^54; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{37.0};
 
@@ -256,7 +254,7 @@ TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_1) {
 
 TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_2) {
     // Given
-    std::istringstream input("23|43^54&32; x");
+    std::istringstream input("23|43^54&32; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{31.0};
 
@@ -269,7 +267,7 @@ TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_2) {
 
 TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_3) {
     // Given
-    std::istringstream input("43^54&32; x");
+    std::istringstream input("43^54&32; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{11.0};
 
@@ -282,7 +280,7 @@ TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_3) {
 
 TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_4) {
     // Given
-    std::istringstream input("231.5|43^54&32; x");
+    std::istringstream input("231.5|43^54&32; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{239.0};
 
@@ -295,7 +293,7 @@ TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_4) {
 
 TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_5) {
     // Given
-    std::istringstream input("(231|43)^54&32; x");
+    std::istringstream input("(231|43)^54&32; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{207.0};
 
@@ -308,7 +306,7 @@ TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_5) {
 
 TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_6) {
     // Given
-    std::istringstream input("((231|43)^54)&32; x");
+    std::istringstream input("((231|43)^54)&32; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{0.0};
 
@@ -321,7 +319,7 @@ TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_6) {
 
 TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_7) {
     // Given
-    std::istringstream input("2*3|2^34; x");
+    std::istringstream input("2*3|2^34; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{38.0};
 
@@ -334,7 +332,7 @@ TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_7) {
 
 TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_8) {
     // Given
-    std::istringstream input("3|32^3&731|13; x");
+    std::istringstream input("3|32^3&731|13; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{47.0};
 
@@ -347,7 +345,7 @@ TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_8) {
 ////////////////////////////////////////////////////////////////////////////////
 TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_1) {
     // Given
-    std::istringstream input("23|43; x");
+    std::istringstream input("23|43; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{63.0};
 
@@ -360,7 +358,7 @@ TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_1) {
 
 TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_2) {
     // Given
-    std::istringstream input("23|43|54; x");
+    std::istringstream input("23|43|54; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{63.0};
 
@@ -373,7 +371,7 @@ TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_2) {
 
 TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_3) {
     // Given
-    std::istringstream input("(23|43)|54; x");
+    std::istringstream input("(23|43)|54; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{63.0};
 
@@ -386,7 +384,7 @@ TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_3) {
 
 TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_4) {
     // Given
-    std::istringstream input("2|5!; x");
+    std::istringstream input("2|5!; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{122.0};
 
@@ -399,7 +397,7 @@ TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_4) {
 
 TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_5) {
     // Given
-    std::istringstream input("(2|5)!; x");
+    std::istringstream input("(2|5)!; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{5040.0};
 
@@ -412,7 +410,7 @@ TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_5) {
 
 TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_6) {
     // Given
-    std::istringstream input("(!2|5)!; x");
+    std::istringstream input("(!2|5)!; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{120.0};
 
@@ -425,7 +423,7 @@ TEST(CorrectCalculationBitwiseORTest, ShouldReturnExpectedBitwiseORResult_6) {
 ////////////////////////////////////////////////////////////////////////////////
 TEST(CorrectCalculationNegativeNumbers, ShouldReturnExpectedNegativeResult_1) {
     // Given
-    std::istringstream input("-1/2; x");
+    std::istringstream input("-1/2; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{-0.5};
 
@@ -438,7 +436,7 @@ TEST(CorrectCalculationNegativeNumbers, ShouldReturnExpectedNegativeResult_1) {
 ////////////////////////////////////////////////////////////////////////////////
 TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_1) {
     // Given
-    std::istringstream input("4%2; x");
+    std::istringstream input("4%2; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{0.0};
 
@@ -451,7 +449,7 @@ TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_1) {
 
 TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_2) {
     // Given
-    std::istringstream input("2%2; x");
+    std::istringstream input("2%2; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{0.0};
 
@@ -464,7 +462,7 @@ TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_2) {
 
 TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_3) {
     // Given
-    std::istringstream input("2%3; x");
+    std::istringstream input("2%3; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{2.0};
 
@@ -477,7 +475,7 @@ TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_3) {
 
 TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_4) {
     // Given
-    std::istringstream input("5%3; x");
+    std::istringstream input("5%3; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{2.0};
 
@@ -490,7 +488,7 @@ TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_4) {
 
 TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_5) {
     // Given
-    std::istringstream input("3%2; x");
+    std::istringstream input("3%2; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{1.0};
 
@@ -503,7 +501,7 @@ TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_5) {
 
 TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_6) {
     // Given
-    std::istringstream input("6.7%3.3; x");
+    std::istringstream input("6.7%3.3; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{0.1};
 
@@ -517,7 +515,7 @@ TEST(CorrectCalculationModuloOperator, ShouldReturnExpectedModuloResult_6) {
 TEST(CorrectCalculationBitwiseNotOperator,
      ShouldReturnExpectedBitwiseNotResult_1) {
     // Given
-    std::istringstream input("~2; x");
+    std::istringstream input("~2; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{-3.0};
 
