@@ -246,7 +246,28 @@ double bitwise_or() {
     }
 }
 
-double declaration() {}
+double declaration() {
+    std::string variable_name{};
+    std::cin >> variable_name;
+
+    if (variables::is_declared(variable_name)) {
+        throw std::runtime_error(
+            "calculator::declaration() "
+            " throws duplicate variable exception.");
+    }
+
+    char eq{};
+    std::cin >> eq;
+    if (eq == '=') {
+        double value{bitwise_or()};
+        variables::vars.push_back(variables::Variable{variable_name, value});
+    }
+    throw_runtime_exception(
+        "calculator::declaration() "
+        " throws syntax error. Equal sign required, but was: ",
+        eq);
+    return 0.0;
+}
 
 double statement() {
     Token token{ts.get()};
