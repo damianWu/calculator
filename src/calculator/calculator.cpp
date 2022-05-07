@@ -28,8 +28,6 @@ inline void throw_runtime_exception(const std::string& error_msg,
 
 namespace variables {
 
-std::vector<Variable> vars{};
-
 // Return value of variable
 double get_value(const std::string& name) {
     auto var_iterator{
