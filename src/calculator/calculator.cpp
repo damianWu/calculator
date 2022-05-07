@@ -298,6 +298,8 @@ double statement() {
     switch (token.kind) {
         case LET:
             return declaration();
+        case CONST: {
+        }
         default: {
             ts.put_back(token);
             return bitwise_or();

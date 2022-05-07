@@ -39,6 +39,8 @@ constexpr char PRINT{';'};
 constexpr char VAR_NAME{'a'};
 // let keyword token kind
 constexpr char LET{'L'};
+// const keyword token kind
+constexpr char CONST{'C'};
 
 constexpr char OPEN_PARENTHESIS{'('};
 constexpr char CLOSE_PARENTHESIS{')'};
