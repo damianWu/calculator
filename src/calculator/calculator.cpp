@@ -73,13 +73,15 @@ bool is_declared(const std::string& variable_name) {
     return var_iterator != std::end(vars);
 }
 
-double define_name(const std::string& variable_name, const double value) {
+double define_name(const std::string& variable_name, const double value,
+                   const bool is_const) {
     if (is_declared(variable_name)) {
         throw_runtime_exception(
             "variables::define_name() "
             " throws redefined variable exception.");
     }
-    variables::vars.push_back(variables::Variable{variable_name, value});
+    variables::vars.push_back(
+        variables::Variable{variable_name, value, is_const});
     return value;
 }
 
