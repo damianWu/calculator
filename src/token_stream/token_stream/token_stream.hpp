@@ -3,6 +3,8 @@
 #ifndef SRC_TOKEN_STREAM_TOKEN_STREAM_TOKEN_STREAM_HPP_
 #define SRC_TOKEN_STREAM_TOKEN_STREAM_TOKEN_STREAM_HPP_
 
+#include <string>
+
 #include "token/token.hpp"
 
 namespace token_stream {
@@ -22,6 +24,10 @@ class TokenStream {
     Token buffer_;
     bool full_;
 };
+
+inline bool verify_let(const char e, const char t) {
+    return e == 'e' && t == 't';
+}
 
 }  // namespace token_stream
 
