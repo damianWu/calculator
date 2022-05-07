@@ -32,24 +32,27 @@ using int64 = std::int64_t;
 // Symbolizes floating-point (numeric) kind of token
 constexpr char FLOATING_POINT_NUMBER{'8'};
 // Finish program symbol/token kind
-constexpr char EXIT{'x'};
+constexpr char EXIT{'@'};
 // End of input expression symbol/token kind
 constexpr char PRINT{';'};
+// variable name token kind
+constexpr char VAR_NAME{'a'};
 // let keyword token kind
 constexpr char LET{'L'};
-// variable name token kind
-constexpr char NAME{'a'};
 
 constexpr char OPEN_PARENTHESIS{'('};
 constexpr char CLOSE_PARENTHESIS{')'};
 constexpr char CLOSE_BRACE{'}'};
 constexpr char OPEN_BRACE{'{'};
+constexpr char EQUAL_SIGN{'='};
 
 constexpr char LOGICAL_NOT{'!'};
 constexpr char BITWISE_NOT{'~'};
 constexpr char NEGATIVE_SIGN{'-'};
 constexpr char POSITIVE_SIGN{'+'};
 
+// Variable definition keyword
+constexpr char DECL_KEY[]{"let"};
 constexpr char RESULT[]{"= "};
 
 namespace grammar {
