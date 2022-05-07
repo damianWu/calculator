@@ -66,6 +66,10 @@ bool is_declared(const std::string& variable_name) {
     return var_iterator != std::end(vars);
 }
 
+void define_name(const std::string& variable_name, const double value) {
+    variables::vars.push_back(variables::Variable{variable_name, value});
+}
+
 }  // namespace variables
 
 namespace calculator {
@@ -256,16 +260,16 @@ double declaration() {
             " throws duplicate variable exception.");
     }
 
-    char eq{};
-    std::cin >> eq;
-    if (eq == '=') {
-        double value{bitwise_or()};
-        variables::vars.push_back(variables::Variable{variable_name, value});
+    Token token{ts.get()};
+    if (token.kind == '=') {
+        double value{calculator::grammar::bitwise_or()};
+        variables::define_name(variable_name, value);
+        return value;
     }
     throw_runtime_exception(
         "calculator::declaration() "
         " throws syntax error. Equal sign required, but was: ",
-        eq);
+        token.kind);
     return 0.0;
 }
 

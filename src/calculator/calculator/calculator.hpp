@@ -20,6 +20,7 @@ double get_value(const std::string& name);
 void set_value(const std::string& name, double value);
 
 bool is_declared(const std::string& variable_name);
+void define_name(const std::string& variable_name, double value);
 
 }  // namespace variables
 
