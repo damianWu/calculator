@@ -292,29 +292,15 @@ double calculate() {
         "loop. Program forced to exit (probably).");
 }
 
-void clean_up_mess() { ts.ignore(PRINT); }
+bool is_factorial(const Token& token) { return token.kind == '!'; }
 
-void throw_if_unexpected_token(const Token& token) {
-    // Two token are unexpected at this stage: fp-number and bitwise not.
-    // Reason #1: !3!2 = !(3!)2 = !62 ? What is two? 62? There is no operator
-    //            between !6 and 2. Error!
-    // Reason #2: ~3~2 = -4~2 -> -4 -3? Two numbers, no operator between them.
-    if (is_token_floating_point_number(token) || token.kind == BITWISE_NOT) {
-        throw_runtime_exception(
-            "Function calculator::throw_if_unexpected_token() "
-            "throws syntax error exception. No floating point literal "
-            "or bitwise not expected.");
+double verify_factorial(const double number) {
+    Token token{ts.get()};
+    if (is_factorial(token)) {
+        return static_cast<double>(factorial(static_cast<uint64>(number)));
     }
-}
-
-bool is_token_floating_point_number(const Token& token) {
-    return token.kind == FLOATING_POINT_NUMBER;
-}
-
-void skip_print_symbol(Token* token) {
-    while (token->kind == PRINT) {
-        *token = ts.get();
-    }
+    ts.put_back(token);
+    return number;
 }
 
 void verify_closing_bracket(const char closing_bracket) {
@@ -329,23 +315,37 @@ void verify_closing_bracket(const char closing_bracket) {
     }
 }
 
-double verify_factorial(const double number) {
-    Token token{ts.get()};
-    if (is_factorial(token)) {
-        return static_cast<double>(factorial(static_cast<uint64>(number)));
+void clean_up_mess() { ts.ignore(PRINT); }
+
+void skip_print_symbol(Token* token) {
+    while (token->kind == PRINT) {
+        *token = ts.get();
     }
-    ts.put_back(token);
-    return number;
 }
 
-bool is_factorial(const Token& token) { return token.kind == '!'; }
+bool is_token_floating_point_number(const Token& token) {
+    return token.kind == FLOATING_POINT_NUMBER;
+}
+
+void throw_if_unexpected_token(const Token& token) {
+    // Two token are unexpected at this stage: fp-number and bitwise not.
+    // Reason #1: !3!2 = !(3!)2 = !62 ? What is two? 62? There is no operator
+    //            between !6 and 2. Error!
+    // Reason #2: ~3~2 = -4~2 -> -4 -3? Two numbers, no operator between them.
+    if (is_token_floating_point_number(token) || token.kind == BITWISE_NOT) {
+        throw_runtime_exception(
+            "Function calculator::throw_if_unexpected_token() "
+            "throws syntax error exception. No floating point literal "
+            "or bitwise not expected.");
+    }
+}
 
 uint64 factorial(const uint64 number) {
     if (number == 0) {
         return 1;
     }
     return number * factorial(number - 1);
-}
+}  // namespace )
 
 bool compare_double(const double a, const double b) {
     double epsilon = std::numeric_limits<double>::epsilon();
