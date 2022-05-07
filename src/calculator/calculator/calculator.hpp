@@ -3,9 +3,23 @@
 #define SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 
 #include <cstdint>
+#include <string>
+#include <vector>
 
 #include "token/token.hpp"
 #include "token_stream/token_stream.hpp"
+
+namespace variables {
+
+struct Variable {
+    std::string name{};
+    double value{};
+};
+
+double get_value(const std::string& name);
+void set_value(const std::string& name, double value);
+
+}  // namespace variables
 
 namespace calculator {
 
