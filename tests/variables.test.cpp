@@ -33,7 +33,7 @@ TEST(FindCorrectVariable, ShouldFindExpectedVariableValue_1) {
     // When
     double given{calculator::calculate()};
 
-    FAIL();
+    FAIL();  // TODO(@damianWu) - unimplemented
     // Then
     ASSERT_NEAR(given, expected, 0.00001);
 }
