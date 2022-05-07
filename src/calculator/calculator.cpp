@@ -285,7 +285,8 @@ double statement() {
 
 using grammar::statement;
 
-// calculator starting point
+// Calculator starting point
+// Allows you to perform multiple calculations in one run
 double calculate() {
     double result{};
     while (std::cin) {
