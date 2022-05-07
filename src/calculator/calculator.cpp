@@ -46,9 +46,9 @@ double get_value(const std::string& name) {
 
 // Set value of (existing) variable
 void set_value(const std::string& name, const double value) {
-    auto var_iterator{
-        std::find_if(std::begin(vars), std::end(vars),
-                     [&name](const auto& n) { return name == n; })};
+    auto var_iterator{std::find_if(
+        std::begin(vars), std::end(vars),
+        [&name](const Variable& var) { return name == var.name; })};
     if (var_iterator == std::end(vars)) {
         throw std::runtime_error(
             "double variables::set_value() throws exception. "
@@ -60,8 +60,8 @@ void set_value(const std::string& name, const double value) {
 
 bool is_declared(const std::string& variable_name) {
     auto var_iterator{std::find_if(std::begin(vars), std::end(vars),
-                                   [&variable_name](const std::string& name) {
-                                       return variable_name == name;
+                                   [&variable_name](const Variable& var) {
+                                       return variable_name == var.name;
                                    })};
     return var_iterator != std::end(vars);
 }
