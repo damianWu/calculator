@@ -2,8 +2,10 @@
 
 #include "calculator/calculator.hpp"
 
+#include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <iterator>
 #include <limits>
 #include <stdexcept>
 
@@ -23,6 +25,38 @@ inline void throw_runtime_exception(const std::string& error_msg,
 }
 
 }  // namespace
+
+namespace variables {
+
+std::vector<Variable> vars{};
+
+// Return value of variable
+double get_value(const std::string& name) {
+    auto var_iterator{
+        std::find_if(std::begin(vars), std::end(vars),
+                     [&name](const Variable& v) { return name == v.name; })};
+    if (var_iterator == std::end(vars)) {
+        throw std::runtime_error(
+            "double variables::get_value() throws exception. "
+            "Unknow variable: " +
+            name);
+    }
+    return var_iterator->value;
+}
+
+void set_value(const std::string& name, const double value) {
+    auto var{std::find_if(std::begin(vars), std::end(vars),
+                          [&name](const auto& n) { return name == n; })};
+    if (var == std::end(vars)) {
+        throw std::runtime_error(
+            "double variables::set_value() throws exception. "
+            "Unknow variable: " +
+            name);
+    }
+    var->value = value;
+}
+
+}  // namespace variables
 
 namespace calculator {
 
