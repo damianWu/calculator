@@ -37,6 +37,7 @@ constexpr char FLOATING_POINT_NUMBER{'8'};
 constexpr char EXIT{'x'};
 // End of input expression symbol
 constexpr char PRINT{';'};
+constexpr char LET{'L'};
 
 constexpr char LOGICAL_NOT{'!'};
 constexpr char BITWISE_NOT{'~'};
