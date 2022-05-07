@@ -272,26 +272,25 @@ double bitwise_or() {
 }
 
 double declaration() {
-    std::string variable_name{};
-    std::cin >> variable_name;
+    Token name_tkn{ts.get()};
+    if (name_tkn.kind != VAR_NAME) {
+        throw_runtime_exception(
+            "calculator::declaration() throws syntax error. Variable name "
+            "required.");
+    }
 
-    if (variables::is_declared(variable_name)) {
-        throw std::runtime_error(
+    Token equal_sign_tkn{ts.get()};
+    if (equal_sign_tkn.kind != EQUAL_SIGN) {
+        throw_runtime_exception(
             "calculator::declaration() "
-            " throws duplicate variable exception.");
+            " throws syntax error. Equal sign required in variable definition, "
+            "but was: ",
+            equal_sign_tkn.kind);
     }
 
-    Token token{ts.get()};
-    if (token.kind == '=') {
-        double value{calculator::grammar::bitwise_or()};
-        variables::define_name(variable_name, value);
-        return value;
-    }
-    throw_runtime_exception(
-        "calculator::declaration() "
-        " throws syntax error. Equal sign required, but was: ",
-        token.kind);
-    return 0.0;
+    double value{calculator::grammar::bitwise_or()};
+    variables::define_name(name_tkn.name, value);
+    return value;
 }
 
 double statement() {
@@ -307,8 +306,6 @@ double statement() {
 }
 
 }  // namespace grammar
-
-using grammar::statement;
 
 // Calculator starting point
 // Allows you to perform multiple calculations in one run
