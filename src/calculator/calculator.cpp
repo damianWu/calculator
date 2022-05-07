@@ -109,6 +109,21 @@ double primary() {
 
             return number;
         }
+        case VAR_NAME: {
+            if (variables::is_declared(token.name)) {
+                Token t{ts.get()};
+                if (t.kind == EQUAL_SIGN) {  // handle name = expression
+                    double number{primary()};
+                    variables::set_value(token.name, number);
+                    return number;
+                }
+                ts.put_back(t);  // not an assignment: return the value
+                return variables::get_value(token.name);
+            }
+            throw std::runtime_error(
+                "calculator::primary() throws unknown variable name "
+                "exception.");
+        }
         case NEGATIVE_SIGN: {
             return -primary();
         }
