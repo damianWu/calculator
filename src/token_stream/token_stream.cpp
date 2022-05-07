@@ -112,4 +112,13 @@ void TokenStream::put_back(const Token token) {
     full_ = true;
 }
 
+void read_word(std::string* const s) {
+    char c{};
+    while (std::cin.get(c) &&
+           (std::isalpha(c) || std::isdigit(c) || c == '_')) {
+        *s += c;
+    }
+    std::cin.putback(c);
+}
+
 }  // namespace token_stream

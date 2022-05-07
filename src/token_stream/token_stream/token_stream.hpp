@@ -17,17 +17,15 @@ class TokenStream {
     TokenStream();
 
     Token get();
-    void put_back(const Token);
-    void ignore(const char up_to);
+    void put_back(Token);
+    void ignore(char);
 
  private:
     Token buffer_;
     bool full_;
 };
 
-inline bool verify_let(const char e, const char t) {
-    return e == 'e' && t == 't';
-}
+void read_word(std::string* s);
 
 }  // namespace token_stream
 
