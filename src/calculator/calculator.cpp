@@ -28,10 +28,10 @@ inline void throw_runtime_exception(const std::string& error_msg,
 
 namespace variables {
 
-std::vector<Variable> vars{};
+SymbolTable st{};
 
 // Return value of variable
-double get_value(const std::string& name) {
+double SymbolTable::get(const std::string& name) {
     auto var_iterator{
         std::find_if(std::begin(vars), std::end(vars),
                      [&name](const Variable& v) { return name == v.name; })};
@@ -45,7 +45,7 @@ double get_value(const std::string& name) {
 }
 
 // Set value of (existing) variable
-void set_value(const std::string& name, const double value) {
+void SymbolTable::set(const std::string& name, const double value) {
     auto var_iterator{std::find_if(
         std::begin(vars), std::end(vars),
         [&name](const Variable& var) { return name == var.name; })};
@@ -65,7 +65,7 @@ void set_value(const std::string& name, const double value) {
     var_iterator->value = value;
 }
 
-bool is_declared(const std::string& variable_name) {
+bool SymbolTable::is_declared(const std::string& variable_name) {
     auto var_iterator{std::find_if(std::begin(vars), std::end(vars),
                                    [&variable_name](const Variable& var) {
                                        return variable_name == var.name;
@@ -73,14 +73,14 @@ bool is_declared(const std::string& variable_name) {
     return var_iterator != std::end(vars);
 }
 
-double define_name(const std::string& variable_name, const double value,
-                   const bool is_const) {
+double SymbolTable::define(const std::string& variable_name, const double value,
+                           const bool is_const) {
     if (is_declared(variable_name)) {
         throw_runtime_exception(
             "variables::define_name() "
             " throws redefined variable exception.");
     }
-    variables::vars.push_back(
+    variables::st.vars.push_back(
         variables::Variable{variable_name, value, is_const});
     return value;
 }
@@ -119,15 +119,15 @@ double primary() {
             return number;
         }
         case VAR_NAME: {
-            if (variables::is_declared(token.name)) {
+            if (variables::st.is_declared(token.name)) {
                 Token t{ts.get()};
                 if (t.kind == EQUAL_SIGN) {  // handle name = expression
                     double number{primary()};
-                    variables::set_value(token.name, number);
+                    variables::st.set(token.name, number);
                     return number;
                 }
                 ts.put_back(t);  // not an assignment: return the value
-                return variables::get_value(token.name);
+                return variables::st.get(token.name);
             }
             throw std::runtime_error(
                 "calculator::primary() throws unknown variable name "
@@ -298,7 +298,7 @@ double declaration(const Token& var_type) {
     }
 
     double value{calculator::grammar::bitwise_or()};
-    variables::define_name(name_tkn.name, value, var_type.kind == CONST);
+    variables::st.define(name_tkn.name, value, var_type.kind == CONST);
     return value;
 }
 

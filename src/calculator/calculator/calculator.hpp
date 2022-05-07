@@ -17,12 +17,18 @@ struct Variable {
     bool is_const{};
 };
 
-double get_value(const std::string& name);
-void set_value(const std::string& name, double value);
+class SymbolTable {
+ public:
+    double get(const std::string& name);
+    void set(const std::string& name, double value);
 
-bool is_declared(const std::string& variable_name);
-double define_name(const std::string& variable_name, double value,
-                   bool is_const = false);
+    bool is_declared(const std::string& variable_name);
+    double define(const std::string& variable_name, double value,
+                  bool is_const = false);
+
+ private:
+    std::vector<Variable> vars{};
+};
 
 }  // namespace variables
 
