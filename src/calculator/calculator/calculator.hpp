@@ -57,6 +57,7 @@ double bitwise_and();
 double bitwise_xor();
 double bitwise_or();
 double statement();
+double declaration();
 
 }  // namespace grammar
 
