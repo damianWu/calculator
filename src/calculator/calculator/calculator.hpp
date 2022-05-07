@@ -68,10 +68,10 @@ double logical_not();
 double term();
 double expression();
 double bitwise_and();
-double bitwise_xor();
 double bitwise_or();
+double bitwise_xor();
 double statement();
-double declaration();
+double declaration(const token::Token& var_type);
 
 }  // namespace grammar
 
