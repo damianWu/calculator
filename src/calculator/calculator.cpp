@@ -44,6 +44,7 @@ double get_value(const std::string& name) {
     return var_iterator->value;
 }
 
+// Set value of (existing) variable
 void set_value(const std::string& name, const double value) {
     auto var{std::find_if(std::begin(vars), std::end(vars),
                           [&name](const auto& n) { return name == n; })};
