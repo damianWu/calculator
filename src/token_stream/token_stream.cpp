@@ -12,6 +12,7 @@ namespace token_stream {
 
 using calculator::EXIT;
 using calculator::FLOATING_POINT_NUMBER;
+using calculator::LET;
 using calculator::PRINT;
 
 using token::Token;
@@ -82,6 +83,17 @@ Token TokenStream::get() {
             double value{};
             std::cin >> value;
             return Token{FLOATING_POINT_NUMBER, value};
+        }
+        case LET: {
+            char e{};
+            char t{};
+            std::cin >> e >> t;
+            if (verify_let(e, t)) {
+                return Token{LET};
+            }
+            throw std::runtime_error(
+                "token_stream::TokenStream::get() "
+                "throws unknown token exception: ");
         }
         default: {
             std::string error_msg{
