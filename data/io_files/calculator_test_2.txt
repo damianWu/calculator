@@ -1,1 +1,6 @@
-22/0; x
+let c = 12.00;
+let z = 2*c;
+const g = z;
+c = 1;
+z = 11;
+c+z+g; @

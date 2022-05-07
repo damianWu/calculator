@@ -2,8 +2,10 @@
 
 #include "calculator/calculator.hpp"
 
+#include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <iterator>
 #include <limits>
 #include <stdexcept>
 
@@ -23,6 +25,67 @@ inline void throw_runtime_exception(const std::string& error_msg,
 }
 
 }  // namespace
+
+namespace variables {
+
+std::vector<Variable> vars{};
+
+// Return value of variable
+double get_value(const std::string& name) {
+    auto var_iterator{
+        std::find_if(std::begin(vars), std::end(vars),
+                     [&name](const Variable& v) { return name == v.name; })};
+    if (var_iterator == std::end(vars)) {
+        throw std::runtime_error(
+            "double variables::get_value() throws exception. "
+            "Unknow variable: " +
+            name);
+    }
+    return var_iterator->value;
+}
+
+// Set value of (existing) variable
+void set_value(const std::string& name, const double value) {
+    auto var_iterator{std::find_if(
+        std::begin(vars), std::end(vars),
+        [&name](const Variable& var) { return name == var.name; })};
+    if (var_iterator == std::end(vars)) {
+        throw std::runtime_error(
+            "double variables::set_value() throws exception. "
+            "Unknow variable: " +
+            name);
+    }
+
+    if (var_iterator->is_const) {
+        throw std::runtime_error(
+            "double variables::set_value() throws exception. "
+            "Attempt to change constant variable.");
+    }
+
+    var_iterator->value = value;
+}
+
+bool is_declared(const std::string& variable_name) {
+    auto var_iterator{std::find_if(std::begin(vars), std::end(vars),
+                                   [&variable_name](const Variable& var) {
+                                       return variable_name == var.name;
+                                   })};
+    return var_iterator != std::end(vars);
+}
+
+double define_name(const std::string& variable_name, const double value,
+                   const bool is_const) {
+    if (is_declared(variable_name)) {
+        throw_runtime_exception(
+            "variables::define_name() "
+            " throws redefined variable exception.");
+    }
+    variables::vars.push_back(
+        variables::Variable{variable_name, value, is_const});
+    return value;
+}
+
+}  // namespace variables
 
 namespace calculator {
 
@@ -54,6 +117,21 @@ double primary() {
             number = verify_factorial(number);
 
             return number;
+        }
+        case VAR_NAME: {
+            if (variables::is_declared(token.name)) {
+                Token t{ts.get()};
+                if (t.kind == EQUAL_SIGN) {  // handle name = expression
+                    double number{primary()};
+                    variables::set_value(token.name, number);
+                    return number;
+                }
+                ts.put_back(t);  // not an assignment: return the value
+                return variables::get_value(token.name);
+            }
+            throw std::runtime_error(
+                "calculator::primary() throws unknown variable name "
+                "exception.");
         }
         case NEGATIVE_SIGN: {
             return -primary();
@@ -202,13 +280,46 @@ double bitwise_or() {
     }
 }
 
-double statement() { return bitwise_or(); }
+double declaration(const Token& var_type) {
+    Token name_tkn{ts.get()};
+    if (name_tkn.kind != VAR_NAME) {
+        throw_runtime_exception(
+            "calculator::declaration() throws syntax error. Variable name "
+            "required.");
+    }
+
+    Token equal_sign_tkn{ts.get()};
+    if (equal_sign_tkn.kind != EQUAL_SIGN) {
+        throw_runtime_exception(
+            "calculator::declaration() "
+            " throws syntax error. Equal sign required in variable definition, "
+            "but was: ",
+            equal_sign_tkn.kind);
+    }
+
+    double value{calculator::grammar::bitwise_or()};
+    variables::define_name(name_tkn.name, value, var_type.kind == CONST);
+    return value;
+}
+
+double statement() {
+    Token token{ts.get()};
+    switch (token.kind) {
+        case LET:
+        case CONST: {
+            return declaration(token);
+        }
+        default: {
+            ts.put_back(token);
+            return bitwise_or();
+        }
+    }
+}
 
 }  // namespace grammar
 
-using grammar::statement;
-
-// calculator starting point
+// Calculator starting point
+// Allows you to perform multiple calculations in one run
 double calculate() {
     double result{};
     while (std::cin) {
@@ -222,7 +333,7 @@ double calculate() {
             }
 
             ts.put_back(token);
-            result = statement();
+            result = grammar::statement();
 
             token = ts.get();
             throw_if_unexpected_token(token);
@@ -246,29 +357,15 @@ double calculate() {
         "loop. Program forced to exit (probably).");
 }
 
-void clean_up_mess() { ts.ignore(PRINT); }
+bool is_factorial(const Token& token) { return token.kind == '!'; }
 
-void throw_if_unexpected_token(const Token& token) {
-    // Two token are unexpected at this stage: fp-number and bitwise not.
-    // Reason #1: !3!2 = !(3!)2 = !62 ? What is two? 62? There is no operator
-    //            between !6 and 2. Error!
-    // Reason #2: ~3~2 = -4~2 -> -4 -3? Two numbers, no operator between them.
-    if (is_token_floating_point_number(token) || token.kind == BITWISE_NOT) {
-        throw_runtime_exception(
-            "Function calculator::throw_if_unexpected_token() "
-            "throws syntax error exception. No floating point literal "
-            "or bitwise not expected.");
+double verify_factorial(const double number) {
+    Token token{ts.get()};
+    if (is_factorial(token)) {
+        return static_cast<double>(factorial(static_cast<uint64>(number)));
     }
-}
-
-bool is_token_floating_point_number(const Token& token) {
-    return token.kind == FLOATING_POINT_NUMBER;
-}
-
-void skip_print_symbol(Token* token) {
-    while (token->kind == PRINT) {
-        *token = ts.get();
-    }
+    ts.put_back(token);
+    return number;
 }
 
 void verify_closing_bracket(const char closing_bracket) {
@@ -283,16 +380,30 @@ void verify_closing_bracket(const char closing_bracket) {
     }
 }
 
-double verify_factorial(const double number) {
-    Token token{ts.get()};
-    if (is_factorial(token)) {
-        return static_cast<double>(factorial(static_cast<uint64>(number)));
+void clean_up_mess() { ts.ignore(PRINT); }
+
+void skip_print_symbol(Token* token) {
+    while (token->kind == PRINT) {
+        *token = ts.get();
     }
-    ts.put_back(token);
-    return number;
 }
 
-bool is_factorial(const Token& token) { return token.kind == '!'; }
+bool is_token_floating_point_number(const Token& token) {
+    return token.kind == FLOATING_POINT_NUMBER;
+}
+
+// Two token are unexpected at this stage: fp-number and bitwise not.
+// Reason #1: !3!2 = !(3!)2 = !62 ? What is two? 62? There is no operator
+//            between !6 and 2. Error!
+// Reason #2: ~3~2 = -4~2 -> -4 -3? Two numbers, no operator between them.
+void throw_if_unexpected_token(const Token& token) {
+    if (is_token_floating_point_number(token) || token.kind == BITWISE_NOT) {
+        throw_runtime_exception(
+            "Function calculator::throw_if_unexpected_token() "
+            "throws syntax error exception. No floating point literal "
+            "or bitwise not expected.");
+    }
+}
 
 uint64 factorial(const uint64 number) {
     if (number == 0) {

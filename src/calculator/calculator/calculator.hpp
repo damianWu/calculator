@@ -3,32 +3,61 @@
 #define SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 
 #include <cstdint>
+#include <string>
+#include <vector>
 
 #include "token/token.hpp"
 #include "token_stream/token_stream.hpp"
+
+namespace variables {
+
+struct Variable {
+    std::string name{};
+    double value{};
+    bool is_const{};
+};
+
+double get_value(const std::string& name);
+void set_value(const std::string& name, double value);
+
+bool is_declared(const std::string& variable_name);
+double define_name(const std::string& variable_name, double value,
+                   bool is_const = false);
+
+}  // namespace variables
 
 namespace calculator {
 
 using uint64 = std::uint64_t;
 using int64 = std::int64_t;
 
+// Symbolizes floating-point (numeric) kind of token
+constexpr char FLOATING_POINT_NUMBER{'8'};
+// Finish program symbol/token kind
+constexpr char EXIT{'@'};
+// End of input expression symbol/token kind
+constexpr char PRINT{';'};
+// variable name token kind
+constexpr char VAR_NAME{'a'};
+// let keyword token kind
+constexpr char LET{'L'};
+// const keyword token kind
+constexpr char CONST{'C'};
+
 constexpr char OPEN_PARENTHESIS{'('};
 constexpr char CLOSE_PARENTHESIS{')'};
 constexpr char CLOSE_BRACE{'}'};
 constexpr char OPEN_BRACE{'{'};
-
-// Symbolizes floating-point (numeric) kind of token
-constexpr char FLOATING_POINT_NUMBER{'8'};
-// Finish program symbol
-constexpr char EXIT{'x'};
-// End of input expression symbol
-constexpr char PRINT{';'};
+constexpr char EQUAL_SIGN{'='};
 
 constexpr char LOGICAL_NOT{'!'};
 constexpr char BITWISE_NOT{'~'};
 constexpr char NEGATIVE_SIGN{'-'};
 constexpr char POSITIVE_SIGN{'+'};
 
+// Variable definition keyword
+constexpr char DECL_KEY[]{"let"};
+constexpr char CONST_KEY[]{"const"};
 constexpr char RESULT[]{"= "};
 
 namespace grammar {
@@ -39,9 +68,10 @@ double logical_not();
 double term();
 double expression();
 double bitwise_and();
-double bitwise_xor();
 double bitwise_or();
+double bitwise_xor();
 double statement();
+double declaration(const token::Token& var_type);
 
 }  // namespace grammar
 

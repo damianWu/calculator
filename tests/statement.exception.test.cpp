@@ -12,7 +12,7 @@ TEST(ExceptionCalculationModuloOperator,
     EXPECT_THROW(
         {
             // Given
-            std::istringstream input("6%0+1; x");
+            std::istringstream input("6%0+1; @");
             std::cin.rdbuf(input.rdbuf());
             try {
                 // When
@@ -33,7 +33,7 @@ TEST(ExceptionCalculationDivisionOperator,
     EXPECT_THROW(
         {
             // Given
-            std::istringstream input("22/0+1; x");
+            std::istringstream input("22/0+1; @");
             std::cin.rdbuf(input.rdbuf());
             try {
                 // When

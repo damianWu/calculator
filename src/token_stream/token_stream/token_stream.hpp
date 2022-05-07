@@ -3,6 +3,8 @@
 #ifndef SRC_TOKEN_STREAM_TOKEN_STREAM_TOKEN_STREAM_HPP_
 #define SRC_TOKEN_STREAM_TOKEN_STREAM_TOKEN_STREAM_HPP_
 
+#include <string>
+
 #include "token/token.hpp"
 
 namespace token_stream {
@@ -15,13 +17,15 @@ class TokenStream {
     TokenStream();
 
     Token get();
-    void put_back(const Token);
-    void ignore(const char up_to);
+    void put_back(Token);
+    void ignore(char);
 
  private:
     Token buffer_;
     bool full_;
 };
+
+void read_word(std::string* s);
 
 }  // namespace token_stream
 

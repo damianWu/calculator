@@ -10,10 +10,6 @@
 
 namespace token_stream {
 
-using calculator::EXIT;
-using calculator::FLOATING_POINT_NUMBER;
-using calculator::PRINT;
-
 using token::Token;
 
 TokenStream::TokenStream() : buffer_{Token{0}}, full_{false} {}
@@ -46,8 +42,9 @@ Token TokenStream::get() {
 
     switch (token_fragment) {
         // Token kind:
-        case PRINT:
-        case EXIT:
+        case calculator::PRINT:
+        case calculator::EXIT:
+        case calculator::EQUAL_SIGN:
         case '(':
         case ')':
         case '}':
@@ -77,13 +74,29 @@ Token TokenStream::get() {
         case '8':
         case '9': {
             // Put back number fragment to the input stream to read number as
-            // whole
+            // a whole
             std::cin.putback(token_fragment);
             double value{};
             std::cin >> value;
-            return Token{FLOATING_POINT_NUMBER, value};
+            return Token{calculator::FLOATING_POINT_NUMBER, value};
         }
         default: {
+            // Read 'let' keyword or variable name
+            if (std::isalpha(token_fragment)) {
+                std::string word{token_fragment};
+                read_word(&word);
+
+                if (word == calculator::DECL_KEY) {
+                    return Token{calculator::LET};
+                }
+
+                if (word == calculator::CONST_KEY) {
+                    return Token{calculator::CONST};
+                }
+
+                return Token{calculator::VAR_NAME, word};
+            }
+
             std::string error_msg{
                 "token_stream::TokenStream::get() "
                 "throws unknown token exception: "};
@@ -102,6 +115,15 @@ void TokenStream::put_back(const Token token) {
     }
     buffer_ = token;
     full_ = true;
+}
+
+void read_word(std::string* const s) {
+    char c{};
+    while (std::cin.get(c) &&
+           (std::isalpha(c) || std::isdigit(c) || c == '_')) {
+        *s += c;
+    }
+    std::cin.putback(c);
 }
 
 }  // namespace token_stream
