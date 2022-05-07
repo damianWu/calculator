@@ -10,11 +10,6 @@
 
 namespace token_stream {
 
-using calculator::EXIT;
-using calculator::FLOATING_POINT_NUMBER;
-using calculator::LET;
-using calculator::PRINT;
-
 using token::Token;
 
 TokenStream::TokenStream() : buffer_{Token{0}}, full_{false} {}
