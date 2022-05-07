@@ -346,7 +346,7 @@ uint64 factorial(const uint64 number) {
         return 1;
     }
     return number * factorial(number - 1);
-}  // namespace )
+}
 
 bool compare_double(const double a, const double b) {
     double epsilon = std::numeric_limits<double>::epsilon();
