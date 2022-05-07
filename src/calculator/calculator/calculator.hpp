@@ -57,6 +57,7 @@ constexpr char POSITIVE_SIGN{'+'};
 
 // Variable definition keyword
 constexpr char DECL_KEY[]{"let"};
+constexpr char CONST_KEY[]{"const"};
 constexpr char RESULT[]{"= "};
 
 namespace grammar {
