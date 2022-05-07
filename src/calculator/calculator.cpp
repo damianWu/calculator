@@ -322,7 +322,7 @@ double calculate() {
             }
 
             ts.put_back(token);
-            result = statement();
+            result = grammar::statement();
 
             token = ts.get();
             throw_if_unexpected_token(token);
