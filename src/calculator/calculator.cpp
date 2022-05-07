@@ -280,7 +280,7 @@ double bitwise_or() {
     }
 }
 
-double declaration() {
+double declaration(const Token& var_type) {
     Token name_tkn{ts.get()};
     if (name_tkn.kind != VAR_NAME) {
         throw_runtime_exception(
@@ -298,7 +298,7 @@ double declaration() {
     }
 
     double value{calculator::grammar::bitwise_or()};
-    variables::define_name(name_tkn.name, value);
+    variables::define_name(name_tkn.name, value, var_type.kind == CONST);
     return value;
 }
 
@@ -306,8 +306,8 @@ double statement() {
     Token token{ts.get()};
     switch (token.kind) {
         case LET:
-            return declaration();
         case CONST: {
+            return declaration(token);
         }
         default: {
             ts.put_back(token);
