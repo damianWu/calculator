@@ -24,6 +24,7 @@ target_link_libraries(
         # ${CONAN_LIBS}
 )
 
+
 # Add gtest to be able to run ctest.
 add_test(
         NAME calculatorTest                    # Test name
