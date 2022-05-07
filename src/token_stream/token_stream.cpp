@@ -42,8 +42,9 @@ Token TokenStream::get() {
 
     switch (token_fragment) {
         // Token kind:
-        case PRINT:
-        case EXIT:
+        case calculator::PRINT:
+        case calculator::EXIT:
+        case calculator::EQUAL_SIGN:
         case '(':
         case ')':
         case '}':
