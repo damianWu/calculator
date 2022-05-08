@@ -355,7 +355,7 @@ uint64 factorial(const uint64 number) {
 
 bool compare_double(const double a, const double b) {
     double epsilon = std::numeric_limits<double>::epsilon();
-    return std::abs(a - b) < epsilon;
+    return std::abs(a - b) <= epsilon * std::abs(a);
 }
 
 }  // namespace calculator
