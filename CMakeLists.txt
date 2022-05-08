@@ -37,7 +37,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Rejected: -Wmissing-prototypes 
 set(EXTRA_COMPILER_FLAGS "-Wall -Wextra -Werror -Wpedantic -Wconversion -Wshadow -Wold-style-cast -Wpointer-arith -Wcast-qual -Wno-unused-function")
 
-# Generate 'compile_commands.json' file required for 'clangd' and familiar.
+# Generate 'compile_commands.json' file required for 'clangd' and familiar tools.
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(${DEBUG_MODE})
