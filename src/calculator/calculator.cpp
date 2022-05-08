@@ -31,7 +31,7 @@ namespace variables {
 SymbolTable st{};
 
 // Return value of variable
-double SymbolTable::get(const std::string& name) {
+double SymbolTable::get(const std::string& name) const {
     auto var_iterator{
         std::find_if(std::begin(vars), std::end(vars),
                      [&name](const Variable& v) { return name == v.name; })};
@@ -65,7 +65,7 @@ void SymbolTable::set(const std::string& name, const double value) {
     var_iterator->value = value;
 }
 
-bool SymbolTable::is_declared(const std::string& variable_name) {
+bool SymbolTable::is_declared(const std::string& variable_name) const {
     auto var_iterator{std::find_if(std::begin(vars), std::end(vars),
                                    [&variable_name](const Variable& var) {
                                        return variable_name == var.name;

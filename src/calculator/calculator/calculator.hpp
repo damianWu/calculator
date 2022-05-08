@@ -19,10 +19,10 @@ struct Variable {
 
 class SymbolTable {
  public:
-    double get(const std::string& name);
-    void set(const std::string& name, double value);
+    bool is_declared(const std::string& variable_name) const;
+    double get(const std::string& name) const;
 
-    bool is_declared(const std::string& variable_name);
+    void set(const std::string& name, double value);
     double define(const std::string& variable_name, double value,
                   bool is_const = false);
 
