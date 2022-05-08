@@ -46,6 +46,7 @@ constexpr char DECL_KEYWORD[]{"let"};
 constexpr char CONST_KEYWORD[]{"const"};
 constexpr char VERSION_KEYWORD[]{"V"};
 constexpr char HELP_KEYWORD[]{"help"};
+
 constexpr char RESULT[]{"= "};
 
 namespace grammar {
