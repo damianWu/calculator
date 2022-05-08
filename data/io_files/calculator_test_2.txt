@@ -1,3 +1,4 @@
+help
 let c = 12.00;
 let z = 2*c;
 const g = z;
