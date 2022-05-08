@@ -380,9 +380,4 @@ void print_version_message() {
     std::cout << "calculator version " << PROGRAM_VERSION << '\n';
 }
 
-bool compare_double(const double a, const double b) {
-    double epsilon = std::numeric_limits<double>::epsilon();
-    return std::abs(a - b) <= epsilon * std::abs(a);
-}
-
 }  // namespace calculator

@@ -2,6 +2,7 @@
 #ifndef SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 #define SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 
+#include <limits>
 #include <stdexcept>
 #include <string>
 
@@ -75,10 +76,21 @@ void skip_print_symbol(token::Token* token);
 bool is_token_floating_point_number(const token::Token& token);
 void throw_if_unexpected_token(const token::Token& token);
 
-uint64 factorial(uint64 number);
-bool compare_double(double a, double b);
 void print_help_message();
 void print_version_message();
+bool compare_double(double a, double b);
+
+constexpr uint64 factorial(const uint64 number) {
+    if (number == 0) {
+        return 1;
+    }
+    return number * factorial(number - 1);
+}
+
+inline bool compare_double(const double a, const double b) {
+    double epsilon = std::numeric_limits<double>::epsilon();
+    return std::abs(a - b) <= epsilon * std::abs(a);
+}
 
 inline void throw_runtime_exception(const std::string& error_msg,
                                     const char token = '\0') {
