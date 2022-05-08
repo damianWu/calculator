@@ -362,13 +362,27 @@ uint64 factorial(const uint64 number) {
 
 void print_help_message() {
     std::cout << "calculator version " << PROGRAM_VERSION << '\n';
-    std::cout << "Author:\t" << AUTHOR << '\n';
+    std::cout << "Author:\t" << AUTHOR << "\n\n";
     std::cout << "USAGE:" << '\n';
-    std::cout << '\t' << "calculator [FLAGS]" << '\n';
-    std::cout << '\t' << "calculator [MATH EXPRESSION]" << '\n';
+    std::cout << "\tcalculator [FLAGS]" << '\n';
+    std::cout << "\tcalculator [MATH EXPRESSION]" << '\n';
     std::cout << "FLAGS:" << '\n';
-    std::cout << '\t' << "help\t\t Prints help information" << '\n';
-    std::cout << '\t' << "V\t\t Prints version information" << '\n';
+    std::cout << "\thelp\t\t Prints help information" << '\n';
+    std::cout << "\tV\t\t Prints version information" << '\n';
+    std::cout << "MATH EXPRESSION (end symbols):" << '\n';
+    std::cout << "\t@\t\t Exits program" << '\n';
+    std::cout << "\t;\t\t Ends every mathematical expression" << '\n';
+    std::cout << "\tlet <var-name> = <value>;\t\t Define variable" << '\n';
+    std::cout << "\tconst <var-name> = <value>;\t\t Define constant variable"
+              << '\n';
+    std::cout << "MATH EXPRESSION (examples):" << '\n';
+    std::cout << "\tEXPRESSION\t\t RESULT" << '\n';
+    std::cout << "\t2+2*2; @\t\t 6" << '\n';
+    std::cout << "\t(2+2)*2; @\t\t 8" << '\n';
+    std::cout
+        << "\tlet c = 12.00;\n\tlet z = 2*c;\n\tconst g = z; c = 1;\n\tc+z+g; @"
+           "\t\t 49"
+        << '\n';
 }
 
 void print_version_message() {
