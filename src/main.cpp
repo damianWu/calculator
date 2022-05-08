@@ -6,8 +6,7 @@
 
 int main() {
     try {
-        const auto result{calculator::calculate()};
-        std::cout << "result: " << result << '\n';
+        calculator::calculate();
     } catch (const std::exception &e) {
         std::cerr << "Exception catch in main function with message: "
                   << e.what() << '\n';
