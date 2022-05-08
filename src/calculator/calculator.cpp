@@ -11,11 +11,17 @@
 #include "token_stream/token_stream.hpp"
 #include "variables/variables.hpp"
 
-using token_stream::TokenStream;
+namespace {
+
+const char PROGRAM_VERSION[]{"1.0.0"};
+const char AUTHOR[]{"https://github.com/damianWu"};
+
+}  // namespace
 
 namespace calculator {
 
 using token::Token;
+using token_stream::TokenStream;
 
 // Receive, hold (only one) and give out token
 TokenStream ts{};
@@ -264,6 +270,16 @@ double calculate() {
                 return result;
             }
 
+            if (token.kind == HELP) {
+                print_help_message();
+                continue;
+            }
+
+            if (token.kind == VERSION) {
+                print_version_message();
+                continue;
+            }
+
             ts.put_back(token);
             result = grammar::statement();
 
@@ -342,6 +358,35 @@ uint64 factorial(const uint64 number) {
         return 1;
     }
     return number * factorial(number - 1);
+}
+
+void print_help_message() {
+    std::cout << "calculator version " << PROGRAM_VERSION << '\n';
+    std::cout << "Author:\t" << AUTHOR << "\n\n";
+    std::cout << "USAGE:" << '\n';
+    std::cout << "\tcalculator [FLAGS]" << '\n';
+    std::cout << "\tcalculator [MATH EXPRESSION]" << '\n';
+    std::cout << "FLAGS:" << '\n';
+    std::cout << "\thelp\t\t Prints help information" << '\n';
+    std::cout << "\tV\t\t Prints version information" << '\n';
+    std::cout << "MATH EXPRESSION (end symbols):" << '\n';
+    std::cout << "\t@\t\t Exits program" << '\n';
+    std::cout << "\t;\t\t Ends every mathematical expression" << '\n';
+    std::cout << "\tlet <var-name> = <value>;\t\t Define variable" << '\n';
+    std::cout << "\tconst <var-name> = <value>;\t\t Define constant variable"
+              << '\n';
+    std::cout << "MATH EXPRESSION (examples):" << '\n';
+    std::cout << "\tEXPRESSION\t\t RESULT" << '\n';
+    std::cout << "\t2+2*2; @\t\t 6" << '\n';
+    std::cout << "\t(2+2)*2; @\t\t 8" << '\n';
+    std::cout
+        << "\tlet c = 12.00;\n\tlet z = 2*c;\n\tconst g = z; c = 1;\n\tc+z+g; @"
+           "\t\t 49"
+        << '\n';
+}
+
+void print_version_message() {
+    std::cout << "calculator version " << PROGRAM_VERSION << '\n';
 }
 
 bool compare_double(const double a, const double b) {

@@ -81,20 +81,11 @@ Token TokenStream::get() {
             return Token{calculator::FLOATING_POINT_NUMBER, value};
         }
         default: {
-            // Read 'let' keyword or variable name
+            // Read 'let', 'const' keyword, variable name or help
             if (std::isalpha(token_fragment)) {
                 std::string word{token_fragment};
                 read_word(&word);
-
-                if (word == calculator::DECL_KEY) {
-                    return Token{calculator::LET};
-                }
-
-                if (word == calculator::CONST_KEY) {
-                    return Token{calculator::CONST};
-                }
-
-                return Token{calculator::VAR_NAME, word};
+                return give_appropriate_token(word);
             }
 
             std::string error_msg{
@@ -104,6 +95,25 @@ Token TokenStream::get() {
             throw std::runtime_error(error_msg);
         }
     }
+}
+
+Token give_appropriate_token(const std::string& word) {
+    if (word == calculator::DECL_KEYWORD) {
+        return Token{calculator::LET};
+    }
+    if (word == calculator::CONST_KEYWORD) {
+        return Token{calculator::CONST};
+    }
+
+    if (word == calculator::HELP_KEYWORD) {
+        return Token{calculator::HELP};
+    }
+
+    if (word == calculator::VERSION_KEYWORD) {
+        return Token{calculator::VERSION};
+    }
+
+    return Token{calculator::VAR_NAME, word};
 }
 
 // Put token to the buffer if empty

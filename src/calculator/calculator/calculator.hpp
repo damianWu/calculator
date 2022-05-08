@@ -25,6 +25,9 @@ constexpr char VAR_NAME{'a'};
 constexpr char LET{'L'};
 // const keyword token kind
 constexpr char CONST{'C'};
+// help token kink
+constexpr char HELP{'H'};
+constexpr char VERSION{'V'};
 
 constexpr char OPEN_PARENTHESIS{'('};
 constexpr char CLOSE_PARENTHESIS{')'};
@@ -38,8 +41,11 @@ constexpr char NEGATIVE_SIGN{'-'};
 constexpr char POSITIVE_SIGN{'+'};
 
 // Variable definition keyword
-constexpr char DECL_KEY[]{"let"};
-constexpr char CONST_KEY[]{"const"};
+constexpr char DECL_KEYWORD[]{"let"};
+// Const variable definition keyword
+constexpr char CONST_KEYWORD[]{"const"};
+constexpr char VERSION_KEYWORD[]{"V"};
+constexpr char HELP_KEYWORD[]{"help"};
 constexpr char RESULT[]{"= "};
 
 namespace grammar {
@@ -70,6 +76,8 @@ void throw_if_unexpected_token(const token::Token& token);
 
 uint64 factorial(uint64 number);
 bool compare_double(double a, double b);
+void print_help_message();
+void print_version_message();
 
 inline void throw_runtime_exception(const std::string& error_msg,
                                     const char token = '\0') {
