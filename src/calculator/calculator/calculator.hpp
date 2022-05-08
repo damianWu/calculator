@@ -2,35 +2,8 @@
 #ifndef SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 #define SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 
-#include <cstdint>
-#include <string>
-#include <vector>
-
 #include "token/token.hpp"
 #include "token_stream/token_stream.hpp"
-
-namespace variables {
-
-struct Variable {
-    std::string name{};
-    double value{};
-    bool is_const{};
-};
-
-class SymbolTable {
- public:
-    bool is_declared(const std::string& variable_name) const;
-    double get(const std::string& name) const;
-
-    void set(const std::string& name, double value);
-    double define(const std::string& variable_name, double value,
-                  bool is_const = false);
-
- private:
-    std::vector<Variable> vars{};
-};
-
-}  // namespace variables
 
 namespace calculator {
 

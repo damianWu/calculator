@@ -2,7 +2,6 @@
 
 #include "calculator/calculator.hpp"
 
-#include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <iterator>
@@ -11,6 +10,7 @@
 
 #include "token/token.hpp"
 #include "token_stream/token_stream.hpp"
+#include "variables/variables.hpp"
 
 using token_stream::TokenStream;
 
@@ -26,72 +26,13 @@ inline void throw_runtime_exception(const std::string& error_msg,
 
 }  // namespace
 
-namespace variables {
-
-SymbolTable st{};
-
-// Return value of variable
-double SymbolTable::get(const std::string& name) const {
-    auto var_iterator{
-        std::find_if(std::begin(vars), std::end(vars),
-                     [&name](const Variable& v) { return name == v.name; })};
-    if (var_iterator == std::end(vars)) {
-        throw std::runtime_error(
-            "double variables::get_value() throws exception. "
-            "Unknow variable: " +
-            name);
-    }
-    return var_iterator->value;
-}
-
-// Set value of (existing) variable
-void SymbolTable::set(const std::string& name, const double value) {
-    auto var_iterator{std::find_if(
-        std::begin(vars), std::end(vars),
-        [&name](const Variable& var) { return name == var.name; })};
-    if (var_iterator == std::end(vars)) {
-        throw std::runtime_error(
-            "double variables::set_value() throws exception. "
-            "Unknow variable: " +
-            name);
-    }
-
-    if (var_iterator->is_const) {
-        throw std::runtime_error(
-            "double variables::set_value() throws exception. "
-            "Attempt to change constant variable.");
-    }
-
-    var_iterator->value = value;
-}
-
-bool SymbolTable::is_declared(const std::string& variable_name) const {
-    auto var_iterator{std::find_if(std::begin(vars), std::end(vars),
-                                   [&variable_name](const Variable& var) {
-                                       return variable_name == var.name;
-                                   })};
-    return var_iterator != std::end(vars);
-}
-
-double SymbolTable::define(const std::string& variable_name, const double value,
-                           const bool is_const) {
-    if (is_declared(variable_name)) {
-        throw_runtime_exception(
-            "variables::define_name() "
-            " throws redefined variable exception.");
-    }
-    variables::st.vars.push_back(
-        variables::Variable{variable_name, value, is_const});
-    return value;
-}
-
-}  // namespace variables
-
 namespace calculator {
 
 using token::Token;
 
 namespace grammar {
+
+variables::SymbolTable st{};
 
 // Handle parenthesis, braces, factorial, logical not, bitwise not, negative
 // sign, positive sign and numbers
@@ -119,15 +60,15 @@ double primary() {
             return number;
         }
         case VAR_NAME: {
-            if (variables::st.is_declared(token.name)) {
+            if (st.is_declared(token.name)) {
                 Token t{ts.get()};
                 if (t.kind == EQUAL_SIGN) {  // handle name = expression
                     double number{primary()};
-                    variables::st.set(token.name, number);
+                    st.set(token.name, number);
                     return number;
                 }
                 ts.put_back(t);  // not an assignment: return the value
-                return variables::st.get(token.name);
+                return st.get(token.name);
             }
             throw std::runtime_error(
                 "calculator::primary() throws unknown variable name "
@@ -298,7 +239,7 @@ double declaration(const Token& var_type) {
     }
 
     double value{calculator::grammar::bitwise_or()};
-    variables::st.define(name_tkn.name, value, var_type.kind == CONST);
+    st.define(name_tkn.name, value, var_type.kind == CONST);
     return value;
 }
 
@@ -414,7 +355,7 @@ uint64 factorial(const uint64 number) {
 
 bool compare_double(const double a, const double b) {
     double epsilon = std::numeric_limits<double>::epsilon();
-    return std::abs(a - b) < epsilon;
+    return std::abs(a - b) <= epsilon * std::abs(a);
 }
 
 }  // namespace calculator

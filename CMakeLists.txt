@@ -86,6 +86,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 add_subdirectory(src/calculator)
 add_subdirectory(src/token)
 add_subdirectory(src/token_stream)
+add_subdirectory(src/variables)
 
 
 
