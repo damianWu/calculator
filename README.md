@@ -1,11 +1,11 @@
 # (Expression) Calculator
 
-(Expression) Calculator compute seemingly simple expressions like: 8+20.5*2.
+(Expression) The calculator compute seemingly simple expressions like: 8+20.5*2.
 Expected value is 49. For humans is obvious, but think how we can program this idea
 to be ''understandable'' by computers. Contrary to appearances it is not a trivial task.
 To handle this problem we use idea of **tokens** and **grammars**.
 
-The program is also an example how a **compiler works**. The calculator analyzes input broken
+The program is also an example how a **compiler works**. Program analyzes input broken
 down into tokens and understood according to a grammar.
 
 ## Tokens and grammars
@@ -59,7 +59,7 @@ Number:
     - 4 % 2 = 0
     - 1 % 6 = 1
 - Variables and constants
-    - let var = 7.2;
+    - let var = 7.2
     - const pi = 3.14159265359
 - Factorial
     - 0! = 1
