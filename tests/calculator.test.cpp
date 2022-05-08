@@ -147,6 +147,19 @@ TEST(CorrectCalculationTest, ShouldReturnExpectedResult_8) {
     // Then
     ASSERT_NEAR(given, expected, 0.00001);
 }
+
+TEST(CorrectCalculationTest, ShouldReturnExpectedResult_9) {
+    // Given
+    std::istringstream input("10-10*10+10; @");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{-80.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
 ////////////////////////////////////////////////////////////////////////////////
 TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_1) {
     // Given
