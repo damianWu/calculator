@@ -95,6 +95,13 @@ gives in result:
     = 3.1415
     = 6.283
 ```
+If you want to immediately exit program after making calculations, write '@' operator
+at the end:
+```
+8 + 20.5 * 2; let pi = 3.1415; 2 * pi; @
+```
+Program print result and exit.
+
 ## Program grammar
 ```
 Calculation:
