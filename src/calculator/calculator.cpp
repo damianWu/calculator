@@ -170,8 +170,8 @@ double bitwise_and() {
 
         switch (token.kind) {
             case '&':
-                left = static_cast<double>(static_cast<uint64>(left) &
-                                           static_cast<uint64>(expression()));
+                left = static_cast<double>(static_cast<int64>(left) &
+                                           static_cast<int64>(expression()));
                 break;
             default:
                 ts.put_back(token);
@@ -188,8 +188,8 @@ double bitwise_xor() {
 
         switch (token.kind) {
             case '^':
-                left = static_cast<double>(static_cast<uint64>(left) ^
-                                           static_cast<uint64>(bitwise_and()));
+                left = static_cast<double>(static_cast<int64>(left) ^
+                                           static_cast<int64>(bitwise_and()));
                 break;
             default:
                 ts.put_back(token);
@@ -206,8 +206,8 @@ double bitwise_or() {
 
         switch (token.kind) {
             case '|':
-                left = static_cast<double>(static_cast<uint64>(left) |
-                                           static_cast<uint64>(bitwise_xor()));
+                left = static_cast<double>(static_cast<int64>(left) |
+                                           static_cast<int64>(bitwise_xor()));
                 break;
             default:
                 ts.put_back(token);
