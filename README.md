@@ -100,7 +100,7 @@ at the end:
 ```
 8 + 20.5 * 2; let pi = 3.1415; 2 * pi; @
 ```
-Program print result and exit.
+Program prints result and exits.
 
 ## Program grammar
 ```
