@@ -362,7 +362,7 @@ void print_help_message() {
     std::cout << "\tV\t\t Prints version information" << '\n';
     std::cout << "MATH EXPRESSION (end symbols):" << '\n';
     std::cout << "\t@\t\t Exits program" << '\n';
-    std::cout << "\t;\t\t Ends every mathematical expression" << '\n';
+    std::cout << "\t;\t\t Ends every calculation" << '\n';
     std::cout << "\tlet <var-name> = <value>;\t\t Define variable" << '\n';
     std::cout << "\tconst <var-name> = <value>;\t\t Define constant variable"
               << '\n';
