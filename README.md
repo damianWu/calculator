@@ -1,7 +1,5 @@
 # (Expression) Calculator
 
-[//]: # (_The Last Markdown Editor, Ever_)
-
 (Expression) Calculator compute seemingly simple expressions like: 8+20.5*2.
 Expected value is 49. For humans is obvious, but think how we can program this idea
 to be ''understandable'' by computers. Contrary to appearances it is not a trivial task.
@@ -39,9 +37,65 @@ Primary:
 Number:
     floating-point-literal
 ```
-
-## Features
-
+## Program grammar
+```
+Calculation:
+    Statement
+    Version
+    Help
+    Print
+    Quit
+    Calculation Statement
+Statement:
+    Declaration
+    Expression
+Declaration:
+    "let" Name "=" Expression
+    "const" Name "=" Expression
+Version:
+    "V"
+Help:
+    "help"
+Statement:
+    BitwiseOR
+    Print
+    Quit
+Print (end expression):
+    ";"
+Quit:
+    "@"
+BitwiseOR:
+    BitwiseXOR
+    BitwiseOR "|" BitwiseXOR
+BitwiseXOR:
+    BitwiseAND
+    BitwiseXOR "^" BitwiseAND
+BitwiseAND:
+    Expression
+    BitwiseAND "&" Expression
+Expression:
+    Term
+    Expression "+" Term
+    Expression "-" Term
+Term:
+    Primary
+    Term "*" Primary
+    Term "/" Primary
+    Term "%" Primary
+Primary:
+    Number
+    Name
+    Name "=" Expression
+    "(" Expression ")"
+    "-" Primary
+    "+" Primary
+    Primary "!"
+Number:
+    floating-point-literal
+Name:
+    [a-zA-Z][a-zA-Z_0-9]
+```
+## Features and Usage
 - Follows the order of the arithmetic operations
     - 8 + 20.5 * 2 = 8 + (20.5 * 2) = 8 + 41 = 49
     - 45 + 11.5 / 7 = 45 + (11.5 / 7) = 45 + 1.64 = 46.64 
@@ -49,22 +103,45 @@ Number:
     - 1 + 2 - 3
     - 3 * 2 + 4 / 2
 - Handles negative numbers
+    - -1 / 2 = -0.5
+    - -1 / -2 = 0.5
 - Handles modulo operator
-- Variables
+    - 4 % 2 = 0
+    - 1 % 6 = 1
+- Variables and constants
     - let var = 7.2;
+    - const pi = 3.14159265359
+- Factorial
+    - 0! = 1
+    - 4! = 24
+    - 4*4! = 96
+- Bitwise operators
+    - 5 | 2 = 7
+    - 5 ^ 6 = 3
+    - 5 & 2 = 0
+- Logical operators
+    - !0 = 1
+    - !82 = 0
+- Compound expressions
+    - 2 * 2 + 8 / 4 % 3 - 30 ^ 3 = -21
+    - !24! - 1 = -1
+    - !4! - 1 = !(4!) - 1 = !24 - 1 = 0 - 1 = -1
+    - 23 | 43 - 1 ^ 54 & 32 = 31
 
 ## Usage
 Run program and type correct mathematical expression using above features. Wait for result.
 <!--## Installation-->
 <!--## Plugins-->
 <!--## Development-->
+
+## Inspiration
+The program is inspired by ideas from the great Bjarne Stroustrup book [Programming -- Principles and Practice Using C++][ppp].
+
 ## License
 
 MIT
 
-**Free Software, Hell Yeah!**
-
-
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
    [github]: <https://github.com/damianWu>
+   [ppp]: <https://www.stroustrup.com/programming.html>
