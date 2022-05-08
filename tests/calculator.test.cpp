@@ -82,6 +82,71 @@ TEST(CorrectCalculationTest, ShouldReturnExpectedResult_3) {
     // Then
     ASSERT_NEAR(given, expected, 0.00001);
 }
+
+TEST(CorrectCalculationTest, ShouldReturnExpectedResult_4) {
+    // Given
+    std::istringstream input("2*2+8/4%3; @");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{6.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationTest, ShouldReturnExpectedResult_5) {
+    // Given
+    std::istringstream input("2*2+8/4%3-30^3; @");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{-21.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationTest, ShouldReturnExpectedResult_6) {
+    // Given
+    std::istringstream input("-30^3; @");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{-31.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationTest, ShouldReturnExpectedResult_7) {
+    // Given
+    std::istringstream input("-(30^3); @");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{-29.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationTest, ShouldReturnExpectedResult_8) {
+    // Given
+    std::istringstream input("!4!-1; @");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{-1.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
 ////////////////////////////////////////////////////////////////////////////////
 TEST(CorrectCalculationFactorialTest, ShouldReturnExpectedFactorialResult_1) {
     // Given
@@ -335,6 +400,19 @@ TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_8) {
     std::istringstream input("3|32^3&731|13; @");
     std::cin.rdbuf(input.rdbuf());
     double expected{47.0};
+
+    // When
+    double given{calculator::calculate()};
+
+    // Then
+    ASSERT_NEAR(given, expected, 0.00001);
+}
+
+TEST(CorrectCalculationBitwiseXORTest, ShouldReturnExpectedBitwiseXORResult_9) {
+    // Given
+    std::istringstream input("23|43-1^54&32; @");
+    std::cin.rdbuf(input.rdbuf());
+    double expected{31.0};
 
     // When
     double given{calculator::calculate()};
