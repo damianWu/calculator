@@ -2,6 +2,9 @@
 #ifndef SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 #define SRC_CALCULATOR_CALCULATOR_CALCULATOR_HPP_
 
+#include <stdexcept>
+#include <string>
+
 #include "token/token.hpp"
 #include "token_stream/token_stream.hpp"
 
@@ -67,6 +70,11 @@ void throw_if_unexpected_token(const token::Token& token);
 
 uint64 factorial(uint64 number);
 bool compare_double(double a, double b);
+
+inline void throw_runtime_exception(const std::string& error_msg,
+                                    const char token = '\0') {
+    throw std::runtime_error(error_msg + token);
+}
 
 }  // namespace calculator
 
