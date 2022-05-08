@@ -5,6 +5,9 @@ Expected value is 49. For humans is obvious, but think how we can program this i
 to be ''understandable'' by computers. Contrary to appearances it is not a trivial task.
 To handle this problem we use idea of **tokens** and **grammars**.
 
+The program is also an example how a **compiler works**. The calculator analyzes input broken
+down into tokens and understood according to a grammar.
+
 ## Tokens and grammars
 ##### Tokens
 A **token** is a sequence of characters that represents something we consider a unit, such
@@ -16,6 +19,7 @@ Token kind | '(' | '8' | '+' | '8' | ')' | '*' | '8' |
 Value      |     | 2.5 |     |  19 |     |     | 11  |
 
 Token type '8' means floating-point-literal.
+
 ##### Grammar
 For example, we know that 45+11.5/7 means 45+(11.5/7) and not (45+11.5)/7 , but how do we
 teach the program that useful rule (division “binds tighter” than addition)? The standard
@@ -36,6 +40,60 @@ Primary:
     "(" Expression ")"
 Number:
     floating-point-literal
+```
+
+## Features
+- Follows the order of the arithmetic operations
+    - 8 + 20.5 * 2 = 8 + (20.5 * 2) = 8 + 41 = 49
+    - 45 + 11.5 / 7 = 45 + (11.5 / 7) = 45 + 1.64 = 46.64 
+    - 1 - 2 * 3 = 1 - (2 * 3) = 1 - 6 = -5
+    - 1 + 2 - 3 = 3 - 3 = 0
+    - 3 * 2 + 4 / 2 = 6 + 2 = 8
+    - 2 * 3 * 4 = 6 * 4 = 24
+    - 10 - 10 * 10 + 10 = 10 - 100 + 10 = -90 + 10 = -80
+- Handles negative numbers
+    - -1 / 2 = -0.5
+    - -1 / -2 = 0.5
+    - --2 = 2
+- Handles modulo operator
+    - 4 % 2 = 0
+    - 1 % 6 = 1
+- Variables and constants
+    - let var = 7.2;
+    - const pi = 3.14159265359
+- Factorial
+    - 0! = 1
+    - 4! = 24
+    - 4*4! = 96
+- Bitwise operators
+    - 5 | 2 = 7
+    - 5 ^ 6 = 3
+    - 5 & 2 = 0
+- Logical operators
+    - !0 = 1
+    - !82 = 0
+- Compound expressions
+    - 2 * 2 + 8 / 4 % 3 - 30 ^ 3 = -21
+    - !24! - 1 = -1
+    - !4! - 1 = !(4!) - 1 = !24 - 1 = 0 - 1 = -1
+    - 23 | 43 - 1 ^ 54 & 32 = 31
+
+## Usage
+Run program and type correct mathematical expression (calculation unit) using above features.
+Every calculation unit should be finished with print operator: ';'. For example:
+```
+8 + 20.5 * 2;
+```
+#### You can write multiple calculation units in one line.
+Following input:
+```
+8 + 20.5 * 2; let pi = 3.1415; 2 * pi;
+```
+gives in result:
+```
+    = 49
+    = 3.1415
+    = 6.283
 ```
 ## Program grammar
 ```
@@ -95,44 +153,6 @@ Number:
 Name:
     [a-zA-Z][a-zA-Z_0-9]
 ```
-## Features and Usage
-- Follows the order of the arithmetic operations
-    - 8 + 20.5 * 2 = 8 + (20.5 * 2) = 8 + 41 = 49
-    - 45 + 11.5 / 7 = 45 + (11.5 / 7) = 45 + 1.64 = 46.64 
-    - 1 - 2 * 3 = 1 - (2 * 3) = 1 - 6 = -5
-    - 1 + 2 - 3 = 3 - 3 = 0
-    - 3 * 2 + 4 / 2 = 6 + 2 = 8
-    - 2 * 3 * 4 = 6 * 4 = 24
-    - 10 - 10 * 10 + 10 = 10 - 100 + 10 = -90 + 10 = -80
-- Handles negative numbers
-    - -1 / 2 = -0.5
-    - -1 / -2 = 0.5
-    - --2 = 2
-- Handles modulo operator
-    - 4 % 2 = 0
-    - 1 % 6 = 1
-- Variables and constants
-    - let var = 7.2;
-    - const pi = 3.14159265359
-- Factorial
-    - 0! = 1
-    - 4! = 24
-    - 4*4! = 96
-- Bitwise operators
-    - 5 | 2 = 7
-    - 5 ^ 6 = 3
-    - 5 & 2 = 0
-- Logical operators
-    - !0 = 1
-    - !82 = 0
-- Compound expressions
-    - 2 * 2 + 8 / 4 % 3 - 30 ^ 3 = -21
-    - !24! - 1 = -1
-    - !4! - 1 = !(4!) - 1 = !24 - 1 = 0 - 1 = -1
-    - 23 | 43 - 1 ^ 54 & 32 = 31
-
-## Usage
-Run program and type correct mathematical expression using above features. Wait for result.
 <!--## Installation-->
 <!--## Plugins-->
 <!--## Development-->
