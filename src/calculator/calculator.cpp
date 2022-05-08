@@ -11,11 +11,17 @@
 #include "token_stream/token_stream.hpp"
 #include "variables/variables.hpp"
 
-using token_stream::TokenStream;
+namespace {
+
+const char PROGRAM_VERSION[]{"1.0.0"};
+const char AUTHOR[]{"https://github.com/damianWu"};
+
+}  // namespace
 
 namespace calculator {
 
 using token::Token;
+using token_stream::TokenStream;
 
 // Receive, hold (only one) and give out token
 TokenStream ts{};
@@ -264,6 +270,16 @@ double calculate() {
                 return result;
             }
 
+            if (token.kind == HELP) {
+                print_help_message();
+                continue;
+            }
+
+            if (token.kind == VERSION) {
+                print_version_message();
+                continue;
+            }
+
             ts.put_back(token);
             result = grammar::statement();
 
@@ -342,6 +358,21 @@ uint64 factorial(const uint64 number) {
         return 1;
     }
     return number * factorial(number - 1);
+}
+
+void print_help_message() {
+    std::cout << "calculator version " << PROGRAM_VERSION << '\n';
+    std::cout << "Author:\t" << AUTHOR << '\n';
+    std::cout << "USAGE:" << '\n';
+    std::cout << '\t' << "calculator [FLAGS]" << '\n';
+    std::cout << '\t' << "calculator [MATH EXPRESSION]" << '\n';
+    std::cout << "FLAGS:" << '\n';
+    std::cout << '\t' << "help\t\t Prints help information" << '\n';
+    std::cout << '\t' << "V\t\t Prints version information" << '\n';
+}
+
+void print_version_message() {
+    std::cout << "calculator version " << PROGRAM_VERSION << '\n';
 }
 
 bool compare_double(const double a, const double b) {

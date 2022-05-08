@@ -26,6 +26,7 @@ class TokenStream {
 };
 
 void read_word(std::string* s);
+Token give_appropriate_token(const std::string& word);
 
 }  // namespace token_stream
 
