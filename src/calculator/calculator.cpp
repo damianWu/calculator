@@ -4,8 +4,6 @@
 
 #include <cmath>
 #include <iostream>
-#include <iterator>
-#include <limits>
 
 #include "token/token.hpp"
 #include "token_stream/token_stream.hpp"
@@ -351,13 +349,6 @@ void throw_if_unexpected_token(const Token& token) {
             "throws syntax error exception. No floating point literal "
             "or bitwise not expected.");
     }
-}
-
-uint64 factorial(const uint64 number) {
-    if (number == 0) {
-        return 1;
-    }
-    return number * factorial(number - 1);
 }
 
 void print_help_message() {
