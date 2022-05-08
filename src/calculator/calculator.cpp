@@ -2,7 +2,6 @@
 
 #include "calculator/calculator.hpp"
 
-#include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <iterator>
@@ -33,6 +32,8 @@ using token::Token;
 
 namespace grammar {
 
+variables::SymbolTable st{};
+
 // Handle parenthesis, braces, factorial, logical not, bitwise not, negative
 // sign, positive sign and numbers
 double primary() {
@@ -59,15 +60,15 @@ double primary() {
             return number;
         }
         case VAR_NAME: {
-            if (variables::st.is_declared(token.name)) {
+            if (st.is_declared(token.name)) {
                 Token t{ts.get()};
                 if (t.kind == EQUAL_SIGN) {  // handle name = expression
                     double number{primary()};
-                    variables::st.set(token.name, number);
+                    st.set(token.name, number);
                     return number;
                 }
                 ts.put_back(t);  // not an assignment: return the value
-                return variables::st.get(token.name);
+                return st.get(token.name);
             }
             throw std::runtime_error(
                 "calculator::primary() throws unknown variable name "
@@ -238,7 +239,7 @@ double declaration(const Token& var_type) {
     }
 
     double value{calculator::grammar::bitwise_or()};
-    variables::st.define(name_tkn.name, value, var_type.kind == CONST);
+    st.define(name_tkn.name, value, var_type.kind == CONST);
     return value;
 }
 
