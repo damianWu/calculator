@@ -165,7 +165,7 @@ Name:
 <!--## Development-->
 
 ## Inspiration
-The program is inspired by ideas from the great Bjarne Stroustrup's book [Programming -- Principles and Practice Using C++][ppp].
+The program is inspired by ideas from the great Bjarne Stroustrup's book [Programming — Principles and Practice Using C++][ppp].
 
 ## License
 
